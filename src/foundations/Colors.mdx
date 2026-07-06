@@ -1,0 +1,23 @@
+import { Meta, ColorPalette, ColorItem } from '@storybook/addon-docs/blocks'
+import { colorGroups } from './colors'
+
+<Meta title="Foundations/Colors" />
+
+# Colors
+
+The Comfy UI color palette, synced from the Figma design system
+([Foundations / Colors](https://www.figma.com/design/60wkPriIjI9zjyAKOq3dja/?node-id=1023-36350)).
+
+Each scale runs from `50` (lightest) to `950` (darkest). The `500` step is the
+base tone of every scale. Use `brand-500` (Comfy green) as the primary brand color.
+
+<ColorPalette>
+  {colorGroups.map((group) => (
+    <ColorItem
+      key={group.name}
+      title={group.name}
+      subtitle={group.description}
+      colors={group.colors}
+    />
+  ))}
+</ColorPalette>

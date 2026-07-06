@@ -1,0 +1,85 @@
+/* Chip — Comfy UI design system.
+   All colors reference design tokens (src/foundations/tokens.css). */
+
+.chip {
+  --chip-bg: var(--bg-invers);
+  --chip-border: transparent;
+  --chip-fg: var(--text-invers);
+  --chip-bg-hover: var(--chip-bg);
+
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--chip-height, 40px);
+  gap: var(--chip-gap, 4px);
+  padding: 0 var(--chip-px, 14px);
+  border: 1px solid var(--chip-border);
+  border-radius: var(--chip-radius, 10px);
+  background: var(--chip-bg);
+  color: var(--chip-fg);
+  font-family: var(--font-family);
+  font-size: var(--chip-font-size, 14px);
+  line-height: var(--chip-line-height, 20px);
+  font-weight: var(--font-weight-medium, 500);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.chip--pill {
+  border-radius: var(--radius-full);
+}
+
+.chip__icon {
+  flex-shrink: 0;
+  color: inherit;
+}
+
+/* ===================================================================
+   Types
+   =================================================================== */
+.chip--dark {
+  --chip-bg: var(--bg-invers);
+  --chip-border: transparent;
+  --chip-fg: var(--text-invers);
+  --chip-bg-hover: var(--gray-800);
+}
+.chip--grey {
+  --chip-bg: var(--bg-primary);
+  --chip-border: var(--border-alpha-primary);
+  --chip-fg: var(--text-secondary);
+  --chip-bg-hover: var(--gray-50);
+}
+.chip--primary {
+  --chip-bg: var(--bg-primary);
+  --chip-border: var(--border-brand);
+  --chip-fg: var(--text-brand-primary);
+  --chip-bg-hover: var(--brand-50);
+}
+.chip--secondary {
+  --chip-bg: var(--bg-brand-secondary);
+  --chip-border: var(--border-brand);
+  --chip-fg: var(--text-brand-secondary);
+  --chip-bg-hover: var(--brand-100);
+}
+
+/* ---- Hover ---- */
+.chip:not(:disabled):hover {
+  background: var(--chip-bg-hover);
+}
+
+/* ---- Focus ---- */
+.chip:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--base-white), 0 0 0 4px var(--focus-ring-color);
+}
+
+/* ---- Disabled ---- */
+.chip:disabled {
+  cursor: not-allowed;
+  --chip-bg: var(--bg-disabled-subtle);
+  --chip-border: var(--border-primary);
+  --chip-fg: var(--text-disabled);
+  --chip-bg-hover: var(--bg-disabled-subtle);
+}

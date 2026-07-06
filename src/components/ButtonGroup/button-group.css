@@ -1,0 +1,67 @@
+/* Button Group — Comfy UI design system.
+   A row of connected segments (toolbar). All values reference design tokens. */
+
+.button-group {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: stretch;
+  height: var(--bg-height, 40px);
+  overflow: hidden;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-10);
+  background: var(--bg-primary);
+}
+
+.button-group__item {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--bg-gap, 4px);
+  padding: 0 var(--bg-px, 14px);
+  border: none;
+  border-right: 1px solid var(--border-primary);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-family);
+  font-size: var(--bg-font-size, 14px);
+  line-height: var(--bg-line-height, 20px);
+  font-weight: var(--font-weight-medium, 500);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.button-group__item:last-child {
+  border-right: none;
+}
+
+.button-group__item--icon-only {
+  aspect-ratio: 1 / 1;
+  padding: 0;
+  gap: 0;
+}
+
+.button-group__item:hover:not(:disabled),
+.button-group__item:active:not(:disabled) {
+  background: var(--bg-active);
+  color: var(--text-primary);
+}
+
+.button-group__item:focus-visible {
+  outline: none;
+  position: relative;
+  z-index: 1;
+  /* inset ring (container clips overflow), brand color like buttons */
+  box-shadow: inset 0 0 0 2px var(--brand-500);
+  color: var(--text-primary);
+}
+
+.button-group__item:disabled {
+  color: var(--text-disabled);
+  cursor: not-allowed;
+}
+
+.button-group__icon {
+  flex-shrink: 0;
+  color: inherit;
+}

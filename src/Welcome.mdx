@@ -1,0 +1,103 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import { getLogo } from './foundations/logo'
+
+<Meta title="Hello" />
+
+export const wordmark = getLogo('wordmark', 'green').svg
+
+<div style={{ fontFamily: 'var(--font-family)', maxWidth: 860, margin: '0 auto' }}>
+
+  <div
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      textAlign: 'center',
+      gap: 24,
+      padding: '56px 32px',
+      borderRadius: 'var(--radius-16)',
+      background: 'linear-gradient(180deg, var(--brand-50) 0%, var(--bg-primary) 100%)',
+      border: '1px solid var(--border-secondary)',
+    }}
+  >
+    <span
+      style={{ display: 'inline-flex', height: 44 }}
+      dangerouslySetInnerHTML={{ __html: wordmark.replace('<svg', '<svg style="height:100%;width:auto;display:block"') }}
+    />
+
+    <h1 style={{ margin: 0, fontFamily: 'var(--font-family)', color: 'var(--text-primary)', fontSize: 'var(--font-h2-size)', lineHeight: 'var(--font-h2-line-height)', fontWeight: 'var(--font-weight-bold)' }}>
+      Вітаємо у Storybook компанії COMFY!
+    </h1>
+
+    <p style={{ margin: 0, maxWidth: 620, fontFamily: 'var(--font-family)', color: 'var(--text-secondary)', fontSize: 'var(--font-body-1-size)', lineHeight: 'var(--font-body-1-line-height)' }}>
+      Це жива бібліотека нашої дизайн-системи — єдине джерело правди для дизайнерів
+      і розробників. Тут зібрані кольори, типографіка, іконки та компоненти,
+      синхронізовані з Figma й побудовані на дизайн-токенах: змінюється токен —
+      оновлюється вся система.
+    </p>
+
+    <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
+      {[
+        ['20+', 'компонентів'],
+        ['292', 'іконки'],
+        ['160+', 'токенів'],
+        ['1', 'джерело правди'],
+      ].map(([num, label]) => (
+        <div
+          key={label}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+            padding: '12px 24px',
+            borderRadius: 'var(--radius-12)',
+            background: 'var(--bg-primary)',
+            border: '1px solid var(--border-secondary)',
+            boxShadow: 'var(--elevation-100)',
+            minWidth: 110,
+          }}
+        >
+          <span style={{ color: 'var(--text-brand-primary)', fontSize: 'var(--font-h3-size)', fontWeight: 'var(--font-weight-extrabold)', lineHeight: 'var(--font-h3-line-height)' }}>{num}</span>
+          <span style={{ color: 'var(--text-secondary)', fontSize: 'var(--font-caption-1-size)' }}>{label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16, marginTop: 24 }}>
+    {[
+      ['🎨', 'Foundations', 'Кольори, типографіка, ефекти та логотип — фундамент системи.'],
+      ['🧩', 'Components', 'Кнопки, форми, меню, бейджі — все з живими прикладами й контролами.'],
+      ['🔗', 'Токени всюди', 'Жодного захардкодженого кольору: primitive → semantic → компонент.'],
+    ].map(([emoji, title, text]) => (
+      <div
+        key={title}
+        style={{
+          padding: 20,
+          borderRadius: 'var(--radius-12)',
+          border: '1px solid var(--border-secondary)',
+          background: 'var(--bg-primary)',
+        }}
+      >
+        <div style={{ fontSize: 28, lineHeight: '36px' }}>{emoji}</div>
+        <div style={{ marginTop: 8, color: 'var(--text-primary)', fontSize: 'var(--font-body-1-size)', fontWeight: 'var(--font-weight-bold)' }}>{title}</div>
+        <div style={{ marginTop: 4, color: 'var(--text-secondary)', fontSize: 'var(--font-body-2-size)', lineHeight: 'var(--font-body-2-line-height)' }}>{text}</div>
+      </div>
+    ))}
+  </div>
+
+  <p
+    style={{
+      marginTop: 32,
+      textAlign: 'center',
+      fontFamily: 'var(--font-family)',
+      color: 'var(--text-primary)',
+      fontSize: 'var(--font-label-3-size)',
+      lineHeight: 'var(--font-label-3-line-height)',
+      fontWeight: 'var(--font-weight-medium)',
+    }}
+  >
+    Приємного використання! 🐶
+  </p>
+
+</div>

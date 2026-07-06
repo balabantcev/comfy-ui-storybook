@@ -1,0 +1,79 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import { typeGroups, fontWeights, fontFamily, fontFamilyStack, weightValue } from './typography'
+
+<Meta title="Foundations/Typography" />
+
+# Typography
+
+The Comfy UI type system, synced from the Figma design system
+([Foundations / Typography](https://www.figma.com/design/60wkPriIjI9zjyAKOq3dja/?node-id=18-1951)).
+
+The typeface is **{fontFamily}** — a modern, screen-optimized variable font with
+full Cyrillic and Latin support.
+
+CSS stack:
+
+```css
+font-family: {fontFamilyStack};
+```
+
+## Weights
+
+<table style={{ borderCollapse: 'collapse', width: '100%' }}>
+  <thead>
+    <tr style={{ textAlign: 'left', borderBottom: '1px solid #e5e5e5' }}>
+      <th style={{ padding: '8px 12px' }}>Sample</th>
+      <th style={{ padding: '8px 12px' }}>Name</th>
+      <th style={{ padding: '8px 12px' }}>Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    {Object.entries(fontWeights).map(([name, weight]) => (
+      <tr key={name} style={{ borderBottom: '1px solid #f5f5f5' }}>
+        <td style={{ padding: '8px 12px', fontFamily: fontFamilyStack, fontWeight: weight, fontSize: 28 }}>Aa</td>
+        <td style={{ padding: '8px 12px', textTransform: 'capitalize' }}>{name.replace(/([A-Z])/g, ' $1')}</td>
+        <td style={{ padding: '8px 12px', color: '#737373' }}>{weight}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+## Type scale
+
+Each style is named `Group/Name` (e.g. `Title/Title-1`) and ships in the weights
+listed below. Sizes and line heights are in px.
+
+{typeGroups.map((group) => (
+  <section key={group.name} style={{ marginTop: 40 }}>
+    <h3 style={{ borderBottom: '1px solid #e5e5e5', paddingBottom: 8 }}>{group.name}</h3>
+    {group.styles.map((s) => (
+      <div key={s.name} style={{ padding: '20px 0', borderBottom: '1px solid #f5f5f5' }}>
+        <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', color: '#737373', fontSize: 12, marginBottom: 12 }}>
+          <strong style={{ color: '#0a0a0a', fontSize: 14 }}>{s.name}</strong>
+          <span>{s.token}</span>
+          <span>Size: {s.fontSize}px / {(s.fontSize / 16).toFixed(3).replace(/\.?0+$/, '')}rem</span>
+          <span>Line height: {s.lineHeight}px</span>
+          <span>Weights: {s.weights.join(', ')}</span>
+        </div>
+        <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap', alignItems: 'baseline' }}>
+          {s.weights.map((w) => (
+            <span
+              key={w}
+              title={`${s.name} / ${w}`}
+              style={{
+                fontFamily: fontFamilyStack,
+                fontSize: s.fontSize,
+                lineHeight: `${s.lineHeight}px`,
+                fontWeight: weightValue[w],
+                letterSpacing: s.letterSpacing,
+                color: '#0a0a0a',
+              }}
+            >
+              Приклад
+            </span>
+          ))}
+        </div>
+      </div>
+    ))}
+  </section>
+))}

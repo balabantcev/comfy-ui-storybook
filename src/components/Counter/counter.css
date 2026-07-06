@@ -1,0 +1,59 @@
+/* Counter (notification badge) — Comfy UI design system.
+   All colors reference design tokens (src/foundations/tokens.css). */
+
+.counter {
+  --counter-bg: var(--bg-error-primary);
+  --counter-fg: var(--text-primary-onbrand);
+  --counter-border: transparent;
+  --counter-shadow: none;
+
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  height: var(--counter-size, 20px);
+  min-width: var(--counter-size, 20px);
+  padding: 0 var(--counter-px, 4px);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--counter-border);
+  background: var(--counter-bg);
+  box-shadow: var(--counter-shadow);
+  color: var(--counter-fg);
+  font-family: var(--font-family);
+  font-size: var(--counter-font-size, 12px);
+  line-height: var(--counter-line-height, 16px);
+  font-weight: var(--font-weight-bold, 700);
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ---- Colors ---- */
+.counter--orange {
+  --counter-bg: var(--orange-500);
+  --counter-fg: var(--text-primary-onbrand);
+}
+.counter--brand {
+  --counter-bg: var(--bg-brand-primary);
+  --counter-fg: var(--text-primary-onbrand);
+}
+.counter--red {
+  --counter-bg: var(--bg-error-primary);
+  --counter-fg: var(--text-primary-onbrand);
+}
+.counter--grey {
+  --counter-bg: var(--gray-50);
+  --counter-border: var(--border-secondary);
+  --counter-fg: var(--text-secondary);
+}
+.counter--modern {
+  --counter-bg: var(--bg-primary);
+  --counter-border: var(--border-secondary);
+  --counter-fg: var(--text-secondary);
+  --counter-shadow: var(--elevation-50);
+}
+
+/* ---- Border gap (white ring for placing over content) ---- */
+.counter--gap {
+  --counter-shadow: 0 0 0 2px var(--border-gap, var(--base-white));
+}

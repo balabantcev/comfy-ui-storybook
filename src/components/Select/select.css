@@ -1,0 +1,136 @@
+/* Select — Comfy UI design system.
+   The trigger reuses the Input classes (input.css); this file styles the
+   menu items and the trigger add-ons. Tokens only. */
+
+.select {
+  position: relative;
+}
+
+.select .input__box {
+  cursor: pointer;
+  user-select: none;
+}
+.select--disabled .input__box {
+  cursor: not-allowed;
+}
+
+.select__value {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding-top: var(--field-pt, 0);
+  box-sizing: border-box;
+  color: var(--text-primary);
+  font-size: var(--font-body-1-size, 16px);
+  line-height: var(--font-body-1-line-height, 22px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.select__chevron {
+  flex-shrink: 0;
+  color: var(--icon-secondary);
+  transition: transform 0.15s ease;
+}
+.select--open .select__chevron {
+  transform: rotate(180deg);
+}
+
+.select__panel {
+  position: absolute;
+  top: calc(100% + var(--padding-4));
+  left: 0;
+  right: 0;
+  z-index: 50;
+}
+.select__panel .dropdown-menu {
+  width: 100%;
+}
+
+/* ---- Select item (single) ---- */
+.select-item {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1px var(--padding-4);
+  border: none;
+  background: none;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  border-radius: var(--radius-10);
+}
+.select-item__box {
+  display: flex;
+  flex: 1 1 0;
+  align-items: center;
+  gap: var(--padding-8);
+  min-width: 0;
+  padding: var(--si-pad, 8px);
+  border-radius: var(--radius-10);
+  transition: background-color 0.12s ease;
+}
+.select-item__label {
+  flex: 1 1 0;
+  min-width: 0;
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  font-size: var(--si-font-size, 16px);
+  line-height: var(--si-line-height, 22px);
+  font-weight: var(--font-weight-regular, 400);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.select-item__check {
+  flex-shrink: 0;
+  color: var(--icon-primary);
+}
+.select-item:hover:not(:disabled) .select-item__box,
+.select-item--selected .select-item__box {
+  background: var(--bg-active);
+}
+.select-item:focus-visible {
+  outline: none;
+}
+.select-item:focus-visible .select-item__box {
+  box-shadow: inset 0 0 0 2px var(--brand-500);
+}
+.select-item:disabled {
+  cursor: not-allowed;
+}
+.select-item:disabled .select-item__label {
+  color: var(--text-disabled);
+}
+
+/* ---- Multi rows + footer (reuse FilterSelect pattern) ---- */
+.select__option {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1px var(--padding-4);
+}
+.select__option > .control {
+  flex: 1 1 0;
+  padding: var(--padding-8);
+  border-radius: var(--radius-10);
+  align-items: center;
+}
+.select__option:hover > .control {
+  background: var(--bg-hover);
+}
+.select__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--padding-8);
+  padding: var(--padding-8) var(--padding-8) var(--padding-4);
+}
+.select__footer > .btn {
+  flex: 0 1 auto;
+}
+.select__footer > .btn:last-child {
+  flex: 1 1 auto;
+}

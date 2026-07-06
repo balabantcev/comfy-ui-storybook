@@ -1,0 +1,148 @@
+/* Filter Select — Comfy UI design system.
+   A chip-style trigger that opens a select menu. Tokens only. */
+
+.filter-select {
+  position: relative;
+  display: inline-block;
+  font-family: var(--font-family);
+}
+
+.filter-select__trigger {
+  display: inline-flex;
+  align-items: stretch;
+  gap: var(--padding-2);
+}
+
+.filter-trigger {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--padding-4);
+  height: var(--fs-height, 40px);
+  padding: 0 var(--padding-10) 0 var(--padding-14);
+  border: 1px solid var(--border-alpha-primary);
+  border-radius: var(--fs-radius, 10px);
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  font-size: var(--font-body-2-size, 14px);
+  line-height: var(--font-body-2-line-height, 20px);
+  font-weight: var(--font-weight-medium, 500);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.12s ease, color 0.12s ease, border-color 0.12s ease,
+    box-shadow 0.12s ease;
+}
+.filter-trigger__icon {
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.filter-trigger:hover:not(:disabled) {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+.filter-trigger:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--base-white), 0 0 0 4px var(--focus-ring-color);
+}
+.filter-trigger:disabled {
+  cursor: not-allowed;
+  color: var(--text-disabled);
+}
+
+/* ---- Active (has selection) ---- */
+.filter-select--active .filter-trigger {
+  background: var(--bg-success-tertiary);
+  border-color: transparent;
+  color: var(--text-brand-secondary);
+}
+.filter-select--active .filter-trigger:hover:not(:disabled) {
+  background: var(--brand-100);
+  color: var(--text-brand-secondary);
+}
+
+/* connected (clear button present) → flatten the joining corners */
+.filter-trigger--connected {
+  border-top-right-radius: var(--radius-2);
+  border-bottom-right-radius: var(--radius-2);
+}
+
+.filter-clear {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--fs-height, 40px);
+  padding: 0 var(--padding-10);
+  border: none;
+  border-radius: var(--fs-radius, 10px);
+  border-top-left-radius: var(--radius-2);
+  border-bottom-left-radius: var(--radius-2);
+  background: var(--bg-success-tertiary);
+  color: var(--text-brand-secondary);
+  cursor: pointer;
+  transition: background-color 0.12s ease;
+}
+.filter-clear:hover {
+  background: var(--brand-100);
+}
+.filter-clear:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--base-white), 0 0 0 4px var(--focus-ring-color);
+}
+
+/* ---- Pill ---- */
+.filter-select--pill .filter-trigger,
+.filter-select--pill .filter-clear {
+  border-radius: var(--radius-full);
+}
+.filter-select--pill .filter-trigger--connected {
+  border-top-right-radius: var(--radius-2);
+  border-bottom-right-radius: var(--radius-2);
+}
+.filter-select--pill .filter-clear {
+  border-top-left-radius: var(--radius-2);
+  border-bottom-left-radius: var(--radius-2);
+}
+
+/* ---- Panel ---- */
+.filter-select__panel {
+  position: absolute;
+  top: calc(100% + var(--padding-4));
+  left: 0;
+  z-index: 50;
+}
+
+/* ---- Multi-select row + footer ---- */
+.filter-select__option {
+  display: flex;
+  width: 100%;
+  padding: 1px var(--padding-4);
+  box-sizing: border-box;
+}
+.filter-select__option > .control {
+  flex: 1 1 0;
+  padding: var(--padding-8);
+  border-radius: var(--radius-10);
+  align-items: center;
+}
+.filter-select__option:hover > .control {
+  background: var(--bg-hover);
+}
+.filter-select__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--padding-8);
+  padding: var(--padding-8) var(--padding-8) var(--padding-4);
+}
+/* One row when they fit (clear-link left, apply right); when they don't,
+   the apply button wraps to a new line and stretches to full width. */
+.filter-select__footer > .btn {
+  flex: 0 1 auto;
+}
+.filter-select__footer > .btn:last-child {
+  flex: 1 1 auto;
+}

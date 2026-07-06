@@ -1,0 +1,114 @@
+/* Checkbox & Radio — Comfy UI design system.
+   Shared styles. All colors reference design tokens (src/foundations/tokens.css). */
+
+.control {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--padding-8);
+  cursor: pointer;
+  font-family: var(--font-family);
+}
+.control--disabled {
+  cursor: not-allowed;
+}
+
+.control__box {
+  position: relative;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ctrl-size, 16px);
+  height: var(--ctrl-size, 16px);
+  margin-top: var(--ctrl-offset, 0px);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  color: var(--icon-white-solid);
+  transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.control--checkbox .control__box {
+  border-radius: var(--radius-4);
+}
+.control--radio .control__box {
+  border-radius: var(--radius-full);
+}
+
+/* Visually-hidden native input (keeps keyboard + a11y) */
+.control__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: inherit;
+}
+
+/* Radio inner dot */
+.control__dot {
+  width: var(--ctrl-dot, 6px);
+  height: var(--ctrl-dot, 6px);
+  border-radius: var(--radius-full);
+  background: var(--icon-white-solid);
+}
+
+/* ---- Checked / indeterminate ---- */
+.control--checked .control__box,
+.control--indeterminate .control__box {
+  background: var(--bg-brand-primary);
+  border-color: var(--bg-brand-primary);
+}
+
+/* ---- Hover ---- */
+.control:not(.control--disabled):not(.control--checked):not(.control--indeterminate):hover .control__box {
+  border-color: var(--brand-500);
+  background: var(--brand-50);
+}
+.control--checked:not(.control--disabled):hover .control__box,
+.control--indeterminate:not(.control--disabled):hover .control__box {
+  background: var(--brand-600);
+  border-color: var(--brand-600);
+}
+
+/* ---- Focus ---- */
+.control__box:has(.control__input:focus-visible) {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--base-white), 0 0 0 4px var(--focus-ring-color);
+}
+
+/* ---- Disabled ---- */
+.control--disabled .control__box {
+  background: var(--bg-disabled-subtle);
+  border-color: var(--border-primary);
+}
+.control--disabled.control--checked .control__box,
+.control--disabled.control--indeterminate .control__box {
+  color: var(--icon-disabled-subtle);
+}
+.control--disabled .control__dot {
+  background: var(--icon-disabled-subtle);
+}
+
+/* ---- Text ---- */
+.control__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-2);
+}
+.control__label {
+  color: var(--text-primary);
+  font-size: var(--font-body-2-size, 14px);
+  line-height: var(--font-body-2-line-height, 20px);
+  font-weight: var(--font-weight-medium, 500);
+}
+.control__desc {
+  color: var(--text-secondary);
+  font-size: var(--font-body-2-size, 14px);
+  line-height: var(--font-body-2-line-height, 20px);
+  font-weight: var(--font-weight-regular, 400);
+}
+.control--disabled .control__label,
+.control--disabled .control__desc {
+  color: var(--text-disabled);
+}

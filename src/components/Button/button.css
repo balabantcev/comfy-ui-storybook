@@ -1,0 +1,237 @@
+/* Button — Comfy UI design system.
+   Colors reference the SEMANTIC token layer (src/foundations/tokens.css,
+   generated from semantic.ts → primitives). No hardcoded values here. */
+
+.btn {
+  /* color slots, set per variant/intent below */
+  --btn-bg: transparent;
+  --btn-fg: var(--text-primary);
+  --btn-border: transparent;
+  --btn-bg-hover: transparent;
+  --btn-bg-active: transparent;
+  --focus-ring-color: var(--brand-500);
+
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--btn-height, 40px);
+  gap: var(--btn-gap, 6px);
+  padding: var(--btn-padding, 0 14px);
+  border-radius: var(--btn-radius, 10px);
+  border: 1px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-family: var(--font-family);
+  font-size: var(--btn-font-size, 14px);
+  line-height: var(--btn-line-height, 20px);
+  font-weight: var(--font-weight-medium, 500);
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease,
+    box-shadow 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn__label {
+  display: inline-block;
+}
+.btn__icon {
+  flex-shrink: 0;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--btn-bg-hover);
+  border-color: var(--btn-border);
+  color: var(--btn-fg-hover, var(--btn-fg));
+}
+.btn:active:not(:disabled) {
+  background: var(--btn-bg-active);
+}
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--base-white), 0 0 0 4px var(--focus-ring-color);
+}
+.btn:disabled {
+  cursor: not-allowed;
+}
+
+/* ---------- Icon-only ---------- */
+.btn--icon-only {
+  gap: 0;
+  aspect-ratio: 1 / 1;
+  padding: 0;
+}
+
+/* ===================================================================
+   PRIMARY (filled)
+   =================================================================== */
+.btn--primary.btn--brand {
+  --btn-bg: var(--bg-brand-primary);
+  --btn-fg: var(--text-primary-onbrand);
+  --btn-bg-hover: var(--brand-600);
+  --btn-bg-active: var(--brand-700);
+  --focus-ring-color: var(--brand-500);
+}
+.btn--primary.btn--gray {
+  --btn-bg: var(--gray-900);
+  --btn-fg: var(--text-primary-onbrand);
+  --btn-bg-hover: var(--gray-800);
+  --btn-bg-active: var(--gray-700);
+  --focus-ring-color: var(--gray-400);
+}
+.btn--primary.btn--destructive {
+  --btn-bg: var(--bg-error-primary);
+  --btn-fg: var(--text-primary-onbrand);
+  --btn-bg-hover: var(--error-600);
+  --btn-bg-active: var(--error-700);
+  --focus-ring-color: var(--error-500);
+}
+
+/* Primary subtle (tinted fill, brand text) */
+.btn--primary.btn--subtle.btn--brand {
+  --btn-bg: var(--bg-brand-secondary);
+  --btn-fg: var(--text-brand-secondary);
+  --btn-bg-hover: var(--brand-100);
+  --btn-bg-active: var(--brand-200);
+}
+.btn--primary.btn--subtle.btn--gray {
+  --btn-bg: var(--bg-secondary);
+  --btn-fg: var(--text-secondary);
+  --btn-bg-hover: var(--gray-200);
+  --btn-bg-active: var(--gray-300);
+}
+.btn--primary.btn--subtle.btn--destructive {
+  --btn-bg: var(--bg-error-secondary);
+  --btn-fg: var(--text-error);
+  --btn-bg-hover: var(--error-100);
+  --btn-bg-active: var(--error-200);
+}
+
+/* ===================================================================
+   SECONDARY (outlined, white background + border)
+   =================================================================== */
+.btn--secondary {
+  --btn-bg: var(--bg-primary);
+  background: var(--btn-bg);
+}
+.btn--secondary.btn--brand {
+  --btn-fg: var(--text-brand-primary);
+  --btn-border: var(--border-brand);
+  --btn-bg-hover: var(--brand-50);
+  --btn-bg-active: var(--brand-100);
+  --focus-ring-color: var(--brand-500);
+}
+.btn--secondary.btn--gray {
+  --btn-fg: var(--text-secondary);
+  --btn-border: var(--border-alpha-primary);
+  --btn-fg-hover: var(--text-primary);
+  --btn-bg-hover: var(--gray-50);
+  --btn-bg-active: var(--gray-100);
+  --focus-ring-color: var(--gray-400);
+}
+.btn--secondary.btn--destructive {
+  --btn-fg: var(--text-error);
+  --btn-border: var(--border-error-secondary);
+  --btn-bg-hover: var(--error-50);
+  --btn-bg-active: var(--error-100);
+  --focus-ring-color: var(--error-500);
+}
+
+/* ===================================================================
+   TERTIARY (ghost — transparent, no border, tinted on hover)
+   =================================================================== */
+.btn--tertiary.btn--brand {
+  --btn-fg: var(--text-brand-primary);
+  --btn-bg-hover: var(--brand-50);
+  --btn-bg-active: var(--brand-100);
+  --focus-ring-color: var(--brand-500);
+}
+.btn--tertiary.btn--gray {
+  --btn-fg: var(--text-secondary);
+  --btn-fg-hover: var(--text-primary);
+  --btn-bg-hover: var(--gray-100);
+  --btn-bg-active: var(--gray-200);
+  --focus-ring-color: var(--gray-400);
+}
+.btn--tertiary.btn--destructive {
+  --btn-fg: var(--text-error);
+  --btn-bg-hover: var(--error-50);
+  --btn-bg-active: var(--error-100);
+  --focus-ring-color: var(--error-500);
+}
+
+/* ===================================================================
+   LINK (inline — no background box, underline on hover)
+   =================================================================== */
+.btn--link {
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+}
+.btn--link.btn--brand {
+  --btn-fg: var(--text-brand-primary);
+  --btn-fg-hover: var(--brand-600);
+}
+.btn--link.btn--gray {
+  --btn-fg: var(--text-secondary);
+  --btn-fg-hover: var(--text-primary);
+}
+.btn--link.btn--destructive {
+  --btn-fg: var(--text-error);
+  --btn-fg-hover: var(--error-600);
+}
+.btn--link:hover:not(:disabled) {
+  background: transparent;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.btn--link:focus-visible {
+  border-radius: 4px;
+  box-shadow: 0 0 0 2px var(--base-white), 0 0 0 4px var(--focus-ring-color);
+}
+
+/* ===================================================================
+   DISABLED
+   =================================================================== */
+.btn--primary:disabled {
+  --btn-bg: var(--bg-secondary);
+  --btn-fg: var(--gray-400);
+  --btn-border: transparent;
+}
+.btn--secondary:disabled {
+  --btn-bg: var(--bg-primary);
+  --btn-fg: var(--gray-400);
+  --btn-border: var(--border-secondary);
+}
+.btn--tertiary:disabled,
+.btn--link:disabled {
+  --btn-fg: var(--text-disabled);
+}
+.btn:disabled {
+  box-shadow: none;
+}
+
+/* ===================================================================
+   LOADING spinner
+   =================================================================== */
+.btn--loading {
+  cursor: progress;
+}
+.btn__spinner {
+  width: var(--btn-icon-size, 18px);
+  height: var(--btn-icon-size, 18px);
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  opacity: 0.9;
+  animation: btn-spin 0.6s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

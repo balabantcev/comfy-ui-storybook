@@ -1,0 +1,147 @@
+/* Input — Comfy UI design system.
+   Floating-label text field. All values reference design tokens. */
+
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-4);
+  width: 100%;
+  font-family: var(--font-family);
+}
+
+.input__box {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--padding-8);
+  height: var(--input-height, 56px);
+  padding: 0 var(--padding-12);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-10);
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+.input__icon {
+  flex-shrink: 0;
+  color: var(--icon-secondary);
+}
+.input__prefix {
+  flex-shrink: 0;
+  /* match the input's text box (centred within height − padding-top) so the
+     prefix sits on the same line as the value, below the floated label */
+  align-self: stretch;
+  display: inline-flex;
+  align-items: center;
+  padding-top: var(--field-pt, 0);
+  color: var(--text-primary);
+  font-size: var(--font-body-1-size, 16px);
+  line-height: var(--font-body-1-line-height, 22px);
+}
+
+.input__control {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+}
+
+.input__field {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border: none;
+  outline: none;
+  background: none;
+  font-family: inherit;
+  font-size: var(--font-body-1-size, 16px);
+  line-height: var(--font-body-1-line-height, 22px);
+  color: var(--text-primary);
+  padding: var(--field-pt, 0) 0 0 0;
+}
+.input__field::placeholder {
+  color: var(--text-tertiary);
+}
+/* with a floating label, hide the native placeholder until floated */
+.input--has-label .input__field::placeholder {
+  color: transparent;
+}
+
+.input__label {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  transform-origin: left center;
+  color: var(--text-tertiary);
+  font-size: var(--font-body-1-size, 16px);
+  line-height: var(--font-body-1-line-height, 22px);
+  pointer-events: none;
+  white-space: nowrap;
+  transition: transform 0.12s ease, color 0.12s ease;
+}
+.input__req {
+  color: var(--text-error-primary);
+}
+.input--float .input__label {
+  transform: translateY(calc(-50% - var(--label-float-up, 16px))) scale(0.75);
+}
+
+.input__clear,
+.input__help {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+}
+.input__clear {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--icon-tertiary);
+  cursor: pointer;
+}
+.input__help {
+  color: var(--icon-tertiary);
+}
+
+.input__helper {
+  margin: 0;
+  padding: 0 var(--padding-12);
+  color: var(--text-tertiary);
+  font-size: var(--font-caption-1-size, 12px);
+  line-height: var(--font-caption-1-line-height, 16px);
+}
+
+/* ---- States ---- */
+.input:not(.input--disabled):not(.input--focused):not(.input--error) .input__box:hover {
+  border-color: var(--gray-400);
+}
+.input--focused .input__box {
+  border-color: var(--border-brand);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand-500) 24%, transparent);
+}
+.input--error .input__box {
+  border-color: var(--border-error-secondary);
+}
+.input--error.input--focused .input__box {
+  border-color: var(--error-500);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--error-500) 24%, transparent);
+}
+.input--error .input__helper {
+  color: var(--text-error-primary);
+}
+.input--disabled .input__box {
+  background: var(--bg-disabled-subtle);
+  border-color: var(--border-primary);
+}
+.input--disabled .input__field,
+.input--disabled .input__label,
+.input--disabled .input__prefix {
+  color: var(--text-disabled);
+}
+.input--disabled .input__field {
+  cursor: not-allowed;
+}

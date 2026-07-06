@@ -1,0 +1,8 @@
+allowBuilds:
+  esbuild: true
+  playwright: true
+  playwright-core: true
+  '@vitest/coverage-v8': true
+minimumReleaseAgeExclude:
+  - playwright-core@1.61.1
+  - playwright@1.61.1

@@ -1,0 +1,108 @@
+/* Pagination — Comfy UI design system. Tokens only. */
+
+.pagination-wrap {
+  container-type: inline-size;
+  width: 100%;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--padding-12);
+  width: 100%;
+  padding-top: var(--padding-16);
+  border-top: 1px solid var(--border-secondary);
+  font-family: var(--font-family);
+}
+
+/* prev / next */
+.pagination__nav {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+.pagination__nav--next {
+  justify-content: flex-end;
+}
+.pagination__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--padding-4);
+  padding: 0 var(--padding-2);
+  border: none;
+  background: none;
+  color: var(--text-secondary);
+  font-size: var(--font-body-2-size, 14px);
+  line-height: var(--font-body-2-line-height, 20px);
+  font-weight: var(--font-weight-medium, 500);
+  cursor: pointer;
+}
+.pagination__btn:hover:not(:disabled) {
+  color: var(--text-primary);
+}
+.pagination__btn:disabled {
+  color: var(--text-disabled);
+  cursor: not-allowed;
+}
+.pagination__btn-icon {
+  flex-shrink: 0;
+  color: inherit;
+}
+
+/* numbers */
+.pagination__numbers {
+  display: flex;
+  gap: var(--padding-2);
+}
+.pagination__num {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--pg-size, 40px);
+  height: var(--pg-size, 40px);
+  padding: var(--padding-8);
+  border: none;
+  background: none;
+  border-radius: var(--pg-radius, 8px);
+  color: var(--text-secondary);
+  font-size: var(--font-body-2-size, 14px);
+  line-height: var(--font-body-2-line-height, 20px);
+  font-weight: var(--font-weight-medium, 500);
+  cursor: pointer;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+.pagination__num:hover:not(.pagination__num--active) {
+  background: var(--bg-active);
+  color: var(--text-primary);
+}
+.pagination__num--active {
+  background: var(--bg-active);
+  color: var(--text-primary);
+}
+.pagination__num:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--base-white), 0 0 0 4px var(--focus-ring-color);
+}
+.pagination__ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--pg-size, 40px);
+  height: var(--pg-size, 40px);
+  color: var(--text-secondary);
+  font-size: var(--font-body-2-size, 14px);
+  line-height: var(--font-body-2-line-height, 20px);
+  font-weight: var(--font-weight-medium, 500);
+  user-select: none;
+}
+
+/* ---- Mobile breakpoint (Figma: Breakpoint=Mobile) ----
+   In narrow containers the prev/next labels are hidden — arrows only. */
+@container (max-width: 520px) {
+  .pagination__btn span {
+    display: none;
+  }
+}

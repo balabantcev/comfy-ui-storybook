@@ -1,0 +1,101 @@
+/* Toggle (switch) — Comfy UI design system. Tokens only. */
+
+.toggle {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--padding-12);
+  cursor: pointer;
+  font-family: var(--font-family);
+}
+.toggle--disabled {
+  cursor: not-allowed;
+}
+
+/* ---- Track ---- */
+.toggle__track {
+  position: relative;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: var(--tg-track-w, 36px);
+  height: var(--tg-track-h, 20px);
+  margin-top: var(--tg-offset, 0px);
+  padding: var(--padding-2);
+  border-radius: var(--radius-full);
+  background: var(--bg-tertiary);
+  transition: background-color 0.15s ease;
+}
+
+/* Visually-hidden native input (keyboard + a11y) */
+.toggle__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: inherit;
+}
+
+/* ---- Knob ---- */
+.toggle__knob {
+  display: block;
+  width: var(--tg-knob, 16px);
+  height: var(--tg-knob, 16px);
+  border-radius: var(--radius-full);
+  background: var(--bg-white-solid);
+  box-shadow: var(--elevation-100);
+  transition: transform 0.15s ease;
+  pointer-events: none;
+}
+
+/* ---- States ---- */
+.toggle:not(.toggle--disabled):hover .toggle__track {
+  background: var(--gray-300);
+}
+
+.toggle--on .toggle__track {
+  background: var(--bg-brand-primary);
+}
+.toggle--on:not(.toggle--disabled):hover .toggle__track {
+  background: var(--brand-600);
+}
+.toggle--on .toggle__knob {
+  transform: translateX(var(--tg-travel, 16px));
+}
+
+.toggle__track:has(.toggle__input:focus-visible) {
+  box-shadow: 0 0 0 2px var(--base-white), 0 0 0 4px var(--focus-ring-color);
+}
+
+.toggle--disabled .toggle__track {
+  background: var(--gray-100);
+}
+.toggle--disabled.toggle--on .toggle__track {
+  background: var(--brand-200);
+}
+.toggle--disabled .toggle__knob {
+  box-shadow: none;
+}
+
+/* ---- Text ---- */
+.toggle__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-2);
+}
+.toggle__label {
+  color: var(--text-primary);
+  font-size: var(--tg-font-size, 14px);
+  line-height: var(--tg-line-height, 20px);
+  font-weight: var(--font-weight-medium, 500);
+}
+.toggle__desc {
+  color: var(--text-secondary);
+  font-size: var(--tg-font-size, 14px);
+  line-height: var(--tg-line-height, 20px);
+  font-weight: var(--font-weight-regular, 400);
+}
+.toggle--disabled .toggle__label,
+.toggle--disabled .toggle__desc {
+  color: var(--text-disabled);
+}

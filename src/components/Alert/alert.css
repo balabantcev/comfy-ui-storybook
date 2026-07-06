@@ -1,0 +1,143 @@
+/* Alert — Comfy UI design system.
+   All colors reference design tokens (src/foundations/tokens.css). */
+
+.alert {
+  /* color slots, set per variant below */
+  --alert-bg: var(--bg-primary);
+  --alert-border: var(--border-primary);
+  --alert-icon: var(--icon-secondary);
+  --alert-title: var(--text-primary);
+  --alert-desc: var(--text-secondary);
+  --alert-accent: var(--text-brand-primary);
+
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--padding-12);
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--padding-10) var(--padding-12);
+  background: var(--alert-bg);
+  border: 1px solid var(--alert-border);
+  border-radius: var(--radius-10);
+  font-family: var(--font-family);
+  font-size: var(--font-body-2-size, 14px);
+  line-height: var(--font-body-2-line-height, 20px);
+}
+.alert--closable {
+  padding-right: var(--padding-40);
+}
+
+.alert__icon {
+  flex-shrink: 0;
+  color: var(--alert-icon);
+  margin-top: 1px;
+}
+
+.alert__body {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: var(--padding-12);
+  min-width: 0;
+}
+
+.alert__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-4);
+}
+.alert__title {
+  margin: 0;
+  color: var(--alert-title);
+  font-weight: var(--font-weight-medium, 500);
+}
+.alert__desc {
+  margin: 0;
+  color: var(--alert-desc);
+  font-weight: var(--font-weight-regular, 400);
+}
+.alert__desc :where(a) {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.alert__actions {
+  display: flex;
+  gap: var(--padding-16);
+}
+.alert__action {
+  appearance: none;
+  border: none;
+  background: none;
+  padding: 0 var(--padding-2);
+  font: inherit;
+  font-weight: var(--font-weight-medium, 500);
+  cursor: pointer;
+  border-radius: var(--radius-4);
+}
+.alert__action--dismiss {
+  color: var(--text-secondary);
+}
+.alert__action--main {
+  color: var(--alert-accent);
+}
+.alert__action:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.alert__action:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 24%, transparent);
+}
+
+.alert__close {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--padding-10);
+  border: none;
+  background: none;
+  color: var(--alert-icon);
+  cursor: pointer;
+  border-radius: var(--radius-10);
+}
+.alert__close:hover {
+  opacity: 0.7;
+}
+.alert__close:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--alert-accent) 24%, transparent);
+}
+
+/* ===================================================================
+   Variants
+   =================================================================== */
+.alert--success {
+  --alert-bg: var(--brand-50);
+  --alert-border: var(--brand-300);
+  --alert-icon: var(--brand-700);
+  --alert-title: var(--brand-900);
+  --alert-desc: var(--brand-900);
+  --alert-accent: var(--brand-500);
+}
+.alert--warning {
+  --alert-bg: var(--warning-50);
+  --alert-border: var(--warning-400);
+  --alert-icon: var(--warning-700);
+  --alert-title: var(--warning-900);
+  --alert-desc: var(--warning-900);
+  --alert-accent: var(--warning-800);
+}
+.alert--error {
+  --alert-bg: var(--error-50);
+  --alert-border: var(--error-300);
+  --alert-icon: var(--error-700);
+  --alert-title: var(--error-900);
+  --alert-desc: var(--error-900);
+  --alert-accent: var(--error-500);
+}

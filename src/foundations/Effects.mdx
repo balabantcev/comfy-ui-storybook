@@ -1,0 +1,121 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import { elevations, blurs, blurSurfaces } from './effects'
+
+<Meta title="Foundations/Effects" />
+
+# Effects
+
+Shadow and blur effect styles, synced from the Figma design system
+([Foundations / Effect styles](https://www.figma.com/design/60wkPriIjI9zjyAKOq3dja/?node-id=1030-33573)).
+
+## Elevations
+
+Drop-shadow styles for the light theme, from subtle (`E50`) to prominent (`E500`).
+Shadow colors reference the `alpha-black` scale.
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: 56, padding: '32px 8px' }}>
+  {elevations.map((e) => (
+    <div key={e.name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+      <div
+        style={{
+          width: 128,
+          height: 128,
+          borderRadius: 12,
+          background: '#ffffff',
+          boxShadow: e.boxShadow,
+        }}
+      />
+      <div style={{ textAlign: 'center' }}>
+        <div style={{ fontWeight: 600, fontSize: 14 }}>{e.name}</div>
+        <div style={{ fontSize: 12, color: '#737373' }}>{e.token}</div>
+      </div>
+    </div>
+  ))}
+</div>
+
+<details>
+  <summary>CSS values</summary>
+
+  {elevations.map((e) => (
+    <pre key={e.name} style={{ whiteSpace: 'pre-wrap', fontSize: 12 }}>
+      <strong>{e.name}</strong>{`\n`}box-shadow: {e.boxShadow};
+    </pre>
+  ))}
+</details>
+
+## Blur
+
+Background-blur styles (`backdrop-filter`) used for frosted-glass surfaces. Figma
+stores the blur radius at 2× the CSS value, so `B100` (radius 8) renders as
+`blur(4px)` on the web. Each style also carries a subtle noise overlay in Figma.
+
+Each swatch below shows a white-tinted (`bg-blur-white`) and a dark-tinted
+(`bg-blur-dark`) glass surface over a colorful background.
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, padding: '32px 8px' }}>
+  {blurs.map((b) => (
+    <div key={b.name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+      <div
+        style={{
+          position: 'relative',
+          width: 200,
+          height: 160,
+          borderRadius: 16,
+          overflow: 'hidden',
+          background:
+            'repeating-linear-gradient(45deg, #2abd13 0 24px, #fc5e0f 24px 48px, #3699f4 48px 72px, #8b5cf6 72px 96px)',
+        }}
+      >
+        <div style={{ position: 'absolute', inset: 0, display: 'flex' }}>
+          <div
+            style={{
+              flex: 1,
+              backdropFilter: b.backdropFilter,
+              WebkitBackdropFilter: b.backdropFilter,
+              background: blurSurfaces['bg-blur-white'],
+            }}
+          />
+          <div
+            style={{
+              flex: 1,
+              backdropFilter: b.backdropFilter,
+              WebkitBackdropFilter: b.backdropFilter,
+              background: blurSurfaces['bg-blur-dark'],
+            }}
+          />
+        </div>
+      </div>
+      <div style={{ textAlign: 'center' }}>
+        <div style={{ fontWeight: 600, fontSize: 14 }}>{b.name}</div>
+        <div style={{ fontSize: 12, color: '#737373' }}>{b.token} · {b.backdropFilter}</div>
+      </div>
+    </div>
+  ))}
+</div>
+
+## Blur surfaces
+
+Tinted backgrounds paired with the blur styles above.
+
+<div style={{ display: 'flex', gap: 24, padding: '16px 8px' }}>
+  {Object.entries(blurSurfaces).map(([name, value]) => (
+    <div key={name} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+      <div
+        style={{
+          width: 48,
+          height: 48,
+          borderRadius: 8,
+          border: '1px solid #e5e5e5',
+          background:
+            'linear-gradient(135deg, #e5e5e5 25%, transparent 25%, transparent 75%, #e5e5e5 75%) 0 0 / 16px 16px, #fff',
+        }}
+      >
+        <div style={{ width: '100%', height: '100%', borderRadius: 8, background: value }} />
+      </div>
+      <div style={{ fontSize: 13 }}>
+        <div style={{ fontWeight: 600 }}>{name}</div>
+        <div style={{ color: '#737373' }}>{value}</div>
+      </div>
+    </div>
+  ))}
+</div>

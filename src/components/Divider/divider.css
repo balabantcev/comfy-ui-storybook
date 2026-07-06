@@ -1,0 +1,57 @@
+/* Divider — Comfy UI design system.
+   A line with optional centered content. Tokens only. */
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--padding-8);
+  width: 100%;
+  color: var(--text-primary);
+  font-family: var(--font-family);
+}
+
+.divider__line {
+  flex: 1 1 0;
+  min-width: 1px;
+  height: 1px;
+  background: var(--border-alpha-secondary);
+}
+
+.divider__content {
+  flex-shrink: 0;
+}
+
+/* ---- Text styles for the centered label ---- */
+.divider--label .divider__content {
+  color: var(--text-primary);
+  font-size: var(--font-label-3-size, 18px);
+  line-height: var(--font-label-3-line-height, 24px);
+  font-weight: var(--font-weight-bold, 700);
+}
+.divider--body .divider__content {
+  color: var(--text-secondary);
+  font-size: var(--font-body-2-size, 14px);
+  line-height: var(--font-body-2-line-height, 20px);
+  font-weight: var(--font-weight-medium, 500);
+}
+.divider--caption .divider__content {
+  color: var(--text-secondary);
+  font-size: var(--font-caption-1-size, 12px);
+  line-height: var(--font-caption-1-line-height, 16px);
+  font-weight: var(--font-weight-medium, 500);
+}
+
+/* ---- Vertical ---- */
+.divider--vertical {
+  display: inline-flex;
+  flex-direction: column;
+  width: auto;
+  height: auto;
+  align-self: stretch;
+  min-height: 1em;
+}
+.divider--vertical .divider__line {
+  width: 1px;
+  height: auto;
+  min-height: 1px;
+}

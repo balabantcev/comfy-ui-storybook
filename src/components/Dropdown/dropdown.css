@@ -1,0 +1,116 @@
+/* Dropdown — Comfy UI design system.
+   Menu panel + items. All values reference design tokens. */
+
+.dropdown-menu {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: var(--dropdown-width, 240px);
+  max-width: 100%;
+  padding: var(--padding-4) 0;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-alpha-tertiary);
+  border-radius: var(--radius-10);
+  box-shadow: var(--elevation-300);
+  font-family: var(--font-family);
+}
+
+/* ---- Item ---- */
+.dropdown-item {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  padding: 1px var(--padding-4);
+  border: none;
+  background: none;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.dropdown-item__box {
+  display: flex;
+  flex: 1 1 0;
+  align-items: center;
+  gap: var(--padding-2);
+  min-width: 0;
+  padding: var(--di-pad, 8px);
+  border-radius: var(--radius-10);
+  transition: background-color 0.12s ease;
+}
+
+.dropdown-item__content {
+  display: flex;
+  flex: 1 1 0;
+  align-items: center;
+  gap: var(--padding-8);
+  min-width: 0;
+}
+
+.dropdown-item__icon {
+  flex-shrink: 0;
+  color: var(--icon-primary);
+}
+
+.dropdown-item__label {
+  flex: 1 1 0;
+  min-width: 0;
+  color: var(--text-primary);
+  font-size: var(--di-font-size, 16px);
+  line-height: var(--di-line-height, 22px);
+  font-weight: var(--font-weight-regular, 400);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dropdown-item__shortcut {
+  flex-shrink: 0;
+  color: var(--text-tertiary);
+  font-size: var(--font-caption-1-size, 12px);
+  line-height: var(--font-caption-1-line-height, 16px);
+}
+
+.dropdown-item__chevron {
+  flex-shrink: 0;
+  color: var(--icon-tertiary);
+}
+
+.dropdown-item:hover:not(:disabled) .dropdown-item__box,
+.dropdown-item--active .dropdown-item__box {
+  background: var(--bg-hover);
+}
+
+.dropdown-item:focus-visible {
+  outline: none;
+}
+.dropdown-item:focus-visible .dropdown-item__box {
+  box-shadow: 0 0 0 2px var(--base-white), 0 0 0 4px var(--focus-ring-color);
+}
+
+.dropdown-item:disabled {
+  cursor: not-allowed;
+}
+.dropdown-item:disabled .dropdown-item__label {
+  color: var(--text-disabled);
+}
+.dropdown-item:disabled .dropdown-item__icon,
+.dropdown-item:disabled .dropdown-item__chevron {
+  color: var(--icon-disabled);
+}
+
+/* ---- Interactive wrapper ---- */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown__panel {
+  position: absolute;
+  top: calc(100% + var(--padding-4));
+  left: 0;
+  z-index: 50;
+}
+.dropdown__panel--right {
+  left: auto;
+  right: 0;
+}
