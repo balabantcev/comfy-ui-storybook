@@ -3,6 +3,16 @@
 This repo mirrors the **"❖ Comfy UI"** Figma design system (fileKey `60wkPriIjI9zjyAKOq3dja`)
 as a Vue 3 + Vite + Storybook 10 component library.
 
+## Shared context vault
+
+Durable project knowledge, rules and preferences live in [`/context`](./context/README.md) —
+a plain-markdown vault that is **shared across every AI tool** (Claude Code here,
+Codex via `AGENTS.md`, Cursor via `.cursor/rules/`) and opens as an **Obsidian
+vault** (graph of `[[wiki-links]]`). Read `context/README.md` before non-trivial work.
+When you learn a new durable fact/rule/preference, add a note to `/context` (frontmatter
++ `[[links]]`) and index it in `context/README.md` — don't keep it only in one tool's
+private memory, or the other tools lose it.
+
 ## Core rule: everything is token-driven (no exceptions)
 
 Every color, spacing, radius and typographic value in any foundation or component

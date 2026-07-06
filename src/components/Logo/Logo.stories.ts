@@ -15,7 +15,7 @@ const meta = {
   render: (args) => ({
     components: { Logo },
     setup: () => ({ args }),
-    template: `<div :style="{ padding: '16px', background: args.variant === 'white' ? '#0a0a0a' : 'transparent', display:'inline-block', borderRadius:'12px' }"><Logo v-bind="args" /></div>`,
+    template: `<div :style="{ padding: '16px', background: args.variant === 'white' ? 'var(--bg-invers)' : 'transparent', display:'inline-block', borderRadius:'12px' }"><Logo v-bind="args" /></div>`,
   }),
 } satisfies Meta<typeof Logo>
 

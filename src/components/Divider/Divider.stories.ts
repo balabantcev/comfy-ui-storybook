@@ -83,7 +83,7 @@ export const Vertical: Story = {
   render: () => ({
     components: { Divider },
     template: `
-      <div style="display:flex;align-items:center;gap:12px;height:24px;font:14px sans-serif;color:#0a0a0a">
+      <div style="display:flex;align-items:center;gap:12px;height:24px;font-size:14px;color:var(--text-primary)">
         <span>Один</span>
         <Divider vertical />
         <span>Два</span>

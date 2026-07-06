@@ -1,7 +1,7 @@
 {
   "name": "designcomfystorybook",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Comfy UI — Storybook design system (Vue 3 + Vite), synced from Figma and driven by design tokens.",
   "type": "module",
   "scripts": {
@@ -10,7 +10,10 @@
     "storybook": "storybook dev -p 6006",
     "prebuild-storybook": "pnpm gen:tokens",
     "build-storybook": "storybook build",
-    "typecheck": "vue-tsc -b"
+    "typecheck": "vue-tsc -b",
+    "test": "vitest --run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest --run --coverage"
   },
   "dependencies": {
     "vue": "^3.5.34"

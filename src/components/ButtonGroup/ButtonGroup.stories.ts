@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { fn } from 'storybook/test'
+import { fn, expect, userEvent, within } from 'storybook/test'
 
 import ButtonGroup from './ButtonGroup.vue'
 import ButtonGroupItem from './ButtonGroupItem.vue'
@@ -33,6 +33,13 @@ export const Playground: Story = {
       </ButtonGroup>
     `,
   }),
+  // Interaction test: clicking a segment fires its handler.
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const items = canvas.getAllByRole('button')
+    await expect(items).toHaveLength(4)
+    await userEvent.click(items[0])
+  },
 }
 
 /** Text, icon + text, and icon-only compositions. */
@@ -41,7 +48,7 @@ export const Compositions: Story = {
   render: () => ({
     components: { ButtonGroup, ButtonGroupItem },
     template: `
-      <div style="display:flex;flex-direction:column;gap:24px;align-items:flex-start">
+      <div class="sb-stack" style="gap:24px">
         <ButtonGroup :size="40">
           <ButtonGroupItem>Текст</ButtonGroupItem>
           <ButtonGroupItem>Текст</ButtonGroupItem>
@@ -71,14 +78,14 @@ export const Sizes: Story = {
     components: { ButtonGroup, ButtonGroupItem },
     setup: () => ({ sizes: SIZES }),
     template: `
-      <div style="display:flex;flex-direction:column;gap:16px;align-items:flex-start">
-        <div v-for="s in sizes" :key="s" style="display:flex;align-items:center;gap:12px">
+      <div class="sb-stack">
+        <div v-for="s in sizes" :key="s" class="sb-row" style="gap:12px">
           <ButtonGroup :size="s">
             <ButtonGroupItem>Один</ButtonGroupItem>
             <ButtonGroupItem>Два</ButtonGroupItem>
             <ButtonGroupItem>Три</ButtonGroupItem>
           </ButtonGroup>
-          <span style="font:12px sans-serif;color:#737373">{{ s }}px</span>
+          <span class="sb-caption">{{ s }}px</span>
         </div>
       </div>
     `,

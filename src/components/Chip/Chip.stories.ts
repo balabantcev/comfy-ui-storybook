@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { fn } from 'storybook/test'
+import { fn, expect, userEvent, within } from 'storybook/test'
 
 import Chip from './Chip.vue'
 import { CHIP_TYPES, CHIP_SIZE_VALUES } from './chip.tokens'
 import { iconNames } from '../../icons'
+import { Specimen } from '../../storybook'
 
 const meta = {
   title: 'Components/Chip',
@@ -32,7 +33,15 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Playground: Story = { args: { label: 'Кнопка', iconLeft: 'star', iconRight: 'chevron-down', count: 4 } as any }
+export const Playground: Story = {
+  args: { label: 'Кнопка', iconLeft: 'star', iconRight: 'chevron-down', count: 4 } as any,
+  // Interaction test: clicking fires onClick.
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByRole('button'))
+    await expect(args.onClick).toHaveBeenCalled()
+  },
+}
 
 export const Types: Story = {
   parameters: { controls: { disable: true } },
@@ -40,7 +49,7 @@ export const Types: Story = {
     components: { Chip },
     setup: () => ({ types: CHIP_TYPES }),
     template: `
-      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+      <div class="sb-row" style="gap:12px">
         <Chip v-for="t in types" :key="t" :type="t">{{ t }}</Chip>
       </div>
     `,
@@ -50,14 +59,13 @@ export const Types: Story = {
 export const Sizes: Story = {
   parameters: { controls: { disable: true } },
   render: () => ({
-    components: { Chip },
+    components: { Chip, Specimen },
     setup: () => ({ sizes: CHIP_SIZE_VALUES }),
     template: `
-      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
-        <div v-for="s in sizes" :key="s" style="display:flex;flex-direction:column;align-items:center;gap:8px">
+      <div class="sb-row" style="gap:12px">
+        <Specimen v-for="s in sizes" :key="s" :caption="s + 'px'">
           <Chip :size="s" iconLeft="star">Кнопка</Chip>
-          <span style="font:12px sans-serif;color:#737373">{{ s }}px</span>
-        </div>
+        </Specimen>
       </div>
     `,
   }),
@@ -68,7 +76,7 @@ export const Compositions: Story = {
   render: () => ({
     components: { Chip },
     template: `
-      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+      <div class="sb-row" style="gap:12px">
         <Chip type="grey">Текст</Chip>
         <Chip type="grey" iconLeft="star">З зіркою</Chip>
         <Chip type="grey" :count="4">З лічильником</Chip>

@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { fn } from 'storybook/test'
+import { fn, expect, userEvent, within } from 'storybook/test'
 
 import Button from './Button.vue'
 import { BUTTON_SIZE_VALUES, BUTTON_VARIANTS, BUTTON_INTENTS } from './button.tokens'
 import { iconNames } from '../../icons'
+import { Matrix, Specimen } from '../../storybook'
 
 const meta = {
   title: 'Components/Button',
@@ -40,37 +41,37 @@ type Story = StoryObj<typeof meta>
 
 export const Playground: Story = {
   args: { label: 'Button' } as any,
+  // Interaction test: clicking fires onClick.
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement)
+    const button = canvas.getByRole('button', { name: 'Button' })
+    await userEvent.click(button)
+    await expect(args.onClick).toHaveBeenCalled()
+  },
+}
+
+// Disabled button must not fire onClick.
+export const DisabledDoesNotClick: Story = {
+  args: { label: 'Button', disabled: true } as any,
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement)
+    const button = canvas.getByRole('button', { name: 'Button' })
+    await userEvent.click(button)
+    await expect(args.onClick).not.toHaveBeenCalled()
+  },
 }
 
 // --- Variants × intents matrix ---
 export const Variants: Story = {
   parameters: { controls: { disable: true } },
   render: () => ({
-    components: { Button },
-    setup: () => ({ variants: BUTTON_VARIANTS, intents: BUTTON_INTENTS }),
+    components: { Button, Matrix },
+    setup: () => ({ variants: [...BUTTON_VARIANTS, 'Primary subtle'], intents: BUTTON_INTENTS }),
     template: `
-      <table style="border-collapse:collapse">
-        <thead>
-          <tr>
-            <th></th>
-            <th v-for="i in intents" :key="i" style="padding:12px;text-transform:capitalize;text-align:left;font:500 13px sans-serif;color:#737373">{{ i }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="v in variants" :key="v">
-            <td style="padding:12px;text-transform:capitalize;font:500 13px sans-serif;color:#737373">{{ v }}</td>
-            <td v-for="i in intents" :key="i" style="padding:12px">
-              <Button :variant="v" :intent="i">Button</Button>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:12px;font:500 13px sans-serif;color:#737373">Primary subtle</td>
-            <td v-for="i in intents" :key="i" style="padding:12px">
-              <Button variant="primary" subtle :intent="i">Button</Button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <Matrix :rows="variants" :cols="intents" v-slot="{ row, col }">
+        <Button v-if="row === 'Primary subtle'" variant="primary" subtle :intent="col">Button</Button>
+        <Button v-else :variant="row" :intent="col">Button</Button>
+      </Matrix>
     `,
   }),
 }
@@ -79,14 +80,13 @@ export const Variants: Story = {
 export const Sizes: Story = {
   parameters: { controls: { disable: true } },
   render: () => ({
-    components: { Button },
+    components: { Button, Specimen },
     setup: () => ({ sizes: BUTTON_SIZE_VALUES.filter((s) => s >= 32) }),
     template: `
-      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
-        <div v-for="s in sizes" :key="s" style="display:flex;flex-direction:column;align-items:center;gap:8px">
+      <div class="sb-row">
+        <Specimen v-for="s in sizes" :key="s" :caption="s + 'px'">
           <Button :size="s" iconLeft="plus">Button</Button>
-          <span style="font:12px sans-serif;color:#737373">{{ s }}px</span>
-        </div>
+        </Specimen>
       </div>
     `,
   }),
@@ -98,7 +98,7 @@ export const States: Story = {
   render: () => ({
     components: { Button },
     template: `
-      <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center">
+      <div class="sb-row">
         <Button>Default</Button>
         <Button loading>Loading</Button>
         <Button disabled>Disabled</Button>
@@ -116,11 +116,11 @@ export const IconOnly: Story = {
     components: { Button },
     setup: () => ({ sizes: BUTTON_SIZE_VALUES.filter((s) => s >= 32) }),
     template: `
-      <div style="display:flex;flex-direction:column;gap:16px">
-        <div style="display:flex;gap:12px;align-items:center">
+      <div class="sb-stack">
+        <div class="sb-row">
           <Button v-for="s in sizes" :key="s" :size="s" icon="plus" />
         </div>
-        <div style="display:flex;gap:12px;align-items:center">
+        <div class="sb-row">
           <Button v-for="s in sizes" :key="s" :size="s" icon="heart" pill intent="brand" />
         </div>
       </div>
