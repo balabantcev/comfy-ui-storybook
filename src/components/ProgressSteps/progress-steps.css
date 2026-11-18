@@ -1,0 +1,291 @@
+/* Progress steps — Comfy UI design system. Tokens only.
+   Figma: Progress steps (-Step icon base 15766:3872, -Step base 15766:3897, sets 15766:4297 / 4388 /
+   4211 / 4138). */
+
+/* ===================================================================
+   -Step icon base
+   =================================================================== */
+.step-icon {
+  --si-size: 24px;
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--si-size);
+  height: var(--si-size);
+  border-radius: var(--radius-full);
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-bold, 700);
+  font-size: var(--font-caption-1-size);
+  line-height: var(--font-caption-1-line-height);
+}
+.step-icon--32 {
+  --si-size: 32px;
+  font-size: var(--font-body-2-size);
+  line-height: var(--font-body-2-line-height);
+}
+.step-icon__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+}
+.step-icon--32 .step-icon__dot {
+  width: 10px;
+  height: 10px;
+}
+.step-icon__check {
+  width: 12px;
+  height: 12px;
+  stroke-width: 2;
+}
+.step-icon--32 .step-icon__check {
+  width: 16px;
+  height: 16px;
+  stroke-width: 1.875; /* Figma 2.5px at the 16px frame, in the 12-unit viewBox */
+}
+
+/* Check */
+.step-icon--check.step-icon--incomplete {
+  background: var(--bg-primary);
+  border: 1.5px solid var(--border-primary);
+}
+.step-icon--check.step-icon--incomplete.step-icon--32 {
+  border-width: 2px;
+}
+.step-icon--check.step-icon--incomplete .step-icon__dot {
+  background: var(--utility-gray-400);
+}
+.step-icon--check.step-icon--current {
+  background: var(--bg-brand-primary);
+  /* Figma: 2px outside stroke (surface color) + Focus ring/focus-ring-success */
+  box-shadow: 0 0 0 2px var(--border-gap), 0 0 0 4px var(--utility-brand-500);
+}
+.step-icon--check.step-icon--current .step-icon__dot {
+  background: var(--bg-primary);
+}
+/* Number */
+.step-icon--number.step-icon--incomplete {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-disabled);
+  color: var(--text-tertiary);
+}
+.step-icon--number.step-icon--current {
+  background: var(--bg-primary-alt);
+  border: 1px solid var(--border-primary);
+  color: var(--text-secondary);
+}
+/* Complete (both types) */
+.step-icon--complete {
+  background: var(--bg-brand-primary);
+  color: var(--icon-white-solid);
+}
+
+/* ===================================================================
+   Steps (-Step base)
+   =================================================================== */
+.ps {
+  --ps-title: var(--text-primary);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-family);
+  font-size: var(--ps-font-size);
+  line-height: var(--ps-line-height);
+}
+.ps-step {
+  --ps-title: var(--text-tertiary);
+  --ps-desc: var(--text-tertiary);
+  --ps-connector: var(--border-primary);
+  position: relative;
+  min-width: 0;
+}
+.ps-step--complete {
+  --ps-title: var(--text-primary);
+  --ps-desc: var(--text-secondary);
+  --ps-connector: var(--border-brand);
+}
+.ps-step--current {
+  --ps-title: var(--text-brand-secondary);
+  --ps-desc: var(--text-brand-secondary);
+}
+.ps--number .ps-step--current {
+  --ps-title: var(--text-secondary);
+  --ps-desc: var(--text-secondary);
+}
+.ps--featured .ps-step--current {
+  --ps-title: var(--text-primary);
+  --ps-desc: var(--text-secondary);
+}
+.ps-step__content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.ps-step__title {
+  color: var(--ps-title);
+  font-weight: var(--font-weight-bold, 700);
+}
+.ps-step__desc {
+  color: var(--ps-desc);
+  font-weight: var(--font-weight-regular, 400);
+}
+.ps-step__marker {
+  position: relative;
+  z-index: 1;
+}
+.ps__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---- Horizontal (Figma Breakpoint=Desktop: Icon / Number / Featured icon top) ---- */
+.ps--default.ps--horizontal {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  gap: var(--padding-16);
+}
+.ps--horizontal .ps-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ps-gap);
+  text-align: center;
+}
+.ps--horizontal .ps-step__rail {
+  display: flex;
+}
+/* "Lines": from this step's icon centre to the next one's, behind the icons */
+.ps--horizontal .ps-step__connector {
+  position: absolute;
+  top: calc(var(--ps-icon) / 2 - 1px);
+  left: 50%;
+  width: calc(100% + var(--padding-16));
+  height: 2px;
+  background: var(--ps-connector);
+}
+.ps--horizontal .ps-step:last-child .ps-step__connector {
+  display: none;
+}
+
+/* ---- Vertical (Figma Breakpoint=Mobile / "Only vertical": … left) ---- */
+.ps--default.ps--vertical:not(.ps--line) {
+  display: flex;
+  flex-direction: column;
+}
+.ps--vertical .ps-step {
+  display: flex;
+  gap: var(--ps-gap);
+}
+.ps--vertical .ps-step__rail {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--ps-rail-gap);
+  width: var(--ps-icon);
+  padding-bottom: var(--ps-rail-gap);
+}
+.ps--vertical .ps-step__connector {
+  flex: 1 1 auto;
+  width: 2px;
+  min-height: 0;
+  background: var(--ps-connector);
+}
+/* the check type joins incomplete steps with border-secondary, done ones with icon-brand-primary */
+.ps--icon.ps--vertical .ps-step__connector {
+  background: var(--border-secondary);
+}
+.ps--icon.ps--vertical .ps-step--complete .ps-step__connector {
+  background: var(--icon-brand-primary);
+}
+.ps--vertical .ps-step__content {
+  flex: 1 1 auto;
+  padding: var(--ps-pad-top) 0 var(--ps-pad-bottom);
+}
+.ps--vertical .ps-step:last-child .ps-step__connector {
+  display: none;
+}
+.ps--vertical .ps-step:last-child .ps-step__rail {
+  padding-bottom: 0;
+}
+.ps--vertical .ps-step:last-child .ps-step__content {
+  padding-bottom: 0;
+}
+
+/* ---- Type=Line: a 4px bar per step ---- */
+.ps-step__bar {
+  flex-shrink: 0;
+  border-radius: var(--radius-2, 2px);
+  background: var(--utility-gray-200);
+}
+.ps-step--current .ps-step__bar,
+.ps-step--complete .ps-step__bar {
+  background: var(--utility-brand-500);
+}
+.ps--line.ps--horizontal {
+  gap: var(--ps-gap);
+}
+.ps--line.ps--horizontal .ps-step {
+  align-items: stretch;
+  text-align: start;
+}
+.ps--line.ps--horizontal .ps-step__bar {
+  height: 4px;
+}
+.ps--line.ps--vertical {
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-6);
+}
+.ps--line.ps--vertical .ps-step {
+  padding: var(--padding-2) 0;
+}
+.ps--line.ps--vertical .ps-step__bar {
+  width: 4px;
+  align-self: stretch;
+}
+.ps--line.ps--vertical .ps-step__content {
+  padding: 0;
+}
+
+/* ===================================================================
+   Minimal icons (+ Connected)
+   =================================================================== */
+.ps--minimal,
+.ps--connected {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--padding-12);
+}
+.ps__summary {
+  flex-shrink: 0;
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-medium, 500);
+  white-space: nowrap;
+}
+.ps__progress {
+  display: flex;
+  align-items: center;
+  gap: var(--padding-12);
+}
+.ps--connected .ps__progress {
+  flex: 1 1 auto;
+  gap: 0;
+}
+.ps__link {
+  flex: 1 1 auto;
+  height: 2px;
+  background: var(--border-secondary);
+}
+.ps__link--done {
+  background: var(--border-brand);
+}

@@ -76,3 +76,7 @@ body {
 .sb-mobile-frame {
   max-width: 343px;
 }
+/* full-width block for horizontal layouts (sb-stack aligns children to the start) */
+.sb-wide > * {
+  align-self: stretch;
+}

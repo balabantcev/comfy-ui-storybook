@@ -73,6 +73,11 @@ supported variant and log a warning in development (`isSupportedButton()` in `bu
   `count`, `disabled`); `variant="underline"` — "-Tab button underline" with an optional
   `trailingIcon`. WAI-ARIA tabs: `role="tablist"`/`tab`, roving focus, ←/→ (wrapping, skipping
   disabled), Home/End; `panelId` per item → `aria-controls`. Panels are rendered by the app.
+- **ProgressSteps** (new, Figma Progress steps): `type` icon | number | featured | line, `size` s | m,
+  `layout` horizontal (Desktop, "… top") | vertical (Mobile / "Only vertical", "… left") | auto (768px),
+  `variant` default | minimal | connected ("Minimal icons"); statuses from `current` (or per step).
+  Semantic `<ol>` with `aria-current="step"` and a screen-reader status per step. `StepIcon` is the
+  Figma "-Step icon base" (check / number × incomplete / current / complete × 24 / 32).
 - **Toast** (new, Figma Alert & Toast / Toast): the Alert with elevation E300 — one row on Desktop,
   stacked on Mobile (`breakpoint` `auto` | `desktop` | `mobile`); `role="status"`, `alert` for errors.
   Placement, stacking and auto-dismiss stay with the app.
