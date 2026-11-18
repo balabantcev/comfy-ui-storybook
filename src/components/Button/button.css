@@ -104,7 +104,7 @@
 }
 .btn--primary.btn--subtle.btn--destructive {
   --btn-bg: var(--bg-error-secondary);
-  --btn-fg: var(--text-error);
+  --btn-fg: var(--text-error-secondary);
   --btn-bg-hover: var(--error-100);
   --btn-bg-active: var(--error-200);
 }
@@ -132,7 +132,7 @@
   --focus-ring-color: var(--gray-400);
 }
 .btn--secondary.btn--destructive {
-  --btn-fg: var(--text-error);
+  --btn-fg: var(--text-error-secondary);
   --btn-border: var(--border-error-secondary);
   --btn-bg-hover: var(--error-50);
   --btn-bg-active: var(--error-100);
@@ -156,7 +156,7 @@
   --focus-ring-color: var(--gray-400);
 }
 .btn--tertiary.btn--destructive {
-  --btn-fg: var(--text-error);
+  --btn-fg: var(--text-error-secondary);
   --btn-bg-hover: var(--error-50);
   --btn-bg-active: var(--error-100);
   --focus-ring-color: var(--error-500);
@@ -180,7 +180,7 @@
   --btn-fg-hover: var(--text-primary);
 }
 .btn--link.btn--destructive {
-  --btn-fg: var(--text-error);
+  --btn-fg: var(--text-error-secondary);
   --btn-fg-hover: var(--error-600);
 }
 .btn--link:hover:not(:disabled) {

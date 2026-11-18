@@ -1,10 +1,8 @@
 // Effect tokens — synced from Figma "❖ Comfy UI" / Foundations / Effect styles
 // https://www.figma.com/design/60wkPriIjI9zjyAKOq3dja/?node-id=1030-33573
 //
-// Shadow colors are bound to the alpha-black scale (see colors.ts):
-//   alpha-black-10 = rgba(10,10,10,0.02)
-//   alpha-black-20 = rgba(10,10,10,0.10)
-//   alpha-black-30 = rgba(10,10,10,0.18)
+// Shadow layers use the fixed Dark alpha primitives (see colors.ts):
+//   dark-50 = 2 %, dark-100 = 4 %, dark-200 = 10 %, dark-300 = 18 %
 
 export interface Elevation {
   /** Token name in the app */
@@ -16,41 +14,54 @@ export interface Elevation {
 }
 
 // Reference the design tokens (src/foundations/tokens.css) instead of raw rgba.
-const a10 = 'var(--alpha-black-10)' // rgba(10,10,10,0.02)
-const a20 = 'var(--alpha-black-20)' // rgba(10,10,10,0.10)
-const a30 = 'var(--alpha-black-30)' // rgba(10,10,10,0.18)
+// Shadow colors are bound to fixed primitives in Figma (Colors/Dark/N), so elevations do
+// NOT invert in the dark theme. Layers mirror Figma "Elevations/E*" exactly — note the
+// 4 % layer (dark-100), which an earlier sync mapped to 2 % by mistake.
+const d = (step: number) => `var(--dark-${step})`
 
 export const elevations: Elevation[] = [
   {
     name: 'elevation-50',
     token: 'Elevations/E50',
-    boxShadow: `0px 0px 0.5px 0px ${a20}, 0px 1px 3px 0px ${a10}`,
+    boxShadow: `0px 0px 0.5px 0px ${d(200)}, 0px 1px 3px 0px ${d(100)}`,
   },
   {
     name: 'elevation-100',
     token: 'Elevations/E100',
-    boxShadow: `0px 0px 0.5px 0px ${a20}, 0px 1px 3px 0px ${a20}`,
+    boxShadow: `0px 0px 0.5px 0px ${d(200)}, 0px 1px 3px 0px ${d(200)}`,
   },
   {
     name: 'elevation-200',
     token: 'Elevations/E200',
-    boxShadow: `0px 0px 0.5px 0px ${a20}, 0px 3px 8px 0px ${a20}, 0px 1px 3px 0px ${a10}`,
+    boxShadow: `0px 0px 0.5px 0px ${d(200)}, 0px 3px 8px 0px ${d(200)}, 0px 1px 3px 0px ${d(100)}`,
   },
   {
     name: 'elevation-300',
     token: 'Elevations/E300',
-    boxShadow: `0px 0px 0.5px 0px ${a20}, 0px 5px 12px 0px ${a20}, 0px 1px 3px 0px ${a10}`,
+    boxShadow: `0px 0px 0.5px 0px ${d(200)}, 0px 5px 12px 0px ${d(200)}, 0px 1px 3px 0px ${d(100)}`,
   },
   {
     name: 'elevation-400',
     token: 'Elevations/E400',
-    boxShadow: `0px 0px 0.5px 0px ${a20}, 0px 10px 16px 0px ${a20}, 0px 2px 5px 0px ${a10}`,
+    boxShadow: `0px 0px 0.5px 0px ${d(200)}, 0px 10px 16px 0px ${d(200)}, 0px 2px 5px 0px ${d(100)}`,
   },
   {
     name: 'elevation-500',
     token: 'Elevations/E500',
-    boxShadow: `0px 3px 12px 0px ${a10}, 0px 10px 24px 0px ${a30}, 0px 2px 5px 0px ${a10}`,
+    boxShadow: `0px 3px 12px 0px ${d(50)}, 0px 10px 24px 0px ${d(300)}, 0px 2px 5px 0px ${d(100)}`,
   },
+]
+
+export interface FocusRing {
+  name: string
+  token: string
+  boxShadow: string
+}
+
+// Figma "Focus ring/*" effect styles — a 2px spread bound to theme-aware utility colors.
+export const focusRings: FocusRing[] = [
+  { name: 'focus-ring-success', token: 'Focus ring/focus-ring-success', boxShadow: '0px 0px 0px 2px var(--utility-brand-500)' },
+  { name: 'focus-ring-danger', token: 'Focus ring/focus-ring-danger', boxShadow: '0px 0px 0px 2px var(--utility-error-500)' },
 ]
 
 export interface Blur {

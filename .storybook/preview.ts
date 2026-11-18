@@ -11,6 +11,30 @@ const docsTheme = create({
 })
 
 const preview: Preview = {
+  // Theme switcher (Figma "Colors" collection modes). tokens.css keys the semantic layer
+  // off  data-theme  on <html>; Light is the default.
+  globalTypes: {
+    theme: {
+      description: 'Color theme (Figma "Colors" mode)',
+      toolbar: {
+        title: 'Theme',
+        icon: 'mirror',
+        items: [
+          { value: 'light', title: 'Light', icon: 'sun' },
+          { value: 'dark', title: 'Dark', icon: 'moon' },
+        ],
+        dynamicTitle: true,
+      },
+    },
+  },
+  initialGlobals: { theme: 'light' },
+  decorators: [
+    (story, context) => {
+      document.documentElement.dataset.theme = context.globals.theme === 'dark' ? 'dark' : 'light'
+      return story()
+    },
+  ],
+
   parameters: {
     docs: { theme: docsTheme },
     options: {

@@ -1,6 +1,13 @@
 /* Shared Storybook scaffolding styles — token-driven, so story chrome obeys the
    same design-token rule as components (no hardcoded hex/rgba). */
 
+/* Canvas follows the active theme (data-theme on <html>, set by the Theme toolbar). */
+html,
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
 .sb-row {
   display: flex;
   align-items: center;

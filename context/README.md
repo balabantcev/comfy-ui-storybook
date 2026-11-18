@@ -14,6 +14,7 @@ graph of connections. Notes link to each other with wiki-links (double square br
 ## Index
 
 - [[figma-design-system-source]] — repo mirrors the "❖ Comfy UI" Figma (fileKey `60wkPriIjI9zjyAKOq3dja`); how foundations/icons/tokens sync.
+- [[figma-token-mapping]] — map Figma variables by **value**, not code syntax; the missing 4 % alpha step; Light/Dark + Desktop/Mobile modes.
 - [[token-driven-components]] — **standing rule:** everything references the token system, never hardcode hex/px/rgba.
 - [[no-screenshots-in-chat]] — verify with text tools (`preview_eval`/`preview_logs`), don't post screenshot images.
 - [[storybook-conventions]] — story chrome is token-driven too; shared `src/storybook/` helpers, `play()` interaction tests, a11y, and CI.

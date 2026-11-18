@@ -1,138 +1,134 @@
 // Generates src/foundations/tokens.css (layered CSS custom properties) from the
-// token source files, so every component references one source of truth instead
+// token source modules, so every component references one source of truth instead
 // of hardcoded values.
 //
-//   primitives  (colors.ts)            --brand-500, --gray-100, --alpha-black-60 …
-//   scale       (scale.ts)             --padding-4, --radius-10 …
-//   typography  (typography.ts)        --font-body-1-size, --font-weight-medium …
-//   semantic    (semantic.ts)          --text-secondary: var(--alpha-black-60) …
+//   primitives  (colors.ts)       --brand-500, --gray-100, --dark-600 …          fixed
+//   scale       (scale.ts)        --padding-4, --radius-10, --opacity-40 …       fixed
+//   typography  (typography.ts)   --font-body-1-size …  (+ Mobile overrides)     responsive
+//   effects     (effects.ts)      --elevation-200, --focus-ring-success …
+//   semantic    (semantic.ts)     --text-secondary: var(--dark-600) …            Light / Dark
 //
+// Theming: Light is the default (:root). Put  data-theme="dark"  on <html> (or any
+// subtree) to switch; data-theme="light" forces light inside a dark subtree.
+//
+// The .ts sources are imported directly (Node ≥ 22.18 / 24 strips types natively).
 // Run: pnpm gen:tokens
 
-import { readFileSync, writeFileSync } from 'node:fs'
+import { writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, resolve } from 'node:path'
 
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
-const read = (p) => readFileSync(resolve(root, p), 'utf8')
+import * as colorsMod from '../src/foundations/colors.ts'
+import { spacing, radius, opacity } from '../src/foundations/scale.ts'
+import { typeGroups, fontWeights, mobileBreakpoint } from '../src/foundations/typography.ts'
+import { elevations, focusRings } from '../src/foundations/effects.ts'
+import { semanticColors } from '../src/foundations/semantic.ts'
 
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
 
-// ---- primitives: every  'token': '#hex'  pair in colors.ts ----
-function extractColors(src) {
-  const out = []
-  const re = /'([a-z0-9-]+)'\s*:\s*'(#[0-9a-fA-F]{3,8})'/g
-  let m
-  while ((m = re.exec(src))) out.push([m[1], m[2]])
-  return out
-}
+// ---- collect -------------------------------------------------------------
+const primitives = colorsMod.colorGroups.flatMap((g) => Object.entries(g.colors))
+const primitiveNames = new Set(primitives.map(([n]) => n))
+const semanticNames = new Set(Object.keys(semanticColors))
+const styles = typeGroups.flatMap((g) => g.styles)
 
-// ---- scale: every  'name-N': N  pair ----
-function extractScale(src) {
-  const out = []
-  const re = /'([a-z0-9-]+)'\s*:\s*(\d+(?:\.\d+)?)\s*,/g
-  let m
-  while ((m = re.exec(src))) out.push([m[1], Number(m[2])])
-  return out
-}
-
-// ---- semantic: every  'name': 'primitive-ref'  pair ----
-function extractSemantic(src) {
-  const out = []
-  const re = /'([a-z0-9-]+)'\s*:\s*'([a-z0-9-]+)'/g
-  let m
-  while ((m = re.exec(src))) out.push([m[1], m[2]])
-  return out
-}
-
-// ---- typography: one style object per line ----
-function extractTypography(src) {
-  const styles = []
-  const re = /name:\s*'([^']+)',\s*token:\s*'[^']+',\s*fontSize:\s*(\d+),\s*lineHeight:\s*(\d+)/g
-  let m
-  while ((m = re.exec(src))) styles.push({ name: m[1], size: Number(m[2]), line: Number(m[3]) })
-  // weights
-  const weights = []
-  const wre = /(\w+):\s*(\d00|\d{3}),?/g // crude; refined below
-  return { styles }
-}
-
-// ---- elevations: name + boxShadow template from effects.ts ----
-function extractElevations(src) {
-  const out = []
-  const re = /name:\s*'(elevation-\d+)',[\s\S]*?boxShadow:\s*`([^`]*)`/g
-  let m
-  while ((m = re.exec(src))) {
-    const value = m[2]
-      .replace(/\$\{a10\}/g, 'var(--alpha-black-10)')
-      .replace(/\$\{a20\}/g, 'var(--alpha-black-20)')
-      .replace(/\$\{a30\}/g, 'var(--alpha-black-30)')
-    out.push([m[1], value])
+// ---- validate: fail loudly instead of emitting a broken var() ----------------
+const errors = []
+for (const n of semanticNames) if (primitiveNames.has(n)) errors.push(`name clash: --${n} is both primitive and semantic`)
+for (const [name, [light, dark]] of Object.entries(semanticColors)) {
+  for (const [mode, ref] of [['light', light], ['dark', dark]]) {
+    if (!primitiveNames.has(ref) && !semanticNames.has(ref)) errors.push(`--${name} (${mode}) → unknown token "${ref}"`)
+    if (ref === name) errors.push(`--${name} (${mode}) references itself`)
   }
-  return out
+}
+const varRefs = (s) => [...s.matchAll(/var\(--([a-z0-9_-]+)\)/g)].map((m) => m[1])
+for (const e of [...elevations, ...focusRings])
+  for (const r of varRefs(e.boxShadow))
+    if (!primitiveNames.has(r) && !semanticNames.has(r)) errors.push(`--${e.name} → unknown token "${r}"`)
+if (errors.length) {
+  console.error('gen-tokens: invalid token sources:\n  ' + errors.join('\n  '))
+  process.exit(1)
 }
 
-const colors = extractColors(read('src/foundations/colors.ts'))
-const elevations = extractElevations(read('src/foundations/effects.ts'))
-const scaleSrc = read('src/foundations/scale.ts')
-const spacing = extractScale(scaleSrc.split('export const radius')[0])
-const radius = extractScale(scaleSrc.slice(scaleSrc.indexOf('export const radius')))
-const semantic = extractSemantic(read('src/foundations/semantic.ts'))
-const typo = extractTypography(read('src/foundations/typography.ts'))
+// Anything that references a theme-dependent (semantic) token must be re-declared inside
+// each theme block: a var() inside a custom property is resolved where it is declared.
+const isThemed = (value) => varRefs(value).some((r) => semanticNames.has(r))
 
-// font weights (from the fontWeights map in typography.ts)
-const typoSrc = read('src/foundations/typography.ts')
-const weights = []
-{
-  const block = typoSrc.slice(typoSrc.indexOf('fontWeights ='), typoSrc.indexOf('} as const'))
-  const re = /(\w+):\s*(\d{3}),?/g
-  let m
-  while ((m = re.exec(block))) weights.push([slug(m[1]), Number(m[2])])
-}
-
+// ---- emit ----------------------------------------------------------------
 const L = []
+const px = (v) => `${v}px`
 L.push('/* AUTO-GENERATED by scripts/gen-tokens.mjs — do not edit by hand. */')
-L.push('/* Sources: colors.ts, scale.ts, typography.ts, semantic.ts (synced from Figma). */')
+L.push('/* Sources: src/foundations/{colors,scale,typography,effects,semantic}.ts (synced from Figma). */')
+L.push('')
 L.push(':root {')
-
-L.push('  /* ---- Primitives: colors ---- */')
-for (const [n, hex] of colors) L.push(`  --${n}: ${hex};`)
+L.push('  /* ---- Primitives: colors (fixed, never themed) ---- */')
+for (const [n, hex] of primitives) L.push(`  --${n}: ${hex};`)
 
 L.push('')
 L.push('  /* ---- Scale: spacing ---- */')
-for (const [n, v] of spacing) L.push(`  --${n}: ${v}px;`)
+for (const [n, v] of Object.entries(spacing)) L.push(`  --${n}: ${px(v)};`)
 L.push('  /* ---- Scale: radius ---- */')
-for (const [n, v] of radius) L.push(`  --${n}: ${v}px;`)
+for (const [n, v] of Object.entries(radius)) L.push(`  --${n}: ${px(v)};`)
+L.push('  /* ---- Scale: opacity (Figma percent → CSS 0–1) ---- */')
+for (const [n, v] of Object.entries(opacity)) L.push(`  --${n}: ${v / 100};`)
 
 L.push('')
-L.push('  /* ---- Typography ---- */')
+L.push('  /* ---- Typography (Figma mode "Desktop"; Mobile overrides below) ---- */')
 L.push(`  --font-family: 'Inter Variable', 'Inter', sans-serif;`)
-for (const s of typo.styles) {
+for (const s of styles) {
   const k = slug(s.name)
-  L.push(`  --font-${k}-size: ${s.size}px;`)
-  L.push(`  --font-${k}-line-height: ${s.line}px;`)
+  L.push(`  --font-${k}-size: ${px(s.fontSize)};`)
+  L.push(`  --font-${k}-line-height: ${px(s.lineHeight)};`)
 }
-for (const [n, v] of weights) L.push(`  --font-weight-${n}: ${v};`)
+for (const [n, v] of Object.entries(fontWeights)) L.push(`  --font-weight-${slug(n)}: ${v};`)
 
 L.push('')
-L.push('  /* ---- Elevations (box-shadow) ---- */')
-for (const [n, v] of elevations) L.push(`  --${n}: ${v};`)
-
-L.push('')
-L.push('  /* ---- Semantic (reference primitives) ---- */')
-for (const [n, ref] of semantic) L.push(`  --${n}: var(--${ref});`)
-
-L.push('')
-L.push('  /* ---- Focus ring color (overridable per component/intent) ---- */')
-L.push('  /* Pattern: box-shadow: 0 0 0 2px var(--base-white), 0 0 0 4px var(--focus-ring-color); */')
-L.push('  --focus-ring-color: var(--brand-500);')
+L.push('  /* ---- Elevations (fixed Dark alpha primitives — not themed) ---- */')
+for (const e of elevations.filter((e) => !isThemed(e.boxShadow))) L.push(`  --${e.name}: ${e.boxShadow};`)
 
 L.push('}')
+
+const themed = [...elevations, ...focusRings].filter((e) => isThemed(e.boxShadow))
+const themeBlock = (selector, scheme, idx) => {
+  L.push('')
+  L.push(`${selector} {`)
+  L.push(`  color-scheme: ${scheme};`)
+  L.push(`  /* ---- Semantic colors (Figma "Colors" → mode "${scheme === 'light' ? 'Light' : 'Dark'}") ---- */`)
+  for (const [name, refs] of Object.entries(semanticColors)) L.push(`  --${name}: var(--${refs[idx]});`)
+  L.push('  /* ---- Focus ring (overridable per component/intent) ---- */')
+  L.push('  /* Pattern: box-shadow: 0 0 0 2px var(--border-gap), 0 0 0 4px var(--focus-ring-color); */')
+  L.push('  --focus-ring-color: var(--utility-brand-500);')
+  if (themed.length) {
+    L.push('  /* ---- Effects that reference semantic colors ---- */')
+    for (const e of themed) L.push(`  --${e.name}: ${e.boxShadow};`)
+  }
+  L.push('}')
+}
+themeBlock(':root,\n[data-theme="light"]', 'light', 0)
+themeBlock('[data-theme="dark"]', 'dark', 1)
+
+const mobile = styles.filter((s) => s.mobile)
+if (mobile.length) {
+  L.push('')
+  L.push(`/* ---- Typography: Figma mode "Mobile" (viewport < ${mobileBreakpoint}px) ---- */`)
+  L.push(`@media (max-width: ${mobileBreakpoint - 0.02}px) {`)
+  L.push('  :root {')
+  for (const s of mobile) {
+    const k = slug(s.name)
+    L.push(`    --font-${k}-size: ${px(s.mobile.fontSize)};`)
+    L.push(`    --font-${k}-line-height: ${px(s.mobile.lineHeight)};`)
+  }
+  L.push('  }')
+  L.push('}')
+}
 L.push('')
 
 writeFileSync(resolve(root, 'src/foundations/tokens.css'), L.join('\n'))
 console.log(
-  `tokens.css: ${colors.length} colors, ${spacing.length} spacing, ${radius.length} radius, ` +
-    `${typo.styles.length} type styles, ${weights.length} weights, ${elevations.length} elevations, ` +
-    `${semantic.length} semantic.`,
+  `tokens.css: ${primitives.length} colors, ${Object.keys(spacing).length} spacing, ` +
+    `${Object.keys(radius).length} radius, ${Object.keys(opacity).length} opacity, ` +
+    `${styles.length} type styles (${mobile.length} with Mobile), ${Object.keys(fontWeights).length} weights, ` +
+    `${elevations.length} elevations, ${focusRings.length} focus rings, ` +
+    `${semanticNames.size} semantic × 2 themes.`,
 )

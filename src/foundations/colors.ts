@@ -42,6 +42,20 @@ export const brand: ColorScale = {
   'brand-950': '#0a2e05',
 }
 
+export const success: ColorScale = {
+  'success-50': '#effdec',
+  'success-100': '#ddf9d7',
+  'success-200': '#bef4b3',
+  'success-300': '#8ae977',
+  'success-400': '#4bd530',
+  'success-500': '#2abd13',
+  'success-600': '#24a210',
+  'success-700': '#1c7d0d',
+  'success-800': '#135308',
+  'success-900': '#0e3c06',
+  'success-950': '#0a2e05',
+}
+
 export const error: ColorScale = {
   'error-50': '#fef2f1',
   'error-100': '#fde0de',
@@ -137,36 +151,52 @@ export const warmTaupe: ColorScale = {
   'warm-taupe-700': '#54483b',
   'warm-taupe-800': '#3a3127',
   'warm-taupe-900': '#211c17',
+  'warm-taupe-950': '#120f0c',
 }
 
-export const alphaBlack: ColorScale = {
-  'alpha-black-10': '#0a0a0a05',
-  'alpha-black-20': '#0a0a0a1a',
-  'alpha-black-30': '#0a0a0a2e',
-  'alpha-black-40': '#0a0a0a5e',
-  'alpha-black-50': '#0a0a0a91',
-  'alpha-black-60': '#0a0a0ab5',
-  'alpha-black-70': '#0a0a0ac7',
-  'alpha-black-80': '#0a0a0ae0',
-  'alpha-black-90': '#0a0a0af0',
+// Alpha scales use Figma's own steps (Colors/Dark/N, Colors/White/N). Note the 4 % step
+// (`dark-100`) — Figma uses it for hover/active/tertiary borders and shadow layers.
+// The theme-aware aliases (`alpha-dark-*`, `alpha-white-*`) live in semantic.ts.
+export const dark: ColorScale = {
+  'dark-0': '#0a0a0a00',
+  'dark-50': '#0a0a0a05',
+  'dark-100': '#0a0a0a0a',
+  'dark-200': '#0a0a0a1a',
+  'dark-300': '#0a0a0a2e',
+  'dark-400': '#0a0a0a5e',
+  'dark-500': '#0a0a0a91',
+  'dark-600': '#0a0a0ab5',
+  'dark-700': '#0a0a0ac7',
+  'dark-800': '#0a0a0ae0',
+  'dark-900': '#0a0a0af0',
+  'dark-950': '#0a0a0a',
 }
 
-export const alphaWhite: ColorScale = {
-  'alpha-white-10': '#ffffff0a',
-  'alpha-white-20': '#ffffff1f',
-  'alpha-white-30': '#ffffff2e',
-  'alpha-white-40': '#ffffff5e',
-  'alpha-white-50': '#ffffff91',
-  'alpha-white-60': '#ffffffb5',
-  'alpha-white-70': '#ffffffc7',
-  'alpha-white-80': '#ffffffe0',
-  'alpha-white-90': '#fffffff0',
+export const white: ColorScale = {
+  'white-0': '#ffffff00',
+  'white-50': '#ffffff0a',
+  'white-100': '#ffffff0f',
+  'white-200': '#ffffff1f',
+  'white-300': '#ffffff2e',
+  'white-400': '#ffffff5e',
+  'white-500': '#ffffff91',
+  'white-600': '#ffffffb5',
+  'white-700': '#ffffffc7',
+  'white-800': '#ffffffe0',
+  'white-900': '#fffffff0',
+  'white-950': '#ffffff',
+}
+
+// Component-specific primitive (Figma: Colors/Copmonents/Krashch/krashch-color).
+export const component: ColorScale = {
+  'krashch': '#ffff00',
 }
 
 export const colorGroups: ColorGroup[] = [
   { name: 'Base', description: 'Foundational black & white.', colors: base },
   { name: 'Gray', description: 'Neutral scale for surfaces, borders and text.', colors: gray },
   { name: 'Brand', description: 'Comfy green — primary brand color.', colors: brand },
+  { name: 'Success', description: 'Success states (same hex as Brand today, separate scale in Figma).', colors: success },
   { name: 'Error / Red', description: 'Destructive and error states.', colors: error },
   { name: 'Orange', description: 'Accent orange.', colors: orange },
   { name: 'Warning / Yellow', description: 'Warning and caution states.', colors: warning },
@@ -174,6 +204,7 @@ export const colorGroups: ColorGroup[] = [
   { name: 'Purple / Violet', description: 'Decorative violet.', colors: violet },
   { name: 'Magenta / Pink', description: 'Decorative pink.', colors: pink },
   { name: 'Warm Taupe', description: 'Warm neutral utility scale.', colors: warmTaupe },
-  { name: 'Alpha Black', description: 'Black with transparency, for overlays on light surfaces.', colors: alphaBlack },
-  { name: 'Alpha White', description: 'White with transparency, for overlays on dark surfaces.', colors: alphaWhite },
+  { name: 'Dark (alpha)', description: 'Near-black with transparency, for overlays on light surfaces.', colors: dark },
+  { name: 'White (alpha)', description: 'White with transparency, for overlays on dark surfaces.', colors: white },
+  { name: 'Component', description: 'Component-specific colors.', colors: component },
 ]
