@@ -10,7 +10,8 @@ const config: StorybookConfig = {
     // in-app Visual Tests panel, run `storybook add @chromatic-com/storybook`.
     "@storybook/addon-vitest",
     "@storybook/addon-a11y",
-    "@storybook/addon-docs"
+    "@storybook/addon-docs",
+    "@storybook/addon-mcp"
   ],
   "framework": "@storybook/vue3-vite",
   "staticDirs": ["./public"],
