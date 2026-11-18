@@ -1,6 +1,11 @@
 import { Meta } from '@storybook/addon-docs/blocks'
 import { getLogo } from './foundations/logo'
 import { iconNames } from './icons'
+import { colorGroups } from './foundations/colors'
+import { semanticColors } from './foundations/semantic'
+
+export const componentCount = Object.keys(import.meta.glob('./components/*/*.stories.ts')).length
+export const tokenCount = colorGroups.reduce((n, g) => n + Object.keys(g.colors).length, 0) + Object.keys(semanticColors).length
 
 <Meta title="Вітання" />
 
@@ -40,9 +45,9 @@ export const wordmark = getLogo('wordmark', 'green').svg
 
     <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
       {[
-        ['20+', 'компонентів'],
+        [String(componentCount), 'компоненти'],
         [String(iconNames.length), 'іконки'],
-        ['160+', 'токенів'],
+        [String(tokenCount), 'кольорових токенів'],
         ['1', 'джерело правди'],
       ].map(([num, label]) => (
         <div
