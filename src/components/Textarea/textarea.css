@@ -1,0 +1,114 @@
+/* Textarea — Comfy UI design system. Tokens only.
+   Figma: Input / Textarea input (node 11485:675). */
+
+.textarea {
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-4);
+  width: 100%;
+  font-family: var(--font-family);
+}
+
+.textarea__box {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: var(--padding-4) var(--padding-12) var(--padding-16);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-10);
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+/* Label: Caption-1 above the text once floated; Body-1 on the first line while empty (Figma "Placeholder"). */
+.textarea__label {
+  position: absolute;
+  left: var(--padding-12);
+  top: var(--padding-4);
+  color: var(--text-tertiary);
+  font-size: var(--font-body-1-size, 16px);
+  line-height: var(--font-body-1-line-height, 22px);
+  transform: translateY(var(--font-caption-1-line-height, 16px));
+  pointer-events: none;
+  transition: transform 0.12s ease, font-size 0.12s ease, line-height 0.12s ease;
+}
+.textarea--float .textarea__label {
+  font-size: var(--font-caption-1-size, 12px);
+  line-height: var(--font-caption-1-line-height, 16px);
+  transform: none;
+}
+.textarea__req {
+  color: var(--text-error-primary);
+}
+
+.textarea__field {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: none;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: var(--font-body-1-size, 16px);
+  line-height: var(--font-body-1-line-height, 22px);
+}
+/* reserve the caption line for the label */
+.textarea--has-label .textarea__field {
+  margin-top: var(--font-caption-1-line-height, 16px);
+}
+.textarea__field::placeholder {
+  color: var(--text-tertiary);
+}
+
+/* Figma "Used symbols": Caption-2, bottom-left inside the box */
+.textarea__counter {
+  position: absolute;
+  left: var(--padding-12);
+  bottom: 2px;
+  color: var(--text-tertiary);
+  font-size: var(--font-caption-2-size, 10px);
+  line-height: var(--font-caption-2-line-height, 14px);
+  pointer-events: none;
+}
+
+.textarea__helper {
+  margin: 0;
+  padding-left: var(--padding-12);
+  color: var(--text-tertiary);
+  font-size: var(--font-caption-1-size, 12px);
+  line-height: var(--font-caption-1-line-height, 16px);
+}
+
+/* ---- States (Figma: Hover / Focused / Destructive / Disabled) ---- */
+.textarea:not(.textarea--disabled):not(.textarea--focused):not(.textarea--error) .textarea__box:hover {
+  border-color: var(--border-solid);
+}
+.textarea--focused .textarea__box {
+  border-color: var(--border-brand);
+  box-shadow: 0 0 0 2px var(--utility-brand-500);
+}
+.textarea--error .textarea__box {
+  border-color: var(--border-error-secondary);
+}
+.textarea--error.textarea--focused .textarea__box {
+  border-color: var(--border-error-primary);
+  box-shadow: 0 0 0 2px var(--utility-error-500);
+}
+.textarea--error .textarea__helper {
+  color: var(--text-error-primary);
+}
+.textarea--disabled .textarea__box {
+  background: var(--bg-disabled-subtle);
+  border-color: var(--border-disabled);
+}
+.textarea--disabled .textarea__field,
+.textarea--disabled .textarea__label,
+.textarea--disabled .textarea__counter {
+  color: var(--text-disabled);
+}
+.textarea--disabled .textarea__field {
+  cursor: not-allowed;
+}

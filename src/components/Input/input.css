@@ -40,6 +40,47 @@
   line-height: var(--font-body-1-line-height, 22px);
 }
 
+/* Phone country / price currency (Figma: Flags + "+380" + chevron, "UAH" + chevron) */
+.input__addon {
+  align-self: stretch;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+.input__addon > .dropdown__trigger {
+  display: inline-flex;
+}
+.input__picker {
+  align-self: stretch;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--padding-4);
+  flex-shrink: 0;
+  margin: 0;
+  padding: var(--field-pt, 0) 0 0 0;
+  border: none;
+  background: none;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: var(--font-body-1-size, 16px);
+  line-height: var(--font-body-1-line-height, 22px);
+  cursor: pointer;
+}
+.input__picker--static {
+  cursor: default;
+}
+.input__picker:focus-visible {
+  outline: none;
+  border-radius: var(--radius-4);
+  box-shadow: 0 0 0 2px var(--border-gap), 0 0 0 4px var(--focus-ring-color);
+}
+.input__picker-chevron {
+  color: var(--icon-secondary);
+}
+.input--disabled .input__picker {
+  color: var(--text-disabled);
+  cursor: not-allowed;
+}
+
 .input__control {
   position: relative;
   flex: 1 1 0;
@@ -121,14 +162,16 @@
 }
 .input--focused .input__box {
   border-color: var(--border-brand);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--utility-brand-500) 24%, transparent);
+  /* Figma "Focused": border-brand + Focus ring/focus-ring-success (2px solid ring) */
+  box-shadow: 0 0 0 2px var(--utility-brand-500);
 }
 .input--error .input__box {
   border-color: var(--border-error-secondary);
 }
 .input--error.input--focused .input__box {
   border-color: var(--border-error-primary);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--utility-error-500) 24%, transparent);
+  /* Figma: Focus ring/focus-ring-danger */
+  box-shadow: 0 0 0 2px var(--utility-error-500);
 }
 .input--error .input__helper {
   color: var(--text-error-primary);

@@ -1,0 +1,15 @@
+/* Flag — round, clipped country flag (Figma: Misc icons / Flags). */
+.comfy-flag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: var(--radius-full);
+}
+.comfy-flag > svg {
+  display: block;
+  height: 100%;
+  width: auto;
+  flex-shrink: 0;
+}
