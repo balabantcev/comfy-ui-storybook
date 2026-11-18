@@ -23,3 +23,15 @@ This repo is a Storybook (Vue 3 + Vite + Storybook 10) that mirrors the **"❖ C
 When asked to add more from Figma, follow the same pattern: token `.ts` + `.mdx` doc under `src/foundations/`, values pulled from variables (source of truth), verified live in Storybook on :6006.
 
 The standing rule that everything must be token-driven is in [[token-driven-components]].
+
+## Misc icons → components
+
+Brand artwork (Flag, SocialBrand, PaymentMethod) is stored as raw SVG next to the component
+and inlined with `?raw` + `v-html`; brand colors stay as-is, but any layer Figma binds to a
+variable is rewritten to `style="fill: var(--token)"` so it follows the theme. Ids inside each
+SVG are prefixed per file (`sb-google-0`, `pm-visa-32-1`) so several inline SVGs never clash.
+Export per variant by cutting the component-set SVG export (`download_assets`, format svg) at the
+variant's `<g id="Variant=…">` and translating by its offset — `use_figma` returns ≤ 48 KB.
+Watch for bitmap fills: Figma's Instagram glyph is a 10 MB embedded PNG — rebuild such fills as
+vector gradients. Cyrillic variant names arrive as byte-wise entities (decode latin-1 → utf-8).
+

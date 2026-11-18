@@ -63,6 +63,13 @@ supported variant and log a warning in development (`isSupportedButton()` in `bu
 - **FeaturedIcon** (new, Figma Misc icons / Featured icon): `type` `light` | `gradient` | `outline` |
   `modern`, `color` `gray` | `success` | `warning` | `error` | `purple` | `blue`, `size` 32 / 40 / 48 / 56,
   any registry `icon`. New token `--shadow-skeuomorphic` (the Modern inner disc's layer shadows).
+- **RatingStar** (new, Figma Misc icons / Rating star): `fill` 0–100 (Figma steps of 10, any value
+  works), `color` `orange` | `yellow`, `size`; `starFill(value, index)` helper for a 5-star rating.
+- **SocialBrand** (new, Figma Misc icons / Social brand): 11 marks — Apple, Google, Instagram,
+  Nova post, Ukr post, Meest, iPost, Messenger, Telegram, Viber, Facebook. Apple follows the theme;
+  Instagram's gradient is rebuilt as an SVG gradient (Figma fills it with a 10 MB bitmap).
+- **PaymentMethod** (new, Figma Misc icons / Payment method icon): Visa, Mastercard, Apple Pay,
+  Google Pay, LiqPay, 24 Pay, Післяплата on a white card, `size` 24 (34×24) | 32 (46×32).
 
 ### Accessibility
 - The CI a11y gate never ran: `preview.ts` read `process.env.CI`, which doesn't exist in the
