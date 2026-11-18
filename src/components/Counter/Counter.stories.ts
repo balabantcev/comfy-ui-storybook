@@ -2,11 +2,13 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 
 import Counter from './Counter.vue'
 import { COUNTER_SIZE_VALUES, COUNTER_COLORS } from './counter.tokens'
+import { Matrix } from '../../storybook'
 
 const meta = {
   title: 'Components/Counter',
   component: Counter,
   tags: ['autodocs'],
+  parameters: { figma: '13472:795' },
   argTypes: {
     color: { control: 'inline-radio', options: COUNTER_COLORS },
     size: { control: 'inline-radio', options: COUNTER_SIZE_VALUES },
@@ -24,25 +26,12 @@ export const Playground: Story = {}
 export const Colors: Story = {
   parameters: { controls: { disable: true } },
   render: () => ({
-    components: { Counter },
-    setup: () => ({ colors: COUNTER_COLORS, sizes: COUNTER_SIZE_VALUES }),
+    components: { Counter, Matrix },
+    setup: () => ({ colors: COUNTER_COLORS, sizes: COUNTER_SIZE_VALUES.map((s) => s + 'px') }),
     template: `
-      <table style="border-collapse:collapse">
-        <thead>
-          <tr>
-            <th></th>
-            <th v-for="s in sizes" :key="s" style="padding:10px 16px;text-align:left;font:500 13px sans-serif;color:#737373">{{ s }}px</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="c in colors" :key="c">
-            <td style="padding:8px 16px;text-transform:capitalize;font:500 13px sans-serif;color:#737373">{{ c }}</td>
-            <td v-for="s in sizes" :key="s" style="padding:8px 16px">
-              <Counter :color="c" :size="s" :value="4" />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <Matrix :rows="colors" :cols="sizes" v-slot="{ row, col }">
+        <Counter :color="row" :size="parseInt(col)" :value="4" />
+      </Matrix>
     `,
   }),
 }
@@ -53,11 +42,11 @@ export const Variations: Story = {
   render: () => ({
     components: { Counter },
     template: `
-      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+      <div class="sb-row">
         <Counter color="red" :value="1" />
         <Counter color="red" :value="42" />
         <Counter color="red" value="99+" />
-        <div style="background:#2abd13;padding:10px;border-radius:8px;display:inline-flex">
+        <div class="sb-surface--brand">
           <Counter color="red" :value="3" border-gap />
         </div>
       </div>

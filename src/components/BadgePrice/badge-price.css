@@ -1,0 +1,28 @@
+/* Badge price — Comfy UI design system. Tokens only.
+   Figma: Badge / Badge price (node 13796:1729). */
+.badge-price {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  padding: var(--bp-py) var(--bp-px);
+  border-radius: var(--radius-full);
+  background: var(--utility-error-50);
+  color: var(--text-price);
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-bold, 700);
+  white-space: nowrap;
+}
+/* Figma "Frame 1": 2px side padding; value and unit sit on one baseline */
+.badge-price__frame {
+  display: inline-flex;
+  align-items: baseline;
+  padding: 0 var(--padding-2);
+}
+.badge-price__value {
+  font-size: var(--font-caption-1-size, 12px);
+  line-height: var(--font-caption-1-line-height, 16px);
+}
+.badge-price__unit {
+  font-size: var(--font-caption-2-size, 10px);
+  line-height: var(--font-caption-2-line-height, 14px);
+}

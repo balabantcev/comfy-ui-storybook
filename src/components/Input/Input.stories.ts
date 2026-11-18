@@ -7,6 +7,7 @@ const meta = {
   title: 'Components/Input',
   component: Input,
   tags: ['autodocs'],
+  parameters: { figma: '11215:919' },
   argTypes: {
     size: { control: 'inline-radio', options: [44, 48, 56] },
     required: { control: 'boolean' },
@@ -76,16 +77,27 @@ export const Sizes: Story = {
   }),
 }
 
+/** Figma "Type": Default / Phone number / Price. */
 export const Types: Story = {
   parameters: { controls: { disable: true } },
   render: () => ({
     components: { Input },
-    setup: () => ({ search: ref(''), phone: ref('99 999 99 99'), price: ref('999.00') }),
+    setup: () => ({
+      search: ref(''),
+      phone: ref('974201721'),
+      emptyPhone: ref(''),
+      country: ref('UA'),
+      countries: [{ code: 'UA', dial: '+380' }, { code: 'EN', dial: '+44' }],
+      price: ref('44444444'),
+      currency: ref('UAH'),
+      currencies: ['UAH', 'USD', 'EUR'],
+    }),
     template: `
       <div style="display:flex;flex-direction:column;gap:20px;width:100%;max-width:320px">
         <Input label="Пошук" icon="search" clearable v-model="search" />
-        <Input label="Телефон" prefix="+380" type="tel" v-model="phone" />
-        <Input label="Ціна" prefix="₴" type="text" v-model="price" />
+        <Input kind="phone" required help helper="Допоміжний текст для користувача." v-model="emptyPhone" />
+        <Input kind="phone" help :countries="countries" v-model:country="country" v-model="phone" :helper="'Значення моделі: ' + phone" />
+        <Input kind="price" label="Сума" required help :currencies="currencies" v-model:currency="currency" v-model="price" :helper="'Значення моделі: ' + price + ' ' + currency" />
       </div>
     `,
   }),

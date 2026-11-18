@@ -1,14 +1,12 @@
-/* Alert — Comfy UI design system.
-   All colors reference design tokens (src/foundations/tokens.css). */
+/* Alert — Comfy UI design system. Tokens only.
+   Figma: Alert & Toast / Alert (node 12231:4230). Toast extends it (toast.css). */
 
 .alert {
   /* color slots, set per variant below */
-  --alert-bg: var(--bg-primary);
+  --alert-bg: var(--bg-primary-alt);
   --alert-border: var(--border-primary);
   --alert-icon: var(--icon-secondary);
-  --alert-title: var(--text-primary);
-  --alert-desc: var(--text-secondary);
-  --alert-accent: var(--text-brand-primary);
+  --alert-close: var(--icon-secondary);
 
   position: relative;
   display: flex;
@@ -16,22 +14,25 @@
   gap: var(--padding-12);
   box-sizing: border-box;
   width: 100%;
-  padding: var(--padding-10) var(--padding-12);
+  /* Figma's 1px stroke sits inside the 10/12px padding */
+  padding: calc(var(--padding-10) - 1px) calc(var(--padding-12) - 1px);
   background: var(--alert-bg);
   border: 1px solid var(--alert-border);
-  border-radius: var(--radius-10);
+  border-radius: var(--radius-16);
   font-family: var(--font-family);
   font-size: var(--font-body-2-size, 14px);
   line-height: var(--font-body-2-line-height, 20px);
 }
 .alert--closable {
-  padding-right: var(--padding-40);
+  padding-right: calc(var(--padding-40) - 1px);
 }
 
 .alert__icon {
   flex-shrink: 0;
   color: var(--alert-icon);
-  margin-top: 1px;
+}
+.alert__featured {
+  flex-shrink: 0;
 }
 
 .alert__body {
@@ -47,14 +48,16 @@
   flex-direction: column;
   gap: var(--padding-4);
 }
+/* Figma Body-2 Bold, text-primary in every color */
 .alert__title {
   margin: 0;
-  color: var(--alert-title);
-  font-weight: var(--font-weight-medium, 500);
+  color: var(--text-primary);
+  font-weight: var(--font-weight-bold, 700);
 }
+/* Figma Body-2 Regular, text-secondary in every color */
 .alert__desc {
   margin: 0;
-  color: var(--alert-desc);
+  color: var(--text-secondary);
   font-weight: var(--font-weight-regular, 400);
 }
 .alert__desc :where(a) {
@@ -63,35 +66,14 @@
   text-underline-offset: 2px;
 }
 
+/* Figma "Buttons container": Link gray + Link brand / destructive (32px link = 20px tall) */
 .alert__actions {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--padding-16);
 }
-.alert__action {
-  appearance: none;
-  border: none;
-  background: none;
-  padding: 0 var(--padding-2);
-  font: inherit;
-  font-weight: var(--font-weight-medium, 500);
-  cursor: pointer;
-  border-radius: var(--radius-4);
-}
-.alert__action--dismiss {
-  color: var(--text-secondary);
-}
-.alert__action--main {
-  color: var(--alert-accent);
-}
-.alert__action:hover {
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-.alert__action:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 24%, transparent);
-}
 
+/* Figma "Button-X" 40px: icon colored per alert color, bg-hover on hover */
 .alert__close {
   position: absolute;
   top: -1px;
@@ -102,42 +84,44 @@
   padding: var(--padding-10);
   border: none;
   background: none;
-  color: var(--alert-icon);
+  color: var(--alert-close);
   cursor: pointer;
   border-radius: var(--radius-10);
 }
 .alert__close:hover {
-  opacity: 0.7;
+  background: var(--bg-hover);
 }
 .alert__close:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--alert-accent) 24%, transparent);
+  box-shadow: 0 0 0 2px var(--border-gap), 0 0 0 4px var(--focus-ring-color);
 }
 
 /* ===================================================================
-   Variants
+   Colors (Figma "Color")
    =================================================================== */
 .alert--success {
-  --alert-bg: var(--brand-50);
-  --alert-border: var(--brand-300);
-  --alert-icon: var(--brand-700);
-  --alert-title: var(--brand-900);
-  --alert-desc: var(--brand-900);
-  --alert-accent: var(--brand-500);
+  --alert-bg: var(--bg-success-tertiary);
+  --alert-border: var(--border-success-secondary);
+  --alert-icon: var(--utility-success-700);
+  --alert-close: var(--utility-success-700);
 }
 .alert--warning {
-  --alert-bg: var(--warning-50);
-  --alert-border: var(--warning-400);
-  --alert-icon: var(--warning-700);
-  --alert-title: var(--warning-900);
-  --alert-desc: var(--warning-900);
-  --alert-accent: var(--warning-800);
+  --alert-bg: var(--bg-warning-tertiary);
+  --alert-border: var(--border-warning-secondary);
+  --alert-icon: var(--icon-warning-primary);
+  --alert-close: var(--utility-warning-700);
 }
 .alert--error {
-  --alert-bg: var(--error-50);
-  --alert-border: var(--error-300);
-  --alert-icon: var(--error-700);
-  --alert-title: var(--error-900);
-  --alert-desc: var(--error-900);
-  --alert-accent: var(--error-500);
+  --alert-bg: var(--bg-error-tertiary);
+  --alert-border: var(--border-error-secondary);
+  --alert-icon: var(--icon-error-primary);
+  --alert-close: var(--utility-error-700);
+  --focus-ring-color: var(--utility-error-500);
+}
+/* Warning's accent is Figma "Link gray" recolored to text-warning-primary */
+.alert--warning .btn.alert__action-main {
+  --btn-fg: var(--text-warning-primary);
+  --btn-fg-hover: var(--text-warning-primary);
+  --btn-icon: var(--icon-warning-primary);
+  --btn-icon-hover: var(--icon-warning-primary);
 }

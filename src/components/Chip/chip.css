@@ -6,6 +6,7 @@
   --chip-border: transparent;
   --chip-fg: var(--text-invers);
   --chip-bg-hover: var(--chip-bg);
+  --chip-shadow: var(--elevation-50);
 
   box-sizing: border-box;
   display: inline-flex;
@@ -17,6 +18,7 @@
   border: 1px solid var(--chip-border);
   border-radius: var(--chip-radius, 10px);
   background: var(--chip-bg);
+  box-shadow: var(--chip-shadow);
   color: var(--chip-fg);
   font-family: var(--font-family);
   font-size: var(--chip-font-size, 14px);
@@ -39,47 +41,65 @@
 /* ===================================================================
    Types
    =================================================================== */
+/* Bindings from Figma (Chips, node 13509:3771). */
 .chip--dark {
   --chip-bg: var(--bg-invers);
   --chip-border: transparent;
   --chip-fg: var(--text-invers);
-  --chip-bg-hover: var(--gray-800);
+  --chip-bg-hover: var(--bg-invers-hover);
 }
 .chip--grey {
   --chip-bg: var(--bg-primary);
   --chip-border: var(--border-alpha-primary);
   --chip-fg: var(--text-secondary);
-  --chip-bg-hover: var(--gray-50);
+  --chip-bg-hover: var(--bg-hover);
+  --chip-border-hover: var(--border-alpha-solid);
+  --chip-border-focus: var(--border-alpha-solid);
+  --chip-fg-hover: var(--text-primary);
 }
-.chip--primary {
-  --chip-bg: var(--bg-primary);
-  --chip-border: var(--border-brand);
-  --chip-fg: var(--text-brand-primary);
-  --chip-bg-hover: var(--brand-50);
-}
-.chip--secondary {
+/* Figma "Primary brand" — tinted fill */
+.chip--primary-brand {
   --chip-bg: var(--bg-brand-secondary);
   --chip-border: var(--border-brand);
   --chip-fg: var(--text-brand-secondary);
-  --chip-bg-hover: var(--brand-100);
+  --chip-bg-hover: var(--bg-brand-secondary-hover);
+  --chip-border-hover: var(--border-brand-hover);
+  --chip-fg-hover: var(--text-brand-secondary-hover);
+}
+/* Figma "Secondary brand" — outlined */
+.chip--secondary-brand {
+  --chip-bg: var(--bg-primary);
+  --chip-border: var(--border-brand);
+  --chip-fg: var(--text-brand-primary);
+  --chip-bg-hover: var(--bg-brand-secondary-hover-subtle);
+  --chip-border-hover: var(--border-brand-hover);
+  --chip-fg-hover: var(--text-brand-primary-hover);
 }
 
 /* ---- Hover ---- */
 .chip:not(:disabled):hover {
   background: var(--chip-bg-hover);
+  border-color: var(--chip-border-hover, var(--chip-border));
+  color: var(--chip-fg-hover, var(--chip-fg));
 }
 
 /* ---- Focus ---- */
 .chip:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--base-white), 0 0 0 4px var(--focus-ring-color);
+  border-color: var(--chip-border-focus, var(--chip-border));
+  box-shadow: var(--chip-shadow), 0 0 0 2px var(--border-gap), 0 0 0 4px var(--focus-ring-color);
 }
 
 /* ---- Disabled ---- */
 .chip:disabled {
   cursor: not-allowed;
-  --chip-bg: var(--bg-disabled-subtle);
-  --chip-border: var(--border-primary);
+  /* Figma: Dark → bg-disabled; other types → bg-primary + border-disabled */
+  --chip-bg: var(--bg-primary);
+  --chip-border: var(--border-disabled);
   --chip-fg: var(--text-disabled);
-  --chip-bg-hover: var(--bg-disabled-subtle);
+  --chip-bg-hover: var(--chip-bg);
+}
+.chip--dark:disabled {
+  --chip-bg: var(--bg-disabled);
+  --chip-border: transparent;
 }

@@ -1,0 +1,157 @@
+/* Tabs — Comfy UI design system. Tokens only.
+   Figma: Tabs / Horizontal tabs (15414:331), -Tab button base (14332:5245),
+   -Tab button underline (14333:10937). */
+
+.tabs {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  font-family: var(--font-family);
+}
+
+.tab {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  margin: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-weight: var(--font-weight-medium, 500);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.12s ease, color 0.12s ease, box-shadow 0.12s ease;
+}
+.tab:disabled {
+  cursor: not-allowed;
+}
+.tab__icon {
+  flex-shrink: 0;
+}
+
+/* ===================================================================
+   Segmented — "Horizontal tabs" container + "-Tab button base"
+   =================================================================== */
+.tabs--segmented {
+  gap: var(--padding-2);
+  overflow-x: auto;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-8);
+  scrollbar-width: none;
+}
+.tabs--segmented.tabs--border {
+  padding: var(--padding-4);
+  border-radius: var(--radius-12);
+}
+.tabs--segmented.tabs--white {
+  /* Figma's 1px inside stroke — an outline overlaps the tabs the same way */
+  outline: 1px solid var(--border-secondary);
+  outline-offset: -1px;
+}
+.tabs--segmented.tabs--pill,
+.tabs--segmented.tabs--pill .tab {
+  border-radius: var(--radius-full);
+}
+
+.tabs--segmented .tab {
+  --tab-fg: var(--text-secondary);
+  --tab-icon: var(--icon-secondary);
+  gap: var(--tab-gap);
+  /* Figma fixes the height (40px = 8 + 22px Body-1 line + 8 rounds up by 2) */
+  height: var(--tab-height);
+  padding: var(--padding-8) var(--padding-10);
+  border-radius: var(--radius-8);
+  color: var(--tab-fg);
+  font-size: var(--tab-font-size);
+  line-height: var(--tab-line-height);
+}
+.tabs--segmented .tab__icon {
+  color: var(--tab-icon);
+}
+/* Figma "Text padding": 2px sides, 6px to the counter */
+.tab__text {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--padding-6);
+  padding: 0 var(--padding-2);
+}
+
+.tabs--segmented .tab:not(.tab--active):not(:disabled):hover {
+  --tab-fg: var(--text-primary);
+  background: var(--bg-hover);
+}
+.tabs--segmented .tab--active {
+  background: var(--bg-primary-alt);
+  box-shadow: var(--elevation-100);
+}
+.tabs--brand .tab--active {
+  --tab-fg: var(--text-brand-primary);
+  --tab-icon: var(--icon-brand-primary);
+}
+.tabs--white .tab--active {
+  --tab-fg: var(--text-primary);
+  /* Figma: 1px border-primary inside stroke + E100 */
+  box-shadow: inset 0 0 0 1px var(--border-primary), var(--elevation-100);
+}
+.tabs--segmented .tab:disabled {
+  --tab-fg: var(--text-disabled);
+  --tab-icon: var(--icon-disabled);
+}
+.tabs--segmented .tab:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--border-gap), 0 0 0 4px var(--focus-ring-color);
+}
+
+/* ===================================================================
+   Underline — "-Tab button underline"
+   =================================================================== */
+.tabs--underline {
+  gap: var(--padding-16);
+}
+.tabs--underline .tab {
+  position: relative;
+  gap: 0;
+  padding: var(--padding-12) var(--padding-4);
+  color: var(--text-secondary);
+  font-size: var(--font-body-2-size);
+  line-height: var(--font-body-2-line-height);
+  font-weight: var(--font-weight-regular, 400);
+}
+.tabs--underline .tab__icon {
+  color: var(--icon-tertiary);
+}
+/* the 2px bar along the bottom edge */
+.tabs--underline .tab::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: transparent;
+}
+.tabs--underline .tab:not(.tab--active):not(:disabled):hover {
+  color: var(--text-primary);
+}
+.tabs--underline .tab:not(.tab--active):not(:disabled):hover::after {
+  background: var(--utility-gray-300);
+}
+.tabs--underline .tab--active {
+  color: var(--text-brand-primary);
+  font-weight: var(--font-weight-medium, 500);
+}
+.tabs--underline .tab--active::after {
+  background: var(--bg-brand-primary);
+}
+.tabs--underline .tab--active .tab__icon {
+  color: var(--icon-brand-primary);
+}
+.tabs--underline .tab:disabled {
+  color: var(--text-disabled);
+}
+.tabs--underline .tab:focus-visible {
+  outline: none;
+  border-radius: var(--radius-4);
+  box-shadow: 0 0 0 2px var(--border-gap), 0 0 0 4px var(--focus-ring-color);
+}

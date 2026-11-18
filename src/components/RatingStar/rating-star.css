@@ -1,0 +1,17 @@
+/* Rating star — Comfy UI design system. Tokens only.
+   Figma: Misc icons / Rating star (node 12552:45). */
+.rating-star {
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: middle;
+  --rs-color: var(--utility-orange-500);
+}
+.rating-star--yellow {
+  --rs-color: var(--utility-warning-500);
+}
+.rating-star__bg {
+  fill: var(--bg-tertiary);
+}
+.rating-star__fg {
+  fill: var(--rs-color);
+}

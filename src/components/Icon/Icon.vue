@@ -48,9 +48,9 @@ const sizeValue = computed(() =>
   display: block;
 }
 .comfy-icon--missing {
-  border: 1px dashed var(--gray-300);
+  border: 1px dashed var(--border-primary);
   border-radius: var(--radius-4);
-  color: var(--gray-400);
+  color: var(--icon-tertiary);
   font-size: var(--font-caption-1-size, 12px);
   width: 24px;
   height: 24px;

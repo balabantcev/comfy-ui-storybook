@@ -3,16 +3,20 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import Badge from './Badge.vue'
 import { BADGE_SIZE_VALUES, BADGE_VARIANTS, BADGE_COLORS } from './badge.tokens'
 import { iconNames } from '../../icons'
+import { FLAG_CODES } from '../Flag/flag.tokens'
+import { Matrix, Specimen } from '../../storybook'
 
 const meta = {
   title: 'Components/Badge',
   component: Badge,
   tags: ['autodocs'],
+  parameters: { figma: '11287:1108' },
   argTypes: {
     variant: { control: 'inline-radio', options: BADGE_VARIANTS },
     color: { control: 'select', options: BADGE_COLORS },
     size: { control: 'inline-radio', options: BADGE_SIZE_VALUES },
     dot: { control: 'boolean' },
+    country: { control: 'select', options: ['', ...FLAG_CODES] },
     iconLeft: { control: 'select', options: ['', ...iconNames] },
     iconRight: { control: 'select', options: ['', ...iconNames] },
   },
@@ -37,25 +41,12 @@ export const Playground: Story = { args: { label: 'Назва' } as any }
 export const Colors: Story = {
   parameters: { controls: { disable: true } },
   render: () => ({
-    components: { Badge },
+    components: { Badge, Matrix },
     setup: () => ({ variants: BADGE_VARIANTS, colors: BADGE_COLORS }),
     template: `
-      <table style="border-collapse:collapse">
-        <thead>
-          <tr>
-            <th></th>
-            <th v-for="v in variants" :key="v" style="padding:10px 16px;text-align:left;text-transform:capitalize;font:500 13px sans-serif;color:#737373">{{ v }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="c in colors" :key="c">
-            <td style="padding:8px 16px;text-transform:capitalize;font:500 13px sans-serif;color:#737373">{{ c }}</td>
-            <td v-for="v in variants" :key="v" style="padding:8px 16px">
-              <Badge :variant="v" :color="c" dot>{{ c }}</Badge>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <Matrix :rows="colors" :cols="variants" v-slot="{ row, col }">
+        <Badge :variant="col" :color="row" dot>{{ row }}</Badge>
+      </Matrix>
     `,
   }),
 }
@@ -64,31 +55,49 @@ export const Colors: Story = {
 export const Sizes: Story = {
   parameters: { controls: { disable: true } },
   render: () => ({
-    components: { Badge },
+    components: { Badge, Specimen },
     setup: () => ({ sizes: BADGE_SIZE_VALUES }),
     template: `
-      <div style="display:flex;align-items:center;gap:16px">
-        <div v-for="s in sizes" :key="s" style="display:flex;flex-direction:column;align-items:center;gap:8px">
+      <div class="sb-row">
+        <Specimen v-for="s in sizes" :key="s" :caption="s + 'px'">
           <Badge :size="s" color="success" dot>Назва</Badge>
-          <span style="font:12px sans-serif;color:#737373">{{ s }}px</span>
-        </div>
+        </Specimen>
       </div>
     `,
   }),
 }
 
-// Types: dot / icon / dismissible
+// Figma Type: Default (text / icons) / Dot / Country
 export const Types: Story = {
   parameters: { controls: { disable: true } },
   render: () => ({
     components: { Badge },
     template: `
-      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+      <div class="sb-row">
         <Badge color="success">Текст</Badge>
         <Badge color="success" dot>З крапкою</Badge>
         <Badge color="success" iconLeft="check">З іконкою</Badge>
         <Badge color="success" iconRight="x">Закрити</Badge>
+        <Badge color="success" country="UA">Україна</Badge>
       </div>
+    `,
+  }),
+}
+
+/** Figma Type × Size — spacing differs per type (Default 4/2 + 2px text frame, Dot, Country). */
+export const TypesBySize: Story = {
+  parameters: { controls: { disable: true } },
+  render: () => ({
+    components: { Badge, Matrix },
+    setup: () => ({ types: ['text', 'icons', 'dot', 'country'], sizes: BADGE_SIZE_VALUES.map((s) => s + 'px') }),
+    template: `
+      <Matrix :rows="types" :cols="sizes" v-slot="{ row, col }">
+        <Badge
+          :size="parseInt(col)" color="gray"
+          :dot="row === 'dot'" :country="row === 'country' ? 'UA' : undefined"
+          :icon-left="row === 'icons' ? 'info-circle' : undefined" :icon-right="row === 'icons' ? 'x' : undefined"
+        >Назва</Badge>
+      </Matrix>
     `,
   }),
 }

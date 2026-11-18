@@ -1,19 +1,19 @@
 /* Badge — Comfy UI design system.
-   All colors reference design tokens (src/foundations/tokens.css).
-   Figma color names map to our scales: warning→orange, yellow→warning. */
+   Colors come from the SEMANTIC layer only (Light + Dark), exactly as bound in Figma
+   (Components / Badge, node 11287:1108) — so the badge follows the theme. */
 
 .badge {
-  /* per-color scale slots, set by the color class */
-  --c-50: var(--gray-50);
-  --c-200: var(--gray-200);
-  --c-500: var(--gray-500);
-  --c-700: var(--gray-700);
+  /* per-color slots, set by the color class (Figma: utility-{color}-50/200/700/500) */
+  --c-bg: var(--utility-gray-50);
+  --c-border: var(--utility-gray-200);
+  --c-fg: var(--utility-gray-700);
+  --c-dot: var(--utility-gray-500);
 
   /* composed slots, set by the variant class */
-  --badge-bg: var(--c-50);
-  --badge-border: var(--c-200);
-  --badge-fg: var(--c-700);
-  --badge-dot-fill: var(--c-500);
+  --badge-bg: var(--c-bg);
+  --badge-border: var(--c-border);
+  --badge-fg: var(--c-fg);
+  --badge-dot-fill: var(--c-dot);
   --badge-shadow: none;
 
   box-sizing: border-box;
@@ -22,7 +22,8 @@
   justify-content: center;
   height: var(--badge-height, 22px);
   gap: var(--badge-gap, 4px);
-  padding: 0 var(--badge-px, 6px);
+  /* Figma's 1px stroke sits inside the padding */
+  padding: 0 calc(var(--badge-pr, 4px) - 1px) 0 calc(var(--badge-pl, 4px) - 1px);
   border-radius: var(--radius-full);
   border: 1px solid var(--badge-border);
   background: var(--badge-bg);
@@ -38,6 +39,13 @@
 .badge__text {
   display: inline-block;
 }
+/* Type=Default wraps the text in a frame with 2px side padding ("Frame 1") */
+.badge--type-default .badge__text {
+  padding: 0 var(--padding-2);
+}
+.badge__flag {
+  flex-shrink: 0;
+}
 .badge__icon {
   flex-shrink: 0;
   color: var(--badge-fg);
@@ -51,80 +59,79 @@
 }
 
 /* ===================================================================
-   Colors — set the scale slots (Figma utility names → our scales)
+   Colors — Figma bindings per color
    =================================================================== */
 .badge--gray {
-  --c-50: var(--gray-50);
-  --c-200: var(--gray-200);
-  --c-500: var(--gray-500);
-  --c-700: var(--gray-700);
+  --c-bg: var(--utility-gray-50);
+  --c-border: var(--utility-gray-200);
+  --c-fg: var(--utility-gray-700);
+  --c-dot: var(--utility-gray-500);
 }
 .badge--success {
-  --c-50: var(--brand-50);
-  --c-200: var(--brand-200);
-  --c-500: var(--brand-500);
-  --c-700: var(--brand-700);
+  /* Figma binds Success to the brand utility scale */
+  --c-bg: var(--utility-brand-50);
+  --c-border: var(--utility-brand-200);
+  --c-fg: var(--utility-brand-700);
+  --c-dot: var(--utility-brand-500);
 }
 .badge--warning {
-  /* Figma "Warning" = orange scale */
-  --c-50: var(--orange-50);
-  --c-200: var(--orange-200);
-  --c-500: var(--orange-500);
-  --c-700: var(--orange-700);
+  /* Figma 1.1.0 "Warning" = yellow; bound to warning semantics, not utility steps */
+  --c-bg: var(--utility-warning-50);
+  --c-border: var(--border-warning-secondary);
+  --c-fg: var(--text-warning-primary);
+  --c-dot: var(--icon-warning-primary);
 }
 .badge--error {
-  --c-50: var(--error-50);
-  --c-200: var(--error-200);
-  --c-500: var(--error-500);
-  --c-700: var(--error-700);
+  --c-bg: var(--utility-error-50);
+  --c-border: var(--utility-error-200);
+  --c-fg: var(--utility-error-700);
+  --c-dot: var(--utility-error-500);
 }
 .badge--blue {
-  --c-50: var(--blue-50);
-  --c-200: var(--blue-200);
-  --c-500: var(--blue-500);
-  --c-700: var(--blue-700);
+  --c-bg: var(--utility-blue-50);
+  --c-border: var(--utility-blue-200);
+  --c-fg: var(--utility-blue-700);
+  --c-dot: var(--utility-blue-500);
 }
 .badge--purple {
-  /* Figma "Purple" = violet scale */
-  --c-50: var(--violet-50);
-  --c-200: var(--violet-200);
-  --c-500: var(--violet-500);
-  --c-700: var(--violet-700);
+  --c-bg: var(--utility-purple-50);
+  --c-border: var(--utility-purple-200);
+  --c-fg: var(--utility-purple-700);
+  --c-dot: var(--utility-purple-500);
 }
 .badge--magenta {
-  /* Figma "Magenta" = pink scale */
-  --c-50: var(--pink-50);
-  --c-200: var(--pink-200);
-  --c-500: var(--pink-500);
-  --c-700: var(--pink-700);
+  --c-bg: var(--utility-magenta-50);
+  --c-border: var(--utility-magenta-200);
+  --c-fg: var(--utility-magenta-700);
+  --c-dot: var(--utility-magenta-500);
 }
-.badge--yellow {
-  /* Figma "Yellow" = warning scale, with darker text + lighter border for contrast */
-  --c-50: var(--warning-50);
-  --c-200: var(--warning-400);
-  --c-500: var(--warning-500);
-  --c-700: var(--warning-800);
+.badge--orange {
+  /* Figma 1.1.0 "Orange" (formerly "Warning") */
+  --c-bg: var(--utility-orange-50);
+  --c-border: var(--utility-orange-200);
+  --c-fg: var(--utility-orange-700);
+  --c-dot: var(--utility-orange-500);
 }
 
 /* ===================================================================
    Variants — compose the slots
    =================================================================== */
 .badge--default {
-  --badge-bg: var(--c-50);
-  --badge-border: var(--c-200);
-  --badge-fg: var(--c-700);
-  --badge-dot-fill: var(--c-500);
+  --badge-bg: var(--c-bg);
+  --badge-border: var(--c-border);
+  --badge-fg: var(--c-fg);
+  --badge-dot-fill: var(--c-dot);
 }
 .badge--no-outline {
-  --badge-bg: var(--c-50);
+  --badge-bg: var(--c-bg);
   --badge-border: transparent;
-  --badge-fg: var(--c-700);
-  --badge-dot-fill: var(--c-500);
+  --badge-fg: var(--c-fg);
+  --badge-dot-fill: var(--c-dot);
 }
 .badge--modern {
   --badge-bg: var(--bg-primary);
-  --badge-border: var(--gray-300);
-  --badge-fg: var(--gray-700);
-  --badge-dot-fill: var(--c-500);
+  --badge-border: var(--utility-gray-300);
+  --badge-fg: var(--utility-gray-700);
+  --badge-dot-fill: var(--c-dot);
   --badge-shadow: var(--elevation-50);
 }

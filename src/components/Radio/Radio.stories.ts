@@ -8,6 +8,7 @@ const meta = {
   title: 'Components/Radio',
   component: Radio,
   tags: ['autodocs'],
+  parameters: { figma: '11118:1101' },
   argTypes: {
     size: { control: 'inline-radio', options: [16, 20] },
     disabled: { control: 'boolean' },

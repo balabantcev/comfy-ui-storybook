@@ -8,6 +8,7 @@ const meta = {
   title: 'Components/Toggle',
   component: Toggle,
   tags: ['autodocs'],
+  parameters: { figma: '11136:1928' },
   argTypes: {
     size: { control: 'inline-radio', options: [20, 24] },
     disabled: { control: 'boolean' },

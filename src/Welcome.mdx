@@ -1,7 +1,13 @@
 import { Meta } from '@storybook/addon-docs/blocks'
 import { getLogo } from './foundations/logo'
+import { iconNames } from './icons'
+import { colorGroups } from './foundations/colors'
+import { semanticColors } from './foundations/semantic'
 
-<Meta title="Hello" />
+export const componentCount = Object.keys(import.meta.glob('./components/*/*.stories.ts')).length
+export const tokenCount = colorGroups.reduce((n, g) => n + Object.keys(g.colors).length, 0) + Object.keys(semanticColors).length
+
+<Meta title="Вітання" />
 
 export const wordmark = getLogo('wordmark', 'green').svg
 
@@ -16,7 +22,7 @@ export const wordmark = getLogo('wordmark', 'green').svg
       gap: 24,
       padding: '56px 32px',
       borderRadius: 'var(--radius-16)',
-      background: 'linear-gradient(180deg, var(--brand-50) 0%, var(--bg-primary) 100%)',
+      background: 'linear-gradient(180deg, var(--bg-brand-secondary) 0%, var(--bg-primary) 100%)',
       border: '1px solid var(--border-secondary)',
     }}
   >
@@ -29,18 +35,19 @@ export const wordmark = getLogo('wordmark', 'green').svg
       Вітаємо у Storybook компанії COMFY!
     </h1>
 
-    <p style={{ margin: 0, maxWidth: 620, fontFamily: 'var(--font-family)', color: 'var(--text-secondary)', fontSize: 'var(--font-body-1-size)', lineHeight: 'var(--font-body-1-line-height)' }}>
+    {/* a div, not a p: MDX wraps multi-line text in its own <p> */}
+    <div style={{ margin: 0, maxWidth: 620, fontFamily: 'var(--font-family)', color: 'var(--text-secondary)', fontSize: 'var(--font-body-1-size)', lineHeight: 'var(--font-body-1-line-height)' }}>
       Це жива бібліотека нашої дизайн-системи — єдине джерело правди для дизайнерів
       і розробників. Тут зібрані кольори, типографіка, іконки та компоненти,
       синхронізовані з Figma й побудовані на дизайн-токенах: змінюється токен —
       оновлюється вся система.
-    </p>
+    </div>
 
     <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
       {[
-        ['20+', 'компонентів'],
-        ['292', 'іконки'],
-        ['160+', 'токенів'],
+        [String(componentCount), 'компоненти'],
+        [String(iconNames.length), 'іконки'],
+        [String(tokenCount), 'кольорових токенів'],
         ['1', 'джерело правди'],
       ].map(([num, label]) => (
         <div
@@ -86,7 +93,7 @@ export const wordmark = getLogo('wordmark', 'green').svg
     ))}
   </div>
 
-  <p
+  <div
     style={{
       marginTop: 32,
       textAlign: 'center',
@@ -98,6 +105,6 @@ export const wordmark = getLogo('wordmark', 'green').svg
     }}
   >
     Приємного використання! 🐶
-  </p>
+  </div>
 
 </div>

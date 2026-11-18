@@ -1,0 +1,24 @@
+/* Payment method — Figma: Misc icons / Payment method icon (node 13618:494). Tokens only;
+   logo colors are brand artwork inside the SVGs. */
+.payment-method {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 46px;
+  height: 32px;
+  overflow: hidden;
+  border-radius: var(--radius-4);
+  /* the card stays white in both themes (Figma bg-white-solid) so the logos keep their colors */
+  background: var(--bg-white-solid);
+  /* Figma 1px inside stroke — an inset shadow paints under the logo like the Figma layer order */
+  box-shadow: inset 0 0 0 1px var(--border-secondary);
+}
+.payment-method--24 {
+  width: 34px;
+  height: 24px;
+}
+.payment-method > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

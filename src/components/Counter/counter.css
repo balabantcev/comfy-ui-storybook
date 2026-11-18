@@ -2,7 +2,7 @@
    All colors reference design tokens (src/foundations/tokens.css). */
 
 .counter {
-  --counter-bg: var(--bg-error-primary);
+  --counter-bg: var(--bg-error-solid);
   --counter-fg: var(--text-primary-onbrand);
   --counter-border: transparent;
   --counter-shadow: none;
@@ -30,7 +30,7 @@
 
 /* ---- Colors ---- */
 .counter--orange {
-  --counter-bg: var(--orange-500);
+  --counter-bg: var(--bg-brand_orange);
   --counter-fg: var(--text-primary-onbrand);
 }
 .counter--brand {
@@ -38,11 +38,11 @@
   --counter-fg: var(--text-primary-onbrand);
 }
 .counter--red {
-  --counter-bg: var(--bg-error-primary);
+  --counter-bg: var(--bg-error-solid);
   --counter-fg: var(--text-primary-onbrand);
 }
 .counter--grey {
-  --counter-bg: var(--gray-50);
+  --counter-bg: var(--utility-gray-50);
   --counter-border: var(--border-secondary);
   --counter-fg: var(--text-secondary);
 }
@@ -55,5 +55,5 @@
 
 /* ---- Border gap (white ring for placing over content) ---- */
 .counter--gap {
-  --counter-shadow: 0 0 0 2px var(--border-gap, var(--base-white));
+  --counter-shadow: 0 0 0 2px var(--border-gap);
 }

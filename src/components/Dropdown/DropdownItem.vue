@@ -7,8 +7,13 @@ const props = withDefaults(
   defineProps<{
     /** Leading icon name */
     icon?: string
-    /** Show a leading check (selected item) */
+    /** Selected item: shows a leading check (or a checked box with `control="checkbox"`) */
     selected?: boolean
+    /**
+     * Leading control (Figma -Icon-dropdown-item: Icon / Check / Checkbox / Dot).
+     * `checkbox` renders a visual checkbox reflecting `selected`; `dot` a status dot.
+     */
+    control?: 'checkbox' | 'dot'
     /** Keyboard shortcut hint, e.g. "⌘C" */
     shortcut?: string
     /** Trailing chevron (submenu indicator) */
@@ -24,7 +29,7 @@ const props = withDefaults(
 
 const emit = defineEmits<{ (e: 'click', ev: MouseEvent): void }>()
 
-const leadingIcon = computed(() => (props.selected ? 'check' : props.icon))
+const leadingIcon = computed(() => (props.control ? undefined : props.selected ? 'check' : props.icon))
 
 const cssVars = computed(() =>
   props.size === 32
@@ -43,7 +48,8 @@ const onClick = (ev: MouseEvent) => {
 <template>
   <button
     type="button"
-    role="menuitem"
+    :role="control === 'checkbox' ? 'menuitemcheckbox' : 'menuitem'"
+    :aria-checked="control === 'checkbox' ? selected : undefined"
     class="dropdown-item"
     :class="{ 'dropdown-item--active': active }"
     :style="cssVars"
@@ -53,7 +59,21 @@ const onClick = (ev: MouseEvent) => {
     <span class="dropdown-item__box">
       <span class="dropdown-item__content">
         <slot name="leading">
-          <Icon v-if="leadingIcon" :name="leadingIcon" :size="iconSize" class="dropdown-item__icon" />
+          <span v-if="control === 'checkbox'" class="dropdown-item__control" aria-hidden="true">
+            <span class="dropdown-item__checkbox" :class="{ 'dropdown-item__checkbox--checked': selected }">
+              <Icon v-if="selected" name="check" :size="12" />
+            </span>
+          </span>
+          <span v-else-if="control === 'dot'" class="dropdown-item__control" aria-hidden="true">
+            <span class="dropdown-item__dot" />
+          </span>
+          <Icon
+            v-else-if="leadingIcon"
+            :name="leadingIcon"
+            :size="iconSize"
+            class="dropdown-item__icon"
+            :class="{ 'dropdown-item__icon--check': leadingIcon === 'check' }"
+          />
         </slot>
         <span class="dropdown-item__label"><slot /></span>
       </span>

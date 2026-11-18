@@ -27,8 +27,14 @@ export default defineConfig({
       storybookTest({
         configDir: path.join(dirname, '.storybook')
       })],
+      // Story tests run inside the browser, where `process.env` doesn't exist — hand the
+      // a11y gate to .storybook/preview.ts at build time: CI fails on violations, local runs report.
+      define: {
+        'import.meta.env.STORYBOOK_A11Y_TEST': JSON.stringify(process.env.CI ? 'error' : 'todo'),
+      },
       test: {
         name: 'storybook',
+        setupFiles: ['./.storybook/vitest.setup.ts'],
         browser: {
           enabled: true,
           headless: true,

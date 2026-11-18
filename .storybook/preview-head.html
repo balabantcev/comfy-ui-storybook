@@ -11,4 +11,29 @@
   :root {
     --font-inter: 'Inter Variable', 'Inter', sans-serif;
   }
+
+  /* Apply the design-system font to the whole preview so any inherited /
+     scaffolding text (story captions, tables, raw text) uses Inter, not the
+     browser default. Components already set font-family: var(--font-family). */
+  body,
+  .sb-show-main,
+  .sbdocs.sbdocs-wrapper {
+    font-family: var(--font-family, 'Inter Variable', 'Inter', sans-serif);
+  }
+
+  /* Autodocs / MDX text elements ship Storybook's default Nunito Sans via a
+     single-class rule; these two-class selectors win and pin them to Inter. */
+  .sbdocs.sbdocs-p,
+  .sbdocs.sbdocs-h1,
+  .sbdocs.sbdocs-h2,
+  .sbdocs.sbdocs-h3,
+  .sbdocs.sbdocs-h4,
+  .sbdocs.sbdocs-h5,
+  .sbdocs.sbdocs-h6,
+  .sbdocs.sbdocs-li,
+  .sbdocs.sbdocs-a,
+  .sbdocs.sbdocs-td,
+  .sbdocs.sbdocs-th {
+    font-family: var(--font-family, 'Inter Variable', 'Inter', sans-serif);
+  }
 </style>

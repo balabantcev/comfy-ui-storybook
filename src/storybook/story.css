@@ -1,0 +1,107 @@
+/* Shared Storybook scaffolding styles — token-driven, so story chrome obeys the
+   same design-token rule as components (no hardcoded hex/rgba). */
+
+/* Canvas follows the active theme (data-theme on <html>, set by the Theme toolbar). */
+html,
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.sb-row {
+  display: flex;
+  align-items: center;
+  gap: var(--padding-16, 16px);
+  flex-wrap: wrap;
+}
+
+.sb-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-16, 16px);
+  align-items: flex-start;
+}
+
+/* Labeled specimen: a component sample with a small caption underneath. */
+.sb-specimen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--padding-8, 8px);
+}
+
+.sb-caption {
+  font-family: inherit;
+  font-size: var(--font-caption-1-size, 12px);
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--text-secondary);
+}
+
+/* Matrix (rows × cols) table used by variant/color/size showcases. */
+.sb-matrix {
+  border-collapse: collapse;
+}
+.sb-matrix th,
+.sb-matrix .sb-matrix__label {
+  padding: var(--padding-8, 8px) var(--padding-16, 16px);
+  text-align: left;
+  text-transform: capitalize;
+  font-size: 13px;
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.sb-matrix td {
+  padding: var(--padding-8, 8px) var(--padding-16, 16px);
+}
+
+/* Framed surfaces for previewing on inverted / brand backgrounds. */
+.sb-surface--invers {
+  background: var(--bg-invers);
+  padding: var(--padding-16, 16px);
+  border-radius: var(--radius-12, 12px);
+  display: inline-block;
+}
+.sb-surface--brand {
+  background: var(--bg-brand-primary);
+  padding: var(--padding-10, 10px);
+  border-radius: var(--radius-8, 8px);
+  display: inline-flex;
+}
+
+/* Fixed-width frames matching Figma component widths (Alert 440px, mobile toast 343px) */
+.sb-alert-frame {
+  max-width: 440px;
+}
+.sb-mobile-frame {
+  max-width: 343px;
+}
+/* full-width block for horizontal layouts (sb-stack aligns children to the start) */
+.sb-wide > * {
+  align-self: stretch;
+}
+/* padding for fullscreen-layout stories */
+.sb-pad {
+  padding: var(--padding-24);
+}
+
+/* ScrollShadow demos */
+.sb-scroll-demo {
+  width: 226px;
+  height: 200px;
+}
+.sb-scroll-demo--wide {
+  max-width: 420px;
+}
+.sb-scroll-demo__row {
+  margin: 0;
+  padding: var(--padding-8) var(--padding-12);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  font-size: var(--font-body-2-size);
+  line-height: var(--font-body-2-line-height);
+}
+.sb-surface--primary { background: var(--bg-primary); }
+.sb-surface--primary-alt { background: var(--bg-primary-alt); }
+.sb-surface--secondary { background: var(--bg-secondary); }
+.sb-surface--disabled-subtle { background: var(--bg-disabled-subtle); }

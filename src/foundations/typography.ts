@@ -28,6 +28,10 @@ export const weightValue: Record<WeightName, number> = {
   ExtraBold: 800,
 }
 
+// Viewport width below which the Figma "Mobile" typography mode applies.
+// Not defined in Figma — a project assumption; change here and run `pnpm gen:tokens`.
+export const mobileBreakpoint = 768
+
 export interface TextStyle {
   /** Token name, e.g. "Title-1" */
   name: string
@@ -41,6 +45,8 @@ export interface TextStyle {
   letterSpacing: number
   /** Weights that ship as named styles for this token */
   weights: WeightName[]
+  /** Figma Typography → mode "Mobile" (only where it differs from Desktop) */
+  mobile?: { fontSize: number; lineHeight: number }
 }
 
 export interface TypeGroup {
@@ -54,16 +60,16 @@ export const typeGroups: TypeGroup[] = [
   {
     name: 'Title',
     styles: [
-      { name: 'Title-1', token: 'Title/Title-1', fontSize: 72, lineHeight: 90, weights: ['Regular', 'Medium', 'Bold'], ...base },
-      { name: 'Title-2', token: 'Title/Title-2', fontSize: 60, lineHeight: 72, weights: ['Regular', 'Medium', 'Bold'], ...base },
+      { name: 'Title-1', token: 'Title/Title-1', fontSize: 72, lineHeight: 90, weights: ['Regular', 'Medium', 'Bold'], mobile: { fontSize: 48, lineHeight: 60 }, ...base },
+      { name: 'Title-2', token: 'Title/Title-2', fontSize: 60, lineHeight: 72, weights: ['Regular', 'Medium', 'Bold'], mobile: { fontSize: 34, lineHeight: 42 }, ...base },
     ],
   },
   {
     name: 'Heading',
     styles: [
-      { name: 'H1', token: 'Heading/H1', fontSize: 48, lineHeight: 60, weights: ['Regular', 'Medium', 'Bold', 'ExtraBold'], ...base },
-      { name: 'H2', token: 'Heading/H2', fontSize: 34, lineHeight: 42, weights: ['Regular', 'Medium', 'Bold', 'ExtraBold'], ...base },
-      { name: 'H3', token: 'Heading/H3', fontSize: 28, lineHeight: 36, weights: ['Regular', 'Medium', 'Bold', 'ExtraBold'], ...base },
+      { name: 'H1', token: 'Heading/H1', fontSize: 48, lineHeight: 60, weights: ['Regular', 'Medium', 'Bold', 'ExtraBold'], mobile: { fontSize: 34, lineHeight: 42 }, ...base },
+      { name: 'H2', token: 'Heading/H2', fontSize: 34, lineHeight: 42, weights: ['Regular', 'Medium', 'Bold', 'ExtraBold'], mobile: { fontSize: 24, lineHeight: 32 }, ...base },
+      { name: 'H3', token: 'Heading/H3', fontSize: 28, lineHeight: 36, weights: ['Regular', 'Medium', 'Bold', 'ExtraBold'], mobile: { fontSize: 18, lineHeight: 28 }, ...base },
     ],
   },
   {

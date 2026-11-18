@@ -28,3 +28,7 @@ storybook-static
 
 # Claude Code local tooling config
 .claude/
+
+# Obsidian per-user workspace/layout state (keep shared vault settings)
+**/.obsidian/workspace*.json
+**/.obsidian/cache

@@ -3,6 +3,16 @@
 This repo mirrors the **"❖ Comfy UI"** Figma design system (fileKey `60wkPriIjI9zjyAKOq3dja`)
 as a Vue 3 + Vite + Storybook 10 component library.
 
+## Shared context vault
+
+Durable project knowledge, rules and preferences live in [`/context`](./context/README.md) —
+a plain-markdown vault that is **shared across every AI tool** (Claude Code here,
+Codex via `AGENTS.md`, Cursor via `.cursor/rules/`) and opens as an **Obsidian
+vault** (graph of `[[wiki-links]]`). Read `context/README.md` before non-trivial work.
+When you learn a new durable fact/rule/preference, add a note to `/context` (frontmatter
++ `[[links]]`) and index it in `context/README.md` — don't keep it only in one tool's
+private memory, or the other tools lose it.
+
 ## Core rule: everything is token-driven (no exceptions)
 
 Every color, spacing, radius and typographic value in any foundation or component
@@ -15,10 +25,10 @@ A single generator builds one stylesheet of CSS custom properties, loaded global
 in `.storybook/preview.ts`:
 
 ```
-colors.ts      (primitives:  --brand-500, --gray-100, --alpha-black-60 …)
+colors.ts      (primitives:  --brand-500, --gray-100, --dark-600 …)    fixed
 scale.ts       (spacing/radius: --padding-4, --radius-10 …)            ┐
 typography.ts  (type scale: --font-body-1-size, --font-weight-medium …) ├─▶ scripts/gen-tokens.mjs ─▶ src/foundations/tokens.css
-semantic.ts    (aliases: --text-secondary: var(--alpha-black-60) …)    ┘
+semantic.ts    (aliases, Light + Dark: --text-secondary: var(--dark-600) …)  ┘
 ```
 
 - **Primitives** — raw palette/scale values (from Figma variables).
@@ -27,6 +37,10 @@ semantic.ts    (aliases: --text-secondary: var(--alpha-black-60) …)    ┘
 
 Regenerate with `pnpm gen:tokens`. It also runs automatically via `prestorybook`
 and `prebuild-storybook`, so tokens are always fresh.
+
+`pnpm check:tokens` compares the token sources with a committed snapshot of the Figma
+variables (`scripts/figma/variables.snapshot.json`) — CI fails on any difference. To refresh the
+snapshot after a Figma change, see `context/figma-token-mapping.md`.
 
 ### When adding or changing a foundation / component
 
@@ -37,16 +51,16 @@ and `prebuild-storybook`, so tokens are always fresh.
    semantic alias in `semantic.ts`.
 3. `pnpm gen:tokens`.
 4. In the component, reference tokens **only**:
-   - prefer the semantic layer: `var(--bg-brand-primary)`, `var(--text-secondary)`
-   - primitives for hover/active shades: `var(--brand-600)`
+   - colors come from the **semantic** layer only: `var(--bg-brand-primary)`, `var(--bg-brand-primary-hover)`, `var(--text-secondary)` — it has Light + Dark values; primitives never change with the theme
+   - use the semantic token Figma binds for that layer (`get_variable_defs` on the node), incl. `--utility-*` and `--alpha-*`
    - `var(--radius-N)`, `var(--font-{style}-size)`, `var(--font-weight-medium)`
    - alpha of a color: `color-mix(in srgb, var(--brand-500) 24%, transparent)`
    - icons inherit color via `currentColor`
-5. Verify the primitive → semantic → component chain renders live in Storybook (`:6006`).
+5. Verify the primitive → semantic → component chain renders live in Storybook (`:6006`) in both themes (toolbar → Theme).
 
 ## Layout
 
 - `src/foundations/` — token sources (`.ts`) + doc pages (`.mdx`): colors, typography, effects
-- `src/icons/` — 292 SVGs by category + `index.ts` registry (`import.meta.glob`)
+- `src/icons/` — 326 SVGs by category + `index.ts` registry (`import.meta.glob`)
 - `src/components/` — Vue components (`Component.vue` + `component.css` + `Component.stories.ts` + `component.tokens.ts`)
 - `.storybook/public/fonts/` — Inter Variable (local `@font-face`)

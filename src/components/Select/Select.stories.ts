@@ -12,13 +12,22 @@ const OPTIONS = [
   { value: 'dnipro', label: 'Дніпро', disabled: true },
 ]
 
+const ROLES = [
+  { value: 'designer', label: 'Дизайнер', icon: 'user', dot: 'success' as const, hint: '12' },
+  { value: 'developer', label: 'Розробник', icon: 'setting-1', dot: 'blue' as const, hint: '34' },
+  { value: 'manager', label: 'Менеджер', icon: 'users', dot: 'orange' as const, hint: '5' },
+  { value: 'guest', label: 'Гість', icon: 'user-x', dot: 'gray' as const, hint: '0', disabled: true },
+]
+
 const meta = {
   title: 'Components/Select',
   component: Select,
   tags: ['autodocs'],
+  parameters: { figma: '11702:3456' },
   argTypes: {
     size: { control: 'inline-radio', options: [44, 48, 56] },
     itemSize: { control: 'inline-radio', options: [32, 40] },
+    type: { control: 'inline-radio', options: ['default', 'icon', 'dot', 'tags'] },
     multiple: { control: 'boolean' },
     required: { control: 'boolean' },
     disabled: { control: 'boolean' },
@@ -93,6 +102,47 @@ export const Sizes: Story = {
         <Select :size="56" label="56 px" :options="OPTIONS" v-model="v56" />
         <Select :size="48" label="48 px" :options="OPTIONS" v-model="v48" />
         <Select :size="44" label="44 px" :options="OPTIONS" v-model="v44" />
+      </div>
+    `,
+  }),
+}
+
+/** Figma "Type": Icon / Dot / Tags (Default is the plain field above). */
+export const Types: Story = {
+  parameters: { controls: { disable: true } },
+  render: () => ({
+    components: { Select },
+    setup: () => ({ ROLES, a: ref('designer'), b: ref('developer'), c: ref(['designer', 'manager']) }),
+    template: `
+      <div class="sb-stack" style="width:320px">
+        <Select type="icon" label="Icon" :options="ROLES" v-model="a" />
+        <Select type="dot" label="Dot" :options="ROLES" v-model="b" />
+        <Select type="tags" label="Tags" :options="ROLES" v-model="c" helper="Пошук і швидке додавання тегів." />
+      </div>
+    `,
+  }),
+}
+
+/** Multi-select rows with a trailing hint (Figma -Multi-select item "Discount"). */
+export const MultiWithHints: Story = {
+  parameters: { controls: { disable: true } },
+  render: () => ({
+    components: { Select },
+    setup: () => ({ ROLES, v: ref(['designer']) }),
+    template: `<div style="width:320px"><Select multiple label="Ролі" :options="ROLES" v-model="v" /></div>`,
+  }),
+}
+
+/** Empty state (Figma 1.1.0): no options, or a Tags search with no matches. */
+export const EmptyState: Story = {
+  parameters: { controls: { disable: true } },
+  render: () => ({
+    components: { Select },
+    setup: () => ({ v: ref(null), t: ref([]), OPTIONS_ALL: OPTIONS }),
+    template: `
+      <div class="sb-stack" style="width:320px">
+        <Select label="Без варіантів" :options="[]" v-model="v" empty-title="Немає варіантів" empty-description="Список порожній." />
+        <Select type="tags" label="Tags — введіть «xyz»" :options="OPTIONS_ALL" v-model="t" />
       </div>
     `,
   }),

@@ -9,6 +9,7 @@ const meta = {
   title: 'Components/Tooltip',
   component: Tooltip,
   tags: ['autodocs'],
+  parameters: { figma: '11111:3948' },
   argTypes: {
     placement: { control: 'inline-radio', options: ['top', 'bottom', 'left', 'right'] },
     align: { control: 'inline-radio', options: ['start', 'center', 'end'] },

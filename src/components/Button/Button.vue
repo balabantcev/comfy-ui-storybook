@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, useSlots } from 'vue'
 import Icon from '../Icon/Icon.vue'
-import { BUTTON_SIZES, type ButtonVariant, type ButtonIntent } from './button.tokens'
+import { BUTTON_SIZES, isSupportedButton, type ButtonVariant, type ButtonIntent } from './button.tokens'
 import './button.css'
 
 const props = withDefaults(
@@ -12,7 +12,7 @@ const props = withDefaults(
     intent?: ButtonIntent
     /** Height in px — one of the Figma sizes */
     size?: number
-    /** Softer filled style (brand-tinted background) — applies to `primary` */
+    /** Softer filled style (brand-tinted background) — `primary` + `brand` only */
     subtle?: boolean
     /** Full corner radius (pill) */
     pill?: boolean
@@ -44,12 +44,26 @@ const spec = computed(() => BUTTON_SIZES[props.size] ?? BUTTON_SIZES[40])
 
 const isIconOnly = computed(() => props.iconOnly || (!!props.icon && !slots.default))
 
+// Unsupported combinations (not in Figma 1.1.0) fall back to the nearest supported one:
+// primary + gray → primary + brand; subtle + gray/destructive → subtle dropped.
+const resolved = computed(() => {
+  const subtle = props.subtle && props.variant === 'primary'
+  if (isSupportedButton(props.variant, props.intent, subtle)) return { intent: props.intent, subtle }
+  if (import.meta.env.DEV) {
+    console.warn(
+      `[Button] variant="${props.variant}" intent="${props.intent}"${subtle ? ' subtle' : ''} is not part of ` +
+        'the Comfy UI design system (removed in Figma 1.1.0). Rendering the nearest supported variant.',
+    )
+  }
+  return subtle ? { intent: props.intent, subtle: false } : { intent: 'brand' as ButtonIntent, subtle: false }
+})
+
 const classes = computed(() => [
   'btn',
   `btn--${props.variant}`,
-  `btn--${props.intent}`,
+  `btn--${resolved.value.intent}`,
   {
-    'btn--subtle': props.subtle && props.variant === 'primary',
+    'btn--subtle': resolved.value.subtle,
     'btn--pill': props.pill,
     'btn--icon-only': isIconOnly.value,
     'btn--loading': props.loading,

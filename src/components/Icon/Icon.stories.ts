@@ -3,11 +3,13 @@ import { ref, computed } from 'vue'
 
 import Icon from './Icon.vue'
 import { icons, iconNames, categories } from '../../icons'
+import { Specimen } from '../../storybook'
 
 const meta = {
   title: 'Components/Icon',
   component: Icon,
   tags: ['autodocs'],
+  parameters: { figma: '1025:31781' },
   argTypes: {
     name: { control: 'select', options: iconNames },
     size: { control: { type: 'range', min: 12, max: 96, step: 2 } },
@@ -26,14 +28,13 @@ export const Playground: Story = {}
 
 export const Sizes: Story = {
   render: (args) => ({
-    components: { Icon },
+    components: { Icon, Specimen },
     setup: () => ({ args, sizes: [16, 20, 24, 32, 48, 64] }),
     template: `
-      <div style="display:flex;align-items:flex-end;gap:24px;flex-wrap:wrap">
-        <div v-for="s in sizes" :key="s" style="display:flex;flex-direction:column;align-items:center;gap:8px">
+      <div class="sb-row" style="align-items:flex-end">
+        <Specimen v-for="s in sizes" :key="s" :caption="s + 'px'">
           <Icon :name="args.name" :size="s" :color="args.color" />
-          <span style="font-size:12px;color:#737373">{{ s }}px</span>
-        </div>
+        </Specimen>
       </div>
     `,
   }),
@@ -60,17 +61,17 @@ export const Gallery: Story = {
       return { query, groups, total, all: icons.length }
     },
     template: `
-      <div style="font-family:sans-serif">
+      <div>
         <input
           v-model="query"
           placeholder="Search icons…"
-          style="width:100%;max-width:320px;padding:8px 12px;border:1px solid #e5e5e5;border-radius:8px;margin-bottom:8px;font-size:14px"
+          style="width:100%;max-width:320px;padding:8px 12px;border:1px solid var(--border-secondary);border-radius:var(--radius-8);margin-bottom:8px;font-size:14px;color:var(--text-primary)"
         />
-        <div style="font-size:12px;color:#737373;margin-bottom:20px">{{ total }} / {{ all }} icons</div>
+        <div class="sb-caption" style="margin-bottom:20px">{{ total }} / {{ all }} icons</div>
 
         <section v-for="g in groups" :key="g.cat" style="margin-bottom:32px">
-          <h3 style="text-transform:capitalize;border-bottom:1px solid #e5e5e5;padding-bottom:8px;margin-bottom:16px">
-            {{ g.cat }} <span style="color:#a3a3a3;font-weight:400">({{ g.items.length }})</span>
+          <h3 style="text-transform:capitalize;border-bottom:1px solid var(--border-secondary);padding-bottom:8px;margin-bottom:16px;color:var(--text-primary)">
+            {{ g.cat }} <span style="color:var(--text-tertiary);font-weight:400">({{ g.items.length }})</span>
           </h3>
           <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px">
             <div
@@ -78,10 +79,10 @@ export const Gallery: Story = {
               :key="it.name"
               :title="it.name"
               @click="copy(it.name)"
-              style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 8px;border:1px solid #f5f5f5;border-radius:8px;cursor:pointer;text-align:center"
+              style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 8px;border:1px solid var(--border-secondary);border-radius:var(--radius-8);cursor:pointer;text-align:center"
             >
               <Icon :name="it.name" :size="24" />
-              <span style="font-size:11px;color:#525252;word-break:break-word;line-height:1.3">{{ it.name }}</span>
+              <span style="font-size:11px;color:var(--text-secondary);word-break:break-word;line-height:1.3">{{ it.name }}</span>
             </div>
           </div>
         </section>

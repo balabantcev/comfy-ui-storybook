@@ -1,0 +1,12 @@
+/* Social brand — Figma: Misc icons / Social brand (node 13133:1436).
+   Brand colors live in the SVGs; the Apple mark follows the theme via currentColor. */
+.social-brand {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--icon-primary);
+}
+.social-brand > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

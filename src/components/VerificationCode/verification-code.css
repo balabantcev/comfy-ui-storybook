@@ -1,0 +1,81 @@
+/* Verification code — Comfy UI design system. Tokens only.
+   Figma: Input / Verification code (node 13421:8616). */
+
+.vcode {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--padding-4);
+  font-family: var(--font-family);
+}
+
+.vcode__cells {
+  display: flex;
+  gap: var(--padding-8);
+}
+
+.vcode__cell {
+  box-sizing: border-box;
+  width: var(--vcode-size, 56px);
+  height: var(--vcode-size, 56px);
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-10);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  caret-color: var(--text-primary);
+  text-align: center;
+  font-family: inherit;
+  font-size: var(--font-h3-size, 28px);
+  line-height: var(--font-h3-line-height, 36px);
+  font-weight: var(--font-weight-bold, 700);
+  outline: none;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+/* Figma "Default": an empty cell shows a tertiary "0" */
+.vcode__cell::placeholder {
+  color: var(--text-tertiary);
+  opacity: 1;
+}
+.vcode__cell:hover:not(:disabled):not(:focus) {
+  border-color: var(--border-solid);
+}
+/* Figma "Focused": border-brand + Focus ring/focus-ring-success */
+.vcode__cell:focus {
+  border-color: var(--border-brand);
+  box-shadow: 0 0 0 2px var(--utility-brand-500);
+}
+.vcode__cell:focus::placeholder {
+  color: transparent;
+}
+
+.vcode__helper {
+  margin: 0;
+  padding-left: var(--padding-12);
+  color: var(--text-tertiary);
+  font-size: var(--font-caption-1-size, 12px);
+  line-height: var(--font-caption-1-line-height, 16px);
+}
+
+/* Figma "Destructive" */
+.vcode--error .vcode__cell {
+  border-color: var(--border-error-secondary);
+}
+.vcode--error .vcode__cell:focus {
+  border-color: var(--border-error-primary);
+  box-shadow: 0 0 0 2px var(--utility-error-500);
+}
+.vcode--error .vcode__helper {
+  color: var(--text-error-primary);
+}
+
+/* Figma "Disabled" */
+.vcode__cell:disabled {
+  border-color: var(--border-disabled);
+  background: var(--bg-disabled-subtle);
+  color: var(--text-disabled);
+  cursor: not-allowed;
+}
+.vcode__cell:disabled::placeholder {
+  color: var(--text-disabled);
+}
