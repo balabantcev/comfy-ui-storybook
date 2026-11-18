@@ -25,7 +25,7 @@ pnpm typecheck        # перевірка типів (vue-tsc)
 
 ## Що всередині
 
-**20 компонентів · 292 іконки · 160+ дизайн-токенів · 106 сторіс**
+**20 компонентів · 326 іконок · 160+ дизайн-токенів · 106 сторіс**
 
 ### Foundations
 - **Colors** — палітра (brand / gray / error / orange / warning / blue / violet / pink / warm-taupe / alpha), 118 кольорів
@@ -61,7 +61,7 @@ semantic.ts    (aliases: --text-secondary: var(--alpha-black-60) …)     ┘
 ```
 src/
   foundations/   джерела токенів (.ts) + doc-сторінки (.mdx) + logo/
-  icons/         292 SVG за категоріями + index.ts (реєстр)
+  icons/         326 SVG за категоріями + index.ts (реєстр)
   components/    Vue-компоненти (Component.vue + component.css + *.stories.ts)
   Welcome.mdx    стартова сторінка
 scripts/

@@ -1,5 +1,6 @@
 import { Meta } from '@storybook/addon-docs/blocks'
 import { getLogo } from './foundations/logo'
+import { iconNames } from './icons'
 
 <Meta title="Вітання" />
 
@@ -39,7 +40,7 @@ export const wordmark = getLogo('wordmark', 'green').svg
     <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
       {[
         ['20+', 'компонентів'],
-        ['292', 'іконки'],
+        [String(iconNames.length), 'іконки'],
         ['160+', 'токенів'],
         ['1', 'джерело правди'],
       ].map(([num, label]) => (

@@ -12,6 +12,8 @@
 | **Chip** `type` | `secondary` (brand-tinted fill) | `primary-brand` | rename |
 | **Button** | `variant="primary" intent="gray"` | removed (not in Figma) | use `secondary` + `gray`, or `primary` + `brand` |
 | **Button** | `subtle` with `intent="gray"` / `"destructive"` | removed (not in Figma) | `subtle` works with `primary` + `brand` only |
+| **Icon** `name` | `link`, `link-off` | `link-1`, `unlink-1` (renamed in Figma, same artwork) | rename |
+| **Icon** `name` | `locate` | removed (no longer in Figma) | use `navigation` or `marker-pin` |
 
 Unsupported Button combinations no longer break rendering: they fall back to the nearest
 supported variant and log a warning in development (`isSupportedButton()` in `button.tokens.ts`).
@@ -47,6 +49,12 @@ supported variant and log a warning in development (`isSupportedButton()` in `bu
 - **Textarea** (new): in-box label (placeholder-size while empty, caption once filled),
   "n / max" counter (`maxlength`), vertical resize, error / disabled.
 - **Flag** (new): round UA / EN country flags from Figma Misc icons.
+- **Icons**: 35 new (326 total) — `sun`, `moon`, `video`, `video-plus`, `video-minus`, `power`,
+  `pause-circle`, `headset`, `tool`, `navigation`, `map-location`, `post-locker`, `store-pulse`,
+  `store-pickup`, `store-pickup-color`, `store-1-color`, `receipt-text-color`, `barcode`,
+  `climate-equipment`, `hourglass`, `sticky-notes`, `user-check`, `user-star-off`, `list-todo`,
+  `list-chevrons-all-open`, `list-chevrons-all-close`, `ban`, `box-x`, `eye-closed`, `life-buoy`,
+  `link-2`, `unlink-2`, `border-none`, `component`, `rate-app`; new `media/` category.
 - **AlertDialog** (Figma "Modal view"): `align` adds `horizontal` (icon beside the text, actions
   right-aligned, 520px wide); `overlay` (Figma Background — `false` renders the panel inline);
   `breakpoint` `auto` | `desktop` | `mobile` (mobile: bottom-docked, full width, stacked actions

@@ -57,6 +57,6 @@ and `prebuild-storybook`, so tokens are always fresh.
 ## Layout
 
 - `src/foundations/` — token sources (`.ts`) + doc pages (`.mdx`): colors, typography, effects
-- `src/icons/` — 292 SVGs by category + `index.ts` registry (`import.meta.glob`)
+- `src/icons/` — 326 SVGs by category + `index.ts` registry (`import.meta.glob`)
 - `src/components/` — Vue components (`Component.vue` + `component.css` + `Component.stories.ts` + `component.tokens.ts`)
 - `.storybook/public/fonts/` — Inter Variable (local `@font-face`)
