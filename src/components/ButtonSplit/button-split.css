@@ -1,0 +1,20 @@
+/* Button Split — Comfy UI design system. Tokens only.
+   Figma: Button Split (node 16855:8109). Colors / states come from button.css. */
+.btn-split {
+  display: inline-flex;
+  align-items: stretch;
+  gap: var(--padding-2);
+  vertical-align: middle;
+}
+.btn-split__dropdown .dropdown__trigger {
+  display: flex;
+  height: 100%;
+}
+/* Figma "Container text": 2px either side of the label */
+.btn-split__label {
+  padding: 0 var(--padding-2);
+}
+/* the menu opens from the chevron; keep the open chevron in its hover color */
+.btn-split__toggle[aria-expanded='true'] {
+  background: var(--btn-bg-hover, var(--btn-bg));
+}

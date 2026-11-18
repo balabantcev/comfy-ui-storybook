@@ -73,6 +73,11 @@ supported variant and log a warning in development (`isSupportedButton()` in `bu
   `count`, `disabled`); `variant="underline"` — "-Tab button underline" with an optional
   `trailingIcon`. WAI-ARIA tabs: `role="tablist"`/`tab`, roving focus, ←/→ (wrapping, skipping
   disabled), Home/End; `panelId` per item → `aria-controls`. Panels are rendered by the app.
+- **ButtonSplit** (new, Figma Button Split): main action + chevron menu (`#menu` slot with `close`),
+  2px apart; `type` primary | primary-subtle | secondary-brand | secondary-gray | tertiary-brand |
+  tertiary-gray, `size` 32 / 40 / 44 / 48 / 56, `pill`, `iconLeft`, `disabled`, `loading`. Each half
+  hovers and focuses on its own; colors and states reuse Button's classes. Chevron: `aria-haspopup`,
+  `aria-expanded`, `menuLabel`.
 - **Drawer** (new, Figma Drawer + -Drawer header / -Drawer footer): right-side panel, 700px (`width`),
   radius 16 on the left, E400; Mobile = full screen with shared-width buttons (`breakpoint` auto at
   768px). Header: optional Featured icon (`icon`), `title` (Label-2 / Label-3 Bold), `description`,
