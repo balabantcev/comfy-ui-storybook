@@ -84,7 +84,7 @@
 }
 .pagination__num:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--base-white), 0 0 0 4px var(--focus-ring-color);
+  box-shadow: 0 0 0 2px var(--border-gap), 0 0 0 4px var(--focus-ring-color);
 }
 .pagination__ellipsis {
   display: inline-flex;

@@ -3,13 +3,14 @@
    generated from semantic.ts → primitives). No hardcoded values here. */
 
 .btn {
-  /* color slots, set per variant/intent below */
+  /* color slots, set per variant/intent below (Figma: Components / Buttons, node 11111:282) */
   --btn-bg: transparent;
   --btn-fg: var(--text-primary);
+  --btn-icon: currentColor;
   --btn-border: transparent;
-  --btn-bg-hover: transparent;
-  --btn-bg-active: transparent;
-  --focus-ring-color: var(--brand-500);
+  --btn-bg-hover: var(--btn-bg);
+  /* Figma: focus ring = 2px gap in the surface color + "Focus ring/focus-ring-success" */
+  --focus-ring-color: var(--utility-brand-500);
 
   box-sizing: border-box;
   display: inline-flex;
@@ -39,19 +40,25 @@
 }
 .btn__icon {
   flex-shrink: 0;
+  color: var(--btn-icon);
 }
 
-.btn:hover:not(:disabled) {
+/* Figma has no separate "pressed" state — :active reuses the hover colors. */
+.btn:hover:not(:disabled),
+.btn:active:not(:disabled) {
   background: var(--btn-bg-hover);
-  border-color: var(--btn-border);
+  border-color: var(--btn-border-hover, var(--btn-border));
   color: var(--btn-fg-hover, var(--btn-fg));
 }
-.btn:active:not(:disabled) {
-  background: var(--btn-bg-active);
+.btn:hover:not(:disabled) .btn__icon,
+.btn:active:not(:disabled) .btn__icon {
+  color: var(--btn-icon-hover, var(--btn-icon));
 }
 .btn:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--base-white), 0 0 0 4px var(--focus-ring-color);
+  border-color: var(--btn-border-focus, var(--btn-border));
+  color: var(--btn-fg-focus, var(--btn-fg));
+  box-shadow: 0 0 0 2px var(--border-gap), 0 0 0 4px var(--focus-ring-color);
 }
 .btn:disabled {
   cursor: not-allowed;
@@ -64,79 +71,72 @@
   padding: 0;
 }
 
+/* Destructive intent: Figma "Focus ring/focus-ring-danger" */
+.btn--destructive {
+  --focus-ring-color: var(--utility-error-500);
+}
+
 /* ===================================================================
    PRIMARY (filled)
    =================================================================== */
 .btn--primary.btn--brand {
   --btn-bg: var(--bg-brand-primary);
   --btn-fg: var(--text-primary-onbrand);
-  --btn-bg-hover: var(--brand-600);
-  --btn-bg-active: var(--brand-700);
-  --focus-ring-color: var(--brand-500);
-}
-.btn--primary.btn--gray {
-  --btn-bg: var(--gray-900);
-  --btn-fg: var(--text-primary-onbrand);
-  --btn-bg-hover: var(--gray-800);
-  --btn-bg-active: var(--gray-700);
-  --focus-ring-color: var(--gray-400);
+  --btn-icon: var(--icon-white-solid);
+  --btn-bg-hover: var(--bg-brand-primary-hover);
 }
 .btn--primary.btn--destructive {
-  --btn-bg: var(--bg-error-primary);
+  --btn-bg: var(--bg-error-solid);
   --btn-fg: var(--text-primary-onbrand);
-  --btn-bg-hover: var(--error-600);
-  --btn-bg-active: var(--error-700);
-  --focus-ring-color: var(--error-500);
+  --btn-icon: var(--icon-white-solid);
+  --btn-bg-hover: var(--bg-error-solid-hover);
 }
 
-/* Primary subtle (tinted fill, brand text) */
+/* Primary subtle (tinted fill + brand outline) */
 .btn--primary.btn--subtle.btn--brand {
   --btn-bg: var(--bg-brand-secondary);
+  --btn-border: var(--border-brand);
   --btn-fg: var(--text-brand-secondary);
-  --btn-bg-hover: var(--brand-100);
-  --btn-bg-active: var(--brand-200);
-}
-.btn--primary.btn--subtle.btn--gray {
-  --btn-bg: var(--bg-secondary);
-  --btn-fg: var(--text-secondary);
-  --btn-bg-hover: var(--gray-200);
-  --btn-bg-active: var(--gray-300);
-}
-.btn--primary.btn--subtle.btn--destructive {
-  --btn-bg: var(--bg-error-secondary);
-  --btn-fg: var(--text-error-secondary);
-  --btn-bg-hover: var(--error-100);
-  --btn-bg-active: var(--error-200);
+  --btn-icon: var(--icon-brand-secondary);
+  --btn-bg-hover: var(--bg-brand-secondary-hover);
+  --btn-border-hover: var(--border-brand-hover);
+  --btn-fg-hover: var(--text-brand-secondary-hover);
+  --btn-icon-hover: var(--icon-brand-secondary-hover);
 }
 
 /* ===================================================================
-   SECONDARY (outlined, white background + border)
+   SECONDARY (outlined, surface background + border)
    =================================================================== */
 .btn--secondary {
   --btn-bg: var(--bg-primary);
-  background: var(--btn-bg);
 }
 .btn--secondary.btn--brand {
-  --btn-fg: var(--text-brand-primary);
   --btn-border: var(--border-brand);
-  --btn-bg-hover: var(--brand-50);
-  --btn-bg-active: var(--brand-100);
-  --focus-ring-color: var(--brand-500);
+  --btn-fg: var(--text-brand-primary);
+  --btn-icon: var(--icon-brand-primary);
+  --btn-bg-hover: var(--bg-brand-secondary-hover-subtle);
+  --btn-border-hover: var(--border-brand-hover);
+  --btn-fg-hover: var(--text-brand-primary-hover);
+  --btn-icon-hover: var(--icon-brand-primary-hover);
 }
 .btn--secondary.btn--gray {
-  --btn-fg: var(--text-secondary);
   --btn-border: var(--border-alpha-primary);
+  --btn-fg: var(--text-secondary);
+  --btn-icon: var(--icon-secondary);
+  --btn-bg-hover: var(--bg-hover);
+  --btn-border-hover: var(--border-alpha-solid);
   --btn-fg-hover: var(--text-primary);
-  --btn-bg-hover: var(--gray-50);
-  --btn-bg-active: var(--gray-100);
-  --focus-ring-color: var(--gray-400);
+  --btn-icon-hover: var(--icon-primary);
 }
 .btn--secondary.btn--destructive {
-  --btn-fg: var(--text-error-secondary);
   --btn-border: var(--border-error-secondary);
-  --btn-bg-hover: var(--error-50);
-  --btn-bg-active: var(--error-100);
-  --focus-ring-color: var(--error-500);
+  --btn-fg: var(--text-error-secondary);
+  --btn-icon: var(--icon-error-secondary);
+  --btn-bg-hover: var(--bg-error-tertiary);
+  --btn-border-hover: var(--border-error-primary);
+  --btn-border-focus: var(--border-error-primary);
+  --btn-fg-hover: var(--text-error-primary);
+  --btn-icon-hover: var(--icon-error-primary);
 }
 
 /* ===================================================================
@@ -144,22 +144,25 @@
    =================================================================== */
 .btn--tertiary.btn--brand {
   --btn-fg: var(--text-brand-primary);
-  --btn-bg-hover: var(--brand-50);
-  --btn-bg-active: var(--brand-100);
-  --focus-ring-color: var(--brand-500);
+  --btn-icon: var(--icon-brand-primary);
+  --btn-bg-hover: var(--bg-brand-secondary-hover-subtle);
+  --btn-fg-hover: var(--text-brand-primary-hover);
+  --btn-icon-hover: var(--icon-brand-primary-hover);
 }
 .btn--tertiary.btn--gray {
   --btn-fg: var(--text-secondary);
+  --btn-icon: var(--icon-secondary);
+  --btn-bg-hover: var(--bg-hover);
   --btn-fg-hover: var(--text-primary);
-  --btn-bg-hover: var(--gray-100);
-  --btn-bg-active: var(--gray-200);
-  --focus-ring-color: var(--gray-400);
+  --btn-fg-focus: var(--text-primary);
+  --btn-icon-hover: var(--icon-primary);
 }
 .btn--tertiary.btn--destructive {
   --btn-fg: var(--text-error-secondary);
-  --btn-bg-hover: var(--error-50);
-  --btn-bg-active: var(--error-100);
-  --focus-ring-color: var(--error-500);
+  --btn-icon: var(--icon-error-secondary);
+  --btn-bg-hover: var(--bg-error-tertiary);
+  --btn-fg-hover: var(--text-error-primary);
+  --btn-icon-hover: var(--icon-error-primary);
 }
 
 /* ===================================================================
@@ -169,49 +172,51 @@
   padding: 0;
   border: none;
   border-radius: 0;
-  background: transparent;
+  --btn-bg: transparent;
 }
 .btn--link.btn--brand {
   --btn-fg: var(--text-brand-primary);
-  --btn-fg-hover: var(--brand-600);
+  --btn-icon: var(--icon-brand-primary);
+  --btn-fg-hover: var(--text-brand-primary-hover);
+  --btn-icon-hover: var(--icon-brand-primary-hover);
 }
 .btn--link.btn--gray {
   --btn-fg: var(--text-secondary);
+  --btn-icon: var(--icon-secondary);
   --btn-fg-hover: var(--text-primary);
+  --btn-icon-hover: var(--icon-primary);
 }
 .btn--link.btn--destructive {
   --btn-fg: var(--text-error-secondary);
-  --btn-fg-hover: var(--error-600);
+  --btn-icon: var(--icon-error-secondary);
+  --btn-fg-hover: var(--text-error-primary);
+  --btn-icon-hover: var(--icon-error-primary);
 }
 .btn--link:hover:not(:disabled) {
-  background: transparent;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 .btn--link:focus-visible {
-  border-radius: 4px;
-  box-shadow: 0 0 0 2px var(--base-white), 0 0 0 4px var(--focus-ring-color);
+  border-radius: var(--radius-4);
 }
 
 /* ===================================================================
-   DISABLED
+   DISABLED (Figma: bg-disabled / border-disabled / text-disabled / icon-disabled-subtle)
    =================================================================== */
+/* Doubled class so it outranks the 3-class subtle selectors above (0,3,0). */
+.btn.btn:disabled {
+  --btn-fg: var(--text-disabled);
+  --btn-icon: var(--icon-disabled-subtle);
+  box-shadow: none;
+}
 .btn--primary:disabled {
-  --btn-bg: var(--bg-secondary);
-  --btn-fg: var(--gray-400);
+  --btn-bg: var(--bg-disabled);
   --btn-border: transparent;
 }
+.btn--primary.btn--subtle:disabled,
 .btn--secondary:disabled {
   --btn-bg: var(--bg-primary);
-  --btn-fg: var(--gray-400);
-  --btn-border: var(--border-secondary);
-}
-.btn--tertiary:disabled,
-.btn--link:disabled {
-  --btn-fg: var(--text-disabled);
-}
-.btn:disabled {
-  box-shadow: none;
+  --btn-border: var(--border-disabled);
 }
 
 /* ===================================================================

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { fn, expect, userEvent, within } from 'storybook/test'
 
 import Button from './Button.vue'
-import { BUTTON_SIZE_VALUES, BUTTON_VARIANTS, BUTTON_INTENTS } from './button.tokens'
+import { BUTTON_SIZE_VALUES, BUTTON_VARIANTS, BUTTON_INTENTS, isSupportedButton } from './button.tokens'
 import { iconNames } from '../../icons'
 import { Matrix, Specimen } from '../../storybook'
 
@@ -61,15 +61,21 @@ export const DisabledDoesNotClick: Story = {
   },
 }
 
-// --- Variants × intents matrix ---
+// --- Variants × intents matrix (only combinations that exist in Figma 1.1.0) ---
 export const Variants: Story = {
   parameters: { controls: { disable: true } },
   render: () => ({
     components: { Button, Matrix },
-    setup: () => ({ variants: [...BUTTON_VARIANTS, 'Primary subtle'], intents: BUTTON_INTENTS }),
+    setup: () => ({
+      variants: [...BUTTON_VARIANTS, 'Primary subtle'],
+      intents: BUTTON_INTENTS,
+      supported: (row: string, col: any) =>
+        row === 'Primary subtle' ? isSupportedButton('primary', col, true) : isSupportedButton(row as any, col),
+    }),
     template: `
       <Matrix :rows="variants" :cols="intents" v-slot="{ row, col }">
-        <Button v-if="row === 'Primary subtle'" variant="primary" subtle :intent="col">Button</Button>
+        <span v-if="!supported(row, col)" class="sb-caption">—</span>
+        <Button v-else-if="row === 'Primary subtle'" variant="primary" subtle :intent="col">Button</Button>
         <Button v-else :variant="row" :intent="col">Button</Button>
       </Matrix>
     `,

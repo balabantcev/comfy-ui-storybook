@@ -50,31 +50,32 @@
 
 /* ---- States ---- */
 .toggle:not(.toggle--disabled):hover .toggle__track {
-  background: var(--gray-300);
+  background: linear-gradient(var(--bg-hover), var(--bg-hover)), var(--bg-tertiary);
 }
 
 .toggle--on .toggle__track {
   background: var(--bg-brand-primary);
 }
 .toggle--on:not(.toggle--disabled):hover .toggle__track {
-  background: var(--brand-600);
+  background: var(--bg-brand-primary-hover);
 }
 .toggle--on .toggle__knob {
   transform: translateX(var(--tg-travel, 16px));
 }
 
 .toggle__track:has(.toggle__input:focus-visible) {
-  box-shadow: 0 0 0 2px var(--base-white), 0 0 0 4px var(--focus-ring-color);
+  box-shadow: 0 0 0 2px var(--border-gap), 0 0 0 4px var(--focus-ring-color);
 }
 
 .toggle--disabled .toggle__track {
-  background: var(--gray-100);
+  background: var(--bg-disabled-alfa);
+  opacity: var(--opacity-40);
 }
 .toggle--disabled.toggle--on .toggle__track {
-  background: var(--brand-200);
+  background: var(--bg-brand-primary);
 }
 .toggle--disabled .toggle__knob {
-  box-shadow: none;
+  background: var(--bg-subtle);
 }
 
 /* ---- Text ---- */

@@ -34,3 +34,16 @@ export type ButtonIntent = 'brand' | 'gray' | 'destructive'
 
 export const BUTTON_VARIANTS: ButtonVariant[] = ['primary', 'secondary', 'tertiary', 'link']
 export const BUTTON_INTENTS: ButtonIntent[] = ['brand', 'gray', 'destructive']
+
+/**
+ * Combinations that exist in Figma 1.1.0 (Buttons 11111:282 + Button destructive 12398:4029).
+ * Removed in the 1.1.0 sync: primary + gray, and `subtle` with gray / destructive.
+ *   primary   → brand, destructive      (subtle: brand only)
+ *   secondary → brand, gray, destructive
+ *   tertiary  → brand, gray, destructive
+ *   link      → brand, gray, destructive
+ */
+export function isSupportedButton(variant: ButtonVariant, intent: ButtonIntent, subtle = false): boolean {
+  if (variant !== 'primary') return !subtle
+  return subtle ? intent === 'brand' : intent !== 'gray'
+}

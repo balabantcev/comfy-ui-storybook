@@ -13,8 +13,8 @@
 }
 
 .alert-dialog {
-  --ad-accent: var(--brand-600);
-  --ad-accent-bg: var(--brand-50);
+  --ad-accent: var(--utility-brand-600);
+  --ad-accent-bg: var(--utility-brand-100);
 
   box-sizing: border-box;
   display: flex;
@@ -28,8 +28,8 @@
   font-family: var(--font-family);
 }
 .alert-dialog--destructive {
-  --ad-accent: var(--error-600);
-  --ad-accent-bg: var(--error-50);
+  --ad-accent: var(--utility-error-600);
+  --ad-accent-bg: var(--utility-error-100);
 }
 
 /* ---- Header ---- */
@@ -95,11 +95,11 @@
   border-radius: var(--radius-12);
 }
 .alert-dialog__close:hover {
-  background: var(--gray-100);
+  background: var(--bg-hover);
 }
 .alert-dialog__close:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--base-dark) 12%, transparent);
+  box-shadow: 0 0 0 3px var(--alpha-dark-200);
 }
 
 /* ---- Footer / actions ---- */

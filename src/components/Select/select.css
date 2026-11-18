@@ -95,7 +95,7 @@
   outline: none;
 }
 .select-item:focus-visible .select-item__box {
-  box-shadow: inset 0 0 0 2px var(--brand-500);
+  box-shadow: inset 0 0 0 2px var(--focus-ring-color);
 }
 .select-item:disabled {
   cursor: not-allowed;

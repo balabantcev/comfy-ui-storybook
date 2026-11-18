@@ -50,11 +50,11 @@
   cursor: grabbing;
 }
 .slider__thumb:hover {
-  box-shadow: var(--elevation-100), 0 0 0 6px color-mix(in srgb, var(--brand-500) 12%, transparent);
+  box-shadow: var(--elevation-100), 0 0 0 6px color-mix(in srgb, var(--utility-brand-500) 12%, transparent);
 }
 .slider__thumb:focus-visible {
   outline: none;
-  box-shadow: var(--elevation-100), 0 0 0 4px color-mix(in srgb, var(--brand-500) 24%, transparent);
+  box-shadow: var(--elevation-100), 0 0 0 4px color-mix(in srgb, var(--utility-brand-500) 24%, transparent);
 }
 
 .slider__label {
@@ -74,10 +74,10 @@
   pointer-events: none;
 }
 .slider--disabled .slider__fill {
-  background: var(--gray-300);
+  background: var(--border-disabled);
 }
 .slider--disabled .slider__thumb {
-  border-color: var(--gray-300);
+  border-color: var(--border-disabled);
   box-shadow: none;
   cursor: not-allowed;
 }

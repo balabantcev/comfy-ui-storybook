@@ -117,18 +117,18 @@
 
 /* ---- States ---- */
 .input:not(.input--disabled):not(.input--focused):not(.input--error) .input__box:hover {
-  border-color: var(--gray-400);
+  border-color: var(--border-solid);
 }
 .input--focused .input__box {
   border-color: var(--border-brand);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand-500) 24%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--utility-brand-500) 24%, transparent);
 }
 .input--error .input__box {
   border-color: var(--border-error-secondary);
 }
 .input--error.input--focused .input__box {
-  border-color: var(--error-500);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--error-500) 24%, transparent);
+  border-color: var(--border-error-primary);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--utility-error-500) 24%, transparent);
 }
 .input--error .input__helper {
   color: var(--text-error-primary);

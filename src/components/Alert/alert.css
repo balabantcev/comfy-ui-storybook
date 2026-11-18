@@ -3,11 +3,12 @@
 
 .alert {
   /* color slots, set per variant below */
-  --alert-bg: var(--bg-primary);
+  --alert-bg: var(--bg-primary-alt);
   --alert-border: var(--border-primary);
   --alert-icon: var(--icon-secondary);
+  --alert-close: var(--icon-secondary);
   --alert-title: var(--text-primary);
-  --alert-desc: var(--text-secondary);
+  --alert-desc: var(--text-primary);
   --alert-accent: var(--text-brand-primary);
 
   position: relative;
@@ -102,7 +103,7 @@
   padding: var(--padding-10);
   border: none;
   background: none;
-  color: var(--alert-icon);
+  color: var(--alert-close);
   cursor: pointer;
   border-radius: var(--radius-10);
 }
@@ -118,26 +119,29 @@
    Variants
    =================================================================== */
 .alert--success {
-  --alert-bg: var(--brand-50);
-  --alert-border: var(--brand-300);
-  --alert-icon: var(--brand-700);
-  --alert-title: var(--brand-900);
-  --alert-desc: var(--brand-900);
-  --alert-accent: var(--brand-500);
+  --alert-bg: var(--bg-success-tertiary);
+  --alert-border: var(--border-success-secondary);
+  --alert-icon: var(--utility-success-700);
+  --alert-close: var(--utility-success-700);
+  --alert-title: var(--utility-success-900);
+  --alert-desc: var(--utility-success-900);
+  --alert-accent: var(--text-brand-primary);
 }
 .alert--warning {
-  --alert-bg: var(--warning-50);
-  --alert-border: var(--warning-400);
-  --alert-icon: var(--warning-700);
-  --alert-title: var(--warning-900);
-  --alert-desc: var(--warning-900);
-  --alert-accent: var(--warning-800);
+  --alert-bg: var(--bg-warning-tertiary);
+  --alert-border: var(--border-warning-secondary);
+  --alert-icon: var(--icon-warning-primary);
+  --alert-close: var(--utility-warning-700);
+  --alert-title: var(--utility-warning-900);
+  --alert-desc: var(--utility-warning-900);
+  --alert-accent: var(--text-warning-primary);
 }
 .alert--error {
-  --alert-bg: var(--error-50);
-  --alert-border: var(--error-300);
-  --alert-icon: var(--error-700);
-  --alert-title: var(--error-900);
-  --alert-desc: var(--error-900);
-  --alert-accent: var(--error-500);
+  --alert-bg: var(--bg-error-tertiary);
+  --alert-border: var(--border-error-secondary);
+  --alert-icon: var(--icon-error-primary);
+  --alert-close: var(--utility-error-700);
+  --alert-title: var(--utility-error-900);
+  --alert-desc: var(--utility-error-900);
+  --alert-accent: var(--text-error-secondary);
 }

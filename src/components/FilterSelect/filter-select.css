@@ -44,7 +44,7 @@
 }
 .filter-trigger:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--base-white), 0 0 0 4px var(--focus-ring-color);
+  box-shadow: 0 0 0 2px var(--border-gap), 0 0 0 4px var(--focus-ring-color);
 }
 .filter-trigger:disabled {
   cursor: not-allowed;
@@ -58,7 +58,7 @@
   color: var(--text-brand-secondary);
 }
 .filter-select--active .filter-trigger:hover:not(:disabled) {
-  background: var(--brand-100);
+  background: var(--bg-brand-secondary-hover);
   color: var(--text-brand-secondary);
 }
 
@@ -85,11 +85,11 @@
   transition: background-color 0.12s ease;
 }
 .filter-clear:hover {
-  background: var(--brand-100);
+  background: var(--bg-brand-secondary-hover);
 }
 .filter-clear:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--base-white), 0 0 0 4px var(--focus-ring-color);
+  box-shadow: 0 0 0 2px var(--border-gap), 0 0 0 4px var(--focus-ring-color);
 }
 
 /* ---- Pill ---- */

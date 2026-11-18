@@ -21,6 +21,8 @@ export const BADGE_SIZES: Record<number, BadgeSizeSpec> = {
 export const BADGE_SIZE_VALUES = Object.keys(BADGE_SIZES).map(Number)
 
 export type BadgeVariant = 'default' | 'no-outline' | 'modern'
+// Figma 1.1.0 renamed the colors: the old orange "Warning" is now "Orange", and the old
+// "Yellow" is now "Warning" (BREAKING — `warning` used to render orange).
 export type BadgeColor =
   | 'gray'
   | 'success'
@@ -29,7 +31,7 @@ export type BadgeColor =
   | 'blue'
   | 'purple'
   | 'magenta'
-  | 'yellow'
+  | 'orange'
 
 export const BADGE_VARIANTS: BadgeVariant[] = ['default', 'no-outline', 'modern']
 export const BADGE_COLORS: BadgeColor[] = [
@@ -40,5 +42,5 @@ export const BADGE_COLORS: BadgeColor[] = [
   'blue',
   'purple',
   'magenta',
-  'yellow',
+  'orange',
 ]

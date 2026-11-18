@@ -85,7 +85,7 @@
   outline: none;
 }
 .dropdown-item:focus-visible .dropdown-item__box {
-  box-shadow: 0 0 0 2px var(--base-white), 0 0 0 4px var(--focus-ring-color);
+  box-shadow: 0 0 0 2px var(--border-gap), 0 0 0 4px var(--focus-ring-color);
 }
 
 .dropdown-item:disabled {

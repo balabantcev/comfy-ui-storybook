@@ -82,7 +82,7 @@ export const Compositions: Story = {
         <Chip type="grey" :count="4">З лічильником</Chip>
         <Chip type="grey" iconRight="chevron-down">Фільтр</Chip>
         <Chip type="grey" iconRight="x">Закрити</Chip>
-        <Chip type="primary" pill iconLeft="check">Pill</Chip>
+        <Chip type="secondary-brand" pill iconLeft="check">Pill</Chip>
         <Chip type="grey" disabled>Disabled</Chip>
       </div>
     `,
