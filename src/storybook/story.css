@@ -80,3 +80,7 @@ body {
 .sb-wide > * {
   align-self: stretch;
 }
+/* padding for fullscreen-layout stories */
+.sb-pad {
+  padding: var(--padding-24);
+}

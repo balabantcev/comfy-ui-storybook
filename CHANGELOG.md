@@ -73,6 +73,12 @@ supported variant and log a warning in development (`isSupportedButton()` in `bu
   `count`, `disabled`); `variant="underline"` — "-Tab button underline" with an optional
   `trailingIcon`. WAI-ARIA tabs: `role="tablist"`/`tab`, roving focus, ←/→ (wrapping, skipping
   disabled), Home/End; `panelId` per item → `aria-controls`. Panels are rendered by the app.
+- **Drawer** (new, Figma Drawer + -Drawer header / -Drawer footer): right-side panel, 700px (`width`),
+  radius 16 on the left, E400; Mobile = full screen with shared-width buttons (`breakpoint` auto at
+  768px). Header: optional Featured icon (`icon`), `title` (Label-2 / Label-3 Bold), `description`,
+  round × and a `#header` slot; scrolling body; footer with a `#footer` slot + Secondary gray / Primary
+  (`cancelLabel` / `confirmLabel`, `hideActions`). `role="dialog"` named by the title, Escape /
+  backdrop / × close, scroll lock, focus moves in and back to the trigger.
 - **ProgressSteps** (new, Figma Progress steps): `type` icon | number | featured | line, `size` s | m,
   `layout` horizontal (Desktop, "… top") | vertical (Mobile / "Only vertical", "… left") | auto (768px),
   `variant` default | minimal | connected ("Minimal icons"); statuses from `current` (or per step).
