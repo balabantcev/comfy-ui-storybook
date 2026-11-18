@@ -1,0 +1,58 @@
+/* Toast — Comfy UI design system. Tokens only.
+   Figma: Alert & Toast / Toast (node 15423:13721): the Alert + Elevations/E300. */
+
+.alert.toast {
+  box-shadow: var(--elevation-300);
+}
+.toast .alert__actions {
+  gap: var(--padding-12);
+}
+
+/* ---- Breakpoint=Desktop: a single row ---- */
+.toast--bp-desktop {
+  align-items: center;
+}
+.toast--bp-desktop .alert__body {
+  flex-direction: row;
+  align-items: center;
+}
+.toast--bp-desktop .alert__text {
+  flex: 1 1 auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: var(--padding-4);
+  min-width: 0;
+}
+.toast--bp-desktop .alert__actions {
+  flex-shrink: 0;
+  flex-wrap: nowrap;
+}
+.toast--bp-desktop .alert__close {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@media (min-width: 768px) {
+  .toast--bp-auto {
+    align-items: center;
+  }
+  .toast--bp-auto .alert__body {
+    flex-direction: row;
+    align-items: center;
+  }
+  .toast--bp-auto .alert__text {
+    flex: 1 1 auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: var(--padding-4);
+    min-width: 0;
+  }
+  .toast--bp-auto .alert__actions {
+    flex-shrink: 0;
+    flex-wrap: nowrap;
+  }
+  .toast--bp-auto .alert__close {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

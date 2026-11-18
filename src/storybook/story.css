@@ -68,3 +68,11 @@ body {
   border-radius: var(--radius-8, 8px);
   display: inline-flex;
 }
+
+/* Fixed-width frames matching Figma component widths (Alert 440px, mobile toast 343px) */
+.sb-alert-frame {
+  max-width: 440px;
+}
+.sb-mobile-frame {
+  max-width: 343px;
+}

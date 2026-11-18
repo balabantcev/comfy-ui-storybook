@@ -63,6 +63,11 @@ supported variant and log a warning in development (`isSupportedButton()` in `bu
 - **FeaturedIcon** (new, Figma Misc icons / Featured icon): `type` `light` | `gradient` | `outline` |
   `modern`, `color` `gray` | `success` | `warning` | `error` | `purple` | `blue`, `size` 32 / 40 / 48 / 56,
   any registry `icon`. New token `--shadow-skeuomorphic` (the Modern inner disc's layer shadows).
+- **Alert** `iconStyle`: `default` (20px glyph) | `featured` (32px Outline `FeaturedIcon` in the
+  alert's color) — Figma "Variant icon"; `role` `alert` | `status`.
+- **Toast** (new, Figma Alert & Toast / Toast): the Alert with elevation E300 — one row on Desktop,
+  stacked on Mobile (`breakpoint` `auto` | `desktop` | `mobile`); `role="status"`, `alert` for errors.
+  Placement, stacking and auto-dismiss stay with the app.
 - **RatingStar** (new, Figma Misc icons / Rating star): `fill` 0–100 (Figma steps of 10, any value
   works), `color` `orange` | `yellow`, `size`; `starFill(value, index)` helper for a 5-star rating.
 - **SocialBrand** (new, Figma Misc icons / Social brand): 11 marks — Apple, Google, Instagram,
@@ -94,7 +99,11 @@ supported variant and log a warning in development (`isSupportedButton()` in `bu
 - Button: primary destructive at rest uses `bg-error-solid`; Primary subtle has a brand outline;
   Secondary gray darkens its border on hover; disabled uses `bg-disabled` / `border-disabled`
   with a lighter icon; the focus ring is brand-colored for every non-destructive type.
-- Alert: default description is `text-primary`; colors bound to semantic tokens.
+- **Alert** (Figma Alert & Toast): title is Body-2 **Bold** `text-primary` and the description
+  `text-secondary` in every color (they used to be tinted per color); radius 16 (was 10); the actions
+  are real `<Button variant="link">` — Link gray + Link brand / destructive (Warning: Link gray in
+  `text-warning-primary`); × gets `bg-hover` and the standard focus ring; the 1px border now sits
+  inside the padding like Figma's stroke (96px tall, not 98). The `.alert__action--*` classes are gone.
 - Toggle disabled = normal colors at 40 % opacity; Checkbox/Chip/Counter/Input hover and
   disabled colors follow Figma bindings.
 - Focus-ring gap uses `--border-gap` (the surface color) instead of white.
