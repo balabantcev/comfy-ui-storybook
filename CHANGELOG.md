@@ -89,6 +89,10 @@ supported variant and log a warning in development (`isSupportedButton()` in `bu
   `variant` default | minimal | connected ("Minimal icons"); statuses from `current` (or per step).
   Semantic `<ol>` with `aria-current="step"` and a screen-reader status per step. `StepIcon` is the
   Figma "-Step icon base" (check / number × incomplete / current / complete × 24 / 32).
+- **ScrollShadow** (new, Figma ScrollShadow): wraps a scroll area and fades its edges into the surface
+  (`bg` primary | primary-alt | secondary | disabled-subtle — Figma "Variant BG"; transparent → solid
+  at 80 %), only on a side with more to scroll; `orientation` vertical | horizontal, `size` (80px).
+  The viewport is keyboard-focusable; `label` makes it a named region.
 - **Toast** (new, Figma Alert & Toast / Toast): the Alert with elevation E300 — one row on Desktop,
   stacked on Mobile (`breakpoint` `auto` | `desktop` | `mobile`); `role="status"`, `alert` for errors.
   Placement, stacking and auto-dismiss stay with the app.
