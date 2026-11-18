@@ -12,6 +12,7 @@ const meta = {
   component: ButtonSplit,
   tags: ['autodocs'],
   parameters: {
+    figma: '16855:8109',
     docs: {
       description: {
         component:

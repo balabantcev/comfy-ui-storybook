@@ -14,6 +14,7 @@ const meta = {
   title: 'Components/FilterSelect',
   component: FilterSelect,
   tags: ['autodocs'],
+  parameters: { figma: '11779:6110' },
   argTypes: {
     size: { control: 'inline-radio', options: [32, 40, 44, 48, 52] },
     multiple: { control: 'boolean' },

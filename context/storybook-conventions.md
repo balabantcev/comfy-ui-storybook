@@ -27,6 +27,12 @@ in the browser via `@storybook/addon-vitest` (config in `vite.config.ts`, projec
 annotations in `.storybook/vitest.setup.ts`). Run locally with `pnpm test`
 (needs `pnpm exec playwright install chromium` once — installed on this machine 2026-11-18).
 
+## Figma link per component
+
+Each `*.stories.ts` meta has `parameters: { figma: '<node-id>' }` — the component set's node in the
+Comfy UI file. `.storybook/manager.ts` turns it into the **Figma ↗** toolbar button;
+`pnpm check:figma-links` (CI) fails if a component lacks it. New component → add the node id.
+
 ## a11y
 
 `@storybook/addon-a11y` runs on every story. Story tests run **inside Chromium**, where

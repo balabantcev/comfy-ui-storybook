@@ -9,6 +9,7 @@ const meta = {
   component: PaymentMethod,
   tags: ['autodocs'],
   parameters: {
+    figma: '13618:494',
     docs: {
       description: {
         component:

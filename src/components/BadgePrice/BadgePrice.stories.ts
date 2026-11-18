@@ -9,6 +9,7 @@ const meta = {
   component: BadgePrice,
   tags: ['autodocs'],
   parameters: {
+    figma: '13796:1729',
     docs: {
       description: {
         component:

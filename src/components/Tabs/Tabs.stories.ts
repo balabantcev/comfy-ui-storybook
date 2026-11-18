@@ -18,6 +18,7 @@ const meta = {
   component: Tabs,
   tags: ['autodocs'],
   parameters: {
+    figma: '15414:331',
     docs: {
       description: {
         component:

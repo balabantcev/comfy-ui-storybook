@@ -14,6 +14,7 @@ import Divider from '../Divider/Divider.vue'
 const meta = {
   title: 'Components/Dropdown',
   component: DropdownMenu,
+  parameters: { figma: '13551:1880' },
   subcomponents: { DropdownItem, Dropdown, DropdownHeader, DropdownEmptyState, DropdownFooter },
   tags: ['autodocs'],
 } satisfies Meta<typeof DropdownMenu>

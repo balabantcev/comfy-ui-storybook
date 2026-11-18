@@ -34,6 +34,9 @@ jobs:
       - name: Tokens match the Figma snapshot
         run: pnpm check:tokens
 
+      - name: Every component links to its Figma node
+        run: pnpm check:figma-links
+
       - name: Generate design tokens
         run: pnpm gen:tokens
 

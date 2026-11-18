@@ -10,6 +10,7 @@ const meta = {
   component: Alert,
   tags: ['autodocs'],
   parameters: {
+    figma: '12231:4230',
     docs: {
       description: {
         component:

@@ -10,6 +10,7 @@ const meta = {
   title: 'Components/Badge',
   component: Badge,
   tags: ['autodocs'],
+  parameters: { figma: '11287:1108' },
   argTypes: {
     variant: { control: 'inline-radio', options: BADGE_VARIANTS },
     color: { control: 'select', options: BADGE_COLORS },

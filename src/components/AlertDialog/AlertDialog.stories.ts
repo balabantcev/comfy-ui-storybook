@@ -11,6 +11,7 @@ const meta = {
   title: 'Components/AlertDialog',
   component: AlertDialog,
   tags: ['autodocs'],
+  parameters: { figma: '12488:888' },
   argTypes: {
     align: { control: 'inline-radio', options: ['left', 'center', 'horizontal'] },
     overlay: { control: 'boolean' },

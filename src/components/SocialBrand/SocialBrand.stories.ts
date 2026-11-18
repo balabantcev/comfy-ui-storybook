@@ -9,6 +9,7 @@ const meta = {
   component: SocialBrand,
   tags: ['autodocs'],
   parameters: {
+    figma: '13133:1436',
     docs: {
       description: {
         component:

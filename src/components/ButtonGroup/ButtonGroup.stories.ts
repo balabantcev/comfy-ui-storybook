@@ -11,6 +11,7 @@ const meta = {
   component: ButtonGroup,
   subcomponents: { ButtonGroupItem },
   tags: ['autodocs'],
+  parameters: { figma: '11494:2988' },
   argTypes: {
     size: { control: 'inline-radio', options: SIZES },
   },

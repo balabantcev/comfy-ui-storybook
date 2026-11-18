@@ -8,6 +8,7 @@ const meta = {
   title: 'Components/Flag',
   component: Flag,
   tags: ['autodocs'],
+  parameters: { figma: '11288:1811' },
   argTypes: {
     code: { control: 'inline-radio', options: FLAG_CODES },
     size: { control: { type: 'number', min: 12, max: 64 } },

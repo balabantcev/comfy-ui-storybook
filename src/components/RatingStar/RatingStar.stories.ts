@@ -9,6 +9,7 @@ const meta = {
   component: RatingStar,
   tags: ['autodocs'],
   parameters: {
+    figma: '12552:45',
     docs: {
       description: {
         component:

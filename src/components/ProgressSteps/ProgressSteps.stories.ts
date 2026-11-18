@@ -17,6 +17,7 @@ const meta = {
   component: ProgressSteps,
   tags: ['autodocs'],
   parameters: {
+    figma: '15766:4297',
     docs: {
       description: {
         component:

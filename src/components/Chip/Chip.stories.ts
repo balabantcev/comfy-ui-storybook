@@ -10,6 +10,7 @@ const meta = {
   title: 'Components/Chip',
   component: Chip,
   tags: ['autodocs'],
+  parameters: { figma: '13509:3771' },
   argTypes: {
     type: { control: 'inline-radio', options: CHIP_TYPES },
     size: { control: 'select', options: CHIP_SIZE_VALUES },

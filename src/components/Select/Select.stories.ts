@@ -23,6 +23,7 @@ const meta = {
   title: 'Components/Select',
   component: Select,
   tags: ['autodocs'],
+  parameters: { figma: '11702:3456' },
   argTypes: {
     size: { control: 'inline-radio', options: [44, 48, 56] },
     itemSize: { control: 'inline-radio', options: [32, 40] },

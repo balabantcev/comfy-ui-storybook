@@ -10,6 +10,7 @@ const meta = {
   title: 'Components/Button',
   component: Button,
   tags: ['autodocs'],
+  parameters: { figma: '11111:282' },
   argTypes: {
     variant: { control: 'inline-radio', options: BUTTON_VARIANTS },
     intent: { control: 'inline-radio', options: BUTTON_INTENTS },

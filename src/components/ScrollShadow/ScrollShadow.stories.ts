@@ -10,6 +10,7 @@ const meta = {
   component: ScrollShadow,
   tags: ['autodocs'],
   parameters: {
+    figma: '16728:3274',
     docs: {
       description: {
         component:

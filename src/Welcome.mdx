@@ -30,12 +30,13 @@ export const wordmark = getLogo('wordmark', 'green').svg
       Вітаємо у Storybook компанії COMFY!
     </h1>
 
-    <p style={{ margin: 0, maxWidth: 620, fontFamily: 'var(--font-family)', color: 'var(--text-secondary)', fontSize: 'var(--font-body-1-size)', lineHeight: 'var(--font-body-1-line-height)' }}>
+    {/* a div, not a p: MDX wraps multi-line text in its own <p> */}
+    <div style={{ margin: 0, maxWidth: 620, fontFamily: 'var(--font-family)', color: 'var(--text-secondary)', fontSize: 'var(--font-body-1-size)', lineHeight: 'var(--font-body-1-line-height)' }}>
       Це жива бібліотека нашої дизайн-системи — єдине джерело правди для дизайнерів
       і розробників. Тут зібрані кольори, типографіка, іконки та компоненти,
       синхронізовані з Figma й побудовані на дизайн-токенах: змінюється токен —
       оновлюється вся система.
-    </p>
+    </div>
 
     <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
       {[
@@ -87,7 +88,7 @@ export const wordmark = getLogo('wordmark', 'green').svg
     ))}
   </div>
 
-  <p
+  <div
     style={{
       marginTop: 32,
       textAlign: 'center',
@@ -99,6 +100,6 @@ export const wordmark = getLogo('wordmark', 'green').svg
     }}
   >
     Приємного використання! 🐶
-  </p>
+  </div>
 
 </div>

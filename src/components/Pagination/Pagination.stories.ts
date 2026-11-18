@@ -8,6 +8,7 @@ const meta = {
   title: 'Components/Pagination',
   component: Pagination,
   tags: ['autodocs'],
+  parameters: { figma: '13447:5347' },
   argTypes: {
     total: { control: { type: 'number', min: 1 } },
     type: { control: 'inline-radio', options: ['page', 'minimal', 'card'] },

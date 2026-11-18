@@ -7,6 +7,7 @@ const meta = {
   title: 'Components/Input',
   component: Input,
   tags: ['autodocs'],
+  parameters: { figma: '11215:919' },
   argTypes: {
     size: { control: 'inline-radio', options: [44, 48, 56] },
     required: { control: 'boolean' },

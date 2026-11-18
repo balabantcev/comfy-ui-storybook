@@ -6,6 +6,7 @@ const meta = {
   title: 'Components/Logo',
   component: Logo,
   tags: ['autodocs'],
+  parameters: { figma: '1894:485082' },
   argTypes: {
     kind: { control: 'inline-radio', options: ['wordmark', 'mark'] },
     variant: { control: 'select', options: ['green', 'white', 'mono', 'modern', 'default'] },

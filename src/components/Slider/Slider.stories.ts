@@ -8,6 +8,7 @@ const meta = {
   title: 'Components/Slider',
   component: Slider,
   tags: ['autodocs'],
+  parameters: { figma: '12567:6467' },
   argTypes: {
     min: { control: 'number' },
     max: { control: 'number' },
@@ -17,7 +18,7 @@ const meta = {
   },
   args: { min: 0, max: 100, step: 1, labels: true },
   decorators: [() => ({ template: '<div style="width:100%;max-width:320px;padding:8px 0 28px"><story /></div>' })],
-}  satisfies Meta<typeof Slider>
+} satisfies Meta<typeof Slider>
 
 export default meta
 type Story = StoryObj<typeof meta>

@@ -9,6 +9,7 @@ const meta = {
   component: Toast,
   tags: ['autodocs'],
   parameters: {
+    figma: '15423:13721',
     docs: {
       description: {
         component:

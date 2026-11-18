@@ -10,6 +10,7 @@ const meta = {
   component: FeaturedIcon,
   tags: ['autodocs'],
   parameters: {
+    figma: '15030:853',
     docs: {
       description: {
         component:

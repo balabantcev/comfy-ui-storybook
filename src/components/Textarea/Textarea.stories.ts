@@ -7,6 +7,7 @@ const meta = {
   title: 'Components/Textarea',
   component: Textarea,
   tags: ['autodocs'],
+  parameters: { figma: '11485:675' },
   argTypes: {
     rows: { control: { type: 'number', min: 2, max: 12 } },
     maxlength: { control: { type: 'number', min: 10 } },

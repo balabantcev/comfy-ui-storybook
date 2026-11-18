@@ -8,6 +8,7 @@ const meta = {
   title: 'Components/VerificationCode',
   component: VerificationCode,
   tags: ['autodocs'],
+  parameters: { figma: '13421:8616' },
   argTypes: {
     length: { control: { type: 'number', min: 3, max: 8 } },
     size: { control: 'inline-radio', options: [44, 48, 56] },

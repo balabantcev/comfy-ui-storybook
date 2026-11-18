@@ -9,6 +9,7 @@ const meta = {
   title: 'Components/Divider',
   component: Divider,
   tags: ['autodocs'],
+  parameters: { figma: '11296:1467' },
   argTypes: {
     textStyle: { control: 'inline-radio', options: ['label', 'body', 'caption'] },
     align: { control: 'inline-radio', options: ['left', 'center', 'right'] },

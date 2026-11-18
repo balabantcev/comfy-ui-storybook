@@ -128,6 +128,10 @@ supported variant and log a warning in development (`isSupportedButton()` in `bu
   repo and repo tokens Figma doesn't have. Current state: ✓ all 502 values match.
 - CI: `check:tokens` runs first; after `gen:tokens` it fails if the committed `tokens.css` is stale.
 - `scripts/figma/export-variables.figma.js` refreshes the snapshot (Figma MCP or plugin console).
+- **Figma ↗** button in the Storybook toolbar: every component's story meta names its Figma node
+  (`parameters.figma`), the button opens it in the Comfy UI file. `pnpm check:figma-links` (CI)
+  fails when a component has no node.
+- Welcome page: no more nested `<p>` (React hydration warning).
 
 ### Changed (visual — now matches Figma)
 - Hover / active surfaces, tertiary alpha borders and elevations use the 4 % layer they were

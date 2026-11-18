@@ -8,6 +8,7 @@ const meta = {
   title: 'Components/Checkbox',
   component: Checkbox,
   tags: ['autodocs'],
+  parameters: { figma: '11118:844' },
   argTypes: {
     size: { control: 'inline-radio', options: [16, 20] },
     indeterminate: { control: 'boolean' },

@@ -9,6 +9,7 @@ const meta = {
   title: 'Components/Icon',
   component: Icon,
   tags: ['autodocs'],
+  parameters: { figma: '1025:31781' },
   argTypes: {
     name: { control: 'select', options: iconNames },
     size: { control: { type: 'range', min: 12, max: 96, step: 2 } },

@@ -11,6 +11,7 @@ const meta = {
   component: Drawer,
   tags: ['autodocs'],
   parameters: {
+    figma: '15846:1966',
     layout: 'fullscreen',
     docs: {
       story: { inline: false, iframeHeight: 560 },

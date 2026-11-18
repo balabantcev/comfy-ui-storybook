@@ -8,6 +8,7 @@ const meta = {
   title: 'Components/Counter',
   component: Counter,
   tags: ['autodocs'],
+  parameters: { figma: '13472:795' },
   argTypes: {
     color: { control: 'inline-radio', options: COUNTER_COLORS },
     size: { control: 'inline-radio', options: COUNTER_SIZE_VALUES },
