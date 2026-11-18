@@ -27,9 +27,6 @@
    Panel
    =================================================================== */
 .alert-dialog {
-  /* Figma featured icon: Type=Light, Color=Gray (Error when destructive) */
-  --ad-accent: var(--utility-gray-600);
-  --ad-accent-bg: var(--alpha-dark-100);
   --ad-pad: var(--padding-24);
 
   position: relative;
@@ -46,10 +43,6 @@
 }
 .alert-dialog--horizontal {
   width: 520px;
-}
-.alert-dialog--destructive {
-  --ad-accent: var(--utility-error-600);
-  --ad-accent-bg: var(--utility-error-100);
 }
 
 /* ---- Header (Figma "Modal view – Header control") ---- */
@@ -68,16 +61,9 @@
   align-items: flex-start;
 }
 
+/* <FeaturedIcon> Type=Light, Color=Gray (Error when destructive), 48px */
 .alert-dialog__featured-icon {
-  display: inline-flex;
-  flex-shrink: 0;
   align-self: flex-start;
-  align-items: center;
-  justify-content: center;
-  padding: var(--padding-12);
-  border-radius: var(--radius-full);
-  background: var(--ad-accent-bg);
-  color: var(--ad-accent);
 }
 .alert-dialog--center .alert-dialog__featured-icon {
   align-self: center;

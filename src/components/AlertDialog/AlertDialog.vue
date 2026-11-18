@@ -3,6 +3,7 @@ import { computed, watch, onBeforeUnmount } from 'vue'
 import Icon from '../Icon/Icon.vue'
 import Button from '../Button/Button.vue'
 import Checkbox from '../Checkbox/Checkbox.vue'
+import FeaturedIcon from '../FeaturedIcon/FeaturedIcon.vue'
 import './alert-dialog.css'
 
 // Figma: Patterns / Modal window → "Modal view" (node 12488:888)
@@ -139,9 +140,14 @@ onBeforeUnmount(() => {
           :aria-modal="overlay || undefined"
         >
           <div class="alert-dialog__header">
-            <span v-if="showIcon" class="alert-dialog__featured-icon">
-              <Icon :name="iconName" :size="24" />
-            </span>
+            <FeaturedIcon
+              v-if="showIcon"
+              class="alert-dialog__featured-icon"
+              :icon="iconName"
+              type="light"
+              :color="destructive ? 'error' : 'gray'"
+              :size="48"
+            />
 
             <div class="alert-dialog__text">
               <p v-if="title || $slots.title" class="alert-dialog__title">

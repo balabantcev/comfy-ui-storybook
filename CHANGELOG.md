@@ -60,6 +60,9 @@ supported variant and log a warning in development (`isSupportedButton()` in `bu
   `breakpoint` `auto` | `desktop` | `mobile` (mobile: bottom-docked, full width, stacked actions
   with the primary on top); footer checkbox `checkboxLabel` + `v-model:checked`; `body` slot for
   custom content between the header and the actions.
+- **FeaturedIcon** (new, Figma Misc icons / Featured icon): `type` `light` | `gradient` | `outline` |
+  `modern`, `color` `gray` | `success` | `warning` | `error` | `purple` | `blue`, `size` 32 / 40 / 48 / 56,
+  any registry `icon`. New token `--shadow-skeuomorphic` (the Modern inner disc's layer shadows).
 
 ### Changed (visual — now matches Figma)
 - Hover / active surfaces, tertiary alpha borders and elevations use the 4 % layer they were
@@ -79,5 +82,5 @@ supported variant and log a warning in development (`isSupportedButton()` in `bu
 - Divider: Body / Caption labels are Regular weight, `text-tertiary`; a slotted icon is `icon-tertiary`.
 - Input / Select focus: a solid 2px ring (Figma focus-ring-success / -danger) instead of the soft
   24 % glow.
-- AlertDialog: the featured icon is Gray (alpha-dark-100 / utility-gray-600) unless destructive;
+- AlertDialog: the featured icon is a `<FeaturedIcon>` (Light, 48px) — Gray (alpha-dark-100 / utility-gray-600) unless destructive;
   the description is text-primary; the × button gets the standard focus ring.

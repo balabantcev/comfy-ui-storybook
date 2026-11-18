@@ -21,7 +21,7 @@ import { dirname, resolve } from 'node:path'
 import * as colorsMod from '../src/foundations/colors.ts'
 import { spacing, radius, opacity } from '../src/foundations/scale.ts'
 import { typeGroups, fontWeights, mobileBreakpoint } from '../src/foundations/typography.ts'
-import { elevations, focusRings } from '../src/foundations/effects.ts'
+import { elevations, componentShadows, focusRings } from '../src/foundations/effects.ts'
 import { semanticColors } from '../src/foundations/semantic.ts'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
@@ -43,7 +43,7 @@ for (const [name, [light, dark]] of Object.entries(semanticColors)) {
   }
 }
 const varRefs = (s) => [...s.matchAll(/var\(--([a-z0-9_-]+)\)/g)].map((m) => m[1])
-for (const e of [...elevations, ...focusRings])
+for (const e of [...elevations, ...componentShadows, ...focusRings])
   for (const r of varRefs(e.boxShadow))
     if (!primitiveNames.has(r) && !semanticNames.has(r)) errors.push(`--${e.name} → unknown token "${r}"`)
 if (errors.length) {
@@ -86,10 +86,12 @@ for (const [n, v] of Object.entries(fontWeights)) L.push(`  --font-weight-${slug
 L.push('')
 L.push('  /* ---- Elevations (fixed Dark alpha primitives — not themed) ---- */')
 for (const e of elevations.filter((e) => !isThemed(e.boxShadow))) L.push(`  --${e.name}: ${e.boxShadow};`)
+L.push('  /* ---- Component layer shadows (Figma-bound, same primitives) ---- */')
+for (const e of componentShadows.filter((e) => !isThemed(e.boxShadow))) L.push(`  --${e.name}: ${e.boxShadow};`)
 
 L.push('}')
 
-const themed = [...elevations, ...focusRings].filter((e) => isThemed(e.boxShadow))
+const themed = [...elevations, ...componentShadows, ...focusRings].filter((e) => isThemed(e.boxShadow))
 const themeBlock = (selector, scheme, idx) => {
   L.push('')
   L.push(`${selector} {`)

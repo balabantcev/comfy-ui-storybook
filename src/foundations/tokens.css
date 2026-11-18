@@ -237,6 +237,8 @@
   --elevation-300: 0px 0px 0.5px 0px var(--dark-200), 0px 5px 12px 0px var(--dark-200), 0px 1px 3px 0px var(--dark-100);
   --elevation-400: 0px 0px 0.5px 0px var(--dark-200), 0px 10px 16px 0px var(--dark-200), 0px 2px 5px 0px var(--dark-100);
   --elevation-500: 0px 3px 12px 0px var(--dark-50), 0px 10px 24px 0px var(--dark-300), 0px 2px 5px 0px var(--dark-100);
+  /* ---- Component layer shadows (Figma-bound, same primitives) ---- */
+  --shadow-skeuomorphic: 0px 1px 2px 0px var(--dark-300), 0px 3px 3px 0px var(--dark-200), 0px 8px 5px 0px var(--dark-50), inset 0px -2px 1px 0px var(--dark-200);
 }
 
 :root,

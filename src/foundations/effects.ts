@@ -52,6 +52,17 @@ export const elevations: Elevation[] = [
   },
 ]
 
+// Layer shadows that Figma binds directly on a component (not published as effect styles),
+// kept here so components still consume a token. Same fixed Dark primitives as elevations.
+export const componentShadows: Elevation[] = [
+  {
+    // Featured icon, Type=Modern → "Inner" (node 15030:853): raised button-like disc
+    name: 'shadow-skeuomorphic',
+    token: 'Featured icon / Modern / Inner',
+    boxShadow: `0px 1px 2px 0px ${d(300)}, 0px 3px 3px 0px ${d(200)}, 0px 8px 5px 0px ${d(50)}, inset 0px -2px 1px 0px ${d(200)}`,
+  },
+]
+
 export interface FocusRing {
   name: string
   token: string

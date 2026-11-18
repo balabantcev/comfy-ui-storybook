@@ -1,0 +1,129 @@
+/* Featured icon — Comfy UI design system. Tokens only.
+   Figma: Misc icons / Featured icon (node 15030:853). */
+
+.featured-icon {
+  /* per-color slots (Figma binds utility-{color}-*; Gray uses the alpha-dark layer) */
+  --fi-fg: var(--utility-gray-600);          /* Light glyph, Outline rings + glyph, Gradient disc */
+  --fi-bg: var(--alpha-dark-100);            /* Light fill */
+  --fi-tint: var(--alpha-dark-100);          /* Gradient ring fill */
+  --fi-tint-border: var(--alpha-dark-300);   /* Gradient ring stroke */
+  --fi-modern-fg: var(--icon-secondary);     /* Modern glyph */
+
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--fi-size);
+  height: var(--fi-size);
+  border-radius: var(--radius-full);
+  color: var(--fi-fg);
+}
+.featured-icon__inner {
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+}
+
+/* ---- Colors ---- */
+.featured-icon--success {
+  --fi-fg: var(--utility-brand-600);
+  --fi-bg: var(--utility-brand-100);
+  --fi-tint: var(--utility-brand-50);
+  --fi-tint-border: var(--utility-brand-200);
+  --fi-modern-fg: var(--icon-success-primary);
+}
+.featured-icon--warning {
+  --fi-fg: var(--utility-warning-700);
+  --fi-bg: var(--utility-warning-100);
+  --fi-tint: var(--utility-warning-50);
+  --fi-tint-border: var(--utility-warning-300);
+  --fi-modern-fg: var(--icon-warning-primary);
+}
+.featured-icon--error {
+  --fi-fg: var(--utility-error-600);
+  --fi-bg: var(--utility-error-100);
+  --fi-tint: var(--utility-error-50);
+  --fi-tint-border: var(--utility-error-200);
+  --fi-modern-fg: var(--icon-error-primary);
+}
+.featured-icon--purple {
+  --fi-fg: var(--utility-purple-600);
+  --fi-bg: var(--utility-purple-100);
+  --fi-tint: var(--utility-purple-50);
+  --fi-tint-border: var(--utility-purple-200);
+  --fi-modern-fg: var(--utility-purple-600);
+}
+.featured-icon--blue {
+  --fi-fg: var(--utility-blue-600);
+  --fi-bg: var(--utility-blue-100);
+  --fi-tint: var(--utility-blue-50);
+  --fi-tint-border: var(--utility-blue-200);
+  --fi-modern-fg: var(--utility-blue-600);
+}
+
+/* ---- Type=Light: tinted disc ---- */
+.featured-icon--light {
+  background: var(--fi-bg);
+}
+
+/* ---- Type=Gradient: tinted ring fading to the bottom + solid inner disc, white glyph ---- */
+.featured-icon--gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  border-radius: inherit;
+  background: var(--fi-tint);
+  border: 1px solid var(--fi-tint-border);
+  /* Figma "Gradient mask": opaque at the top → transparent at the bottom (only alpha matters) */
+  -webkit-mask-image: linear-gradient(to bottom, currentColor, transparent);
+  mask-image: linear-gradient(to bottom, currentColor, transparent);
+}
+.featured-icon--gradient .featured-icon__inner {
+  width: var(--fi-inner);
+  height: var(--fi-inner);
+  background: var(--fi-fg);
+  color: var(--icon-white-solid);
+}
+
+/* ---- Type=Outline: two concentric rings (10 % / 30 %) ---- */
+.featured-icon--outline::before,
+.featured-icon--outline::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  box-sizing: border-box;
+  border: 2px solid var(--fi-fg);
+  border-radius: var(--radius-full);
+  transform: translate(-50%, -50%);
+}
+.featured-icon--outline::before {
+  width: var(--fi-ring);
+  height: var(--fi-ring);
+  opacity: var(--opacity-10, 0.1);
+}
+.featured-icon--outline::after {
+  width: calc(var(--fi-ring) - 10px);
+  height: calc(var(--fi-ring) - 10px);
+  opacity: var(--opacity-30, 0.3);
+}
+
+/* ---- Type=Modern: bordered disc with a raised inner disc ---- */
+.featured-icon--modern {
+  background: var(--bg-primary-alt);
+  border: 1px solid var(--border-primary);
+  color: var(--fi-modern-fg);
+}
+.featured-icon--modern .featured-icon__inner {
+  width: var(--fi-inner);
+  height: var(--fi-inner);
+  background: var(--bg-primary-alt);
+  /* Figma: 1px outside stroke border-alpha-secondary + the skeuomorphic layer shadows */
+  box-shadow: 0 0 0 1px var(--border-alpha-secondary), var(--shadow-skeuomorphic);
+}
