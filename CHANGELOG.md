@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased — sync with Figma "❖ Comfy UI" 1.1.0
+## 1.1.0 — 2026-11-18 · sync with Figma "❖ Comfy UI" 1.1.0
 
 ### ⚠️ Breaking changes
 
@@ -165,3 +165,8 @@ supported variant and log a warning in development (`isSupportedButton()` in `bu
   24 % glow.
 - AlertDialog: the featured icon is a `<FeaturedIcon>` (Light, 48px) — Gray (alpha-dark-100 / utility-gray-600) unless destructive;
   the description is text-primary; the × button gets the standard focus ring.
+
+## 1.0.0
+
+Initial release: tokens (colors, spacing, radius, typography, effects), 292 icons and the first
+20 components synced from Figma "❖ Comfy UI" 1.0.0.
