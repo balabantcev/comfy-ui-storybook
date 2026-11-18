@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import Icon from '../Icon/Icon.vue'
+import Button from '../Button/Button.vue'
 import './pagination.css'
+
+// Figma: Patterns / Pagination (node 13447:5347)
+//   Type       → `type`:  "Page default" = page, "Page minimal center aligned" = minimal, "Card default" = card
+//   Breakpoint → `breakpoint`: auto (by container width), or forced desktop / mobile
+//   Full corner radius → `pill`
+export type PaginationType = 'page' | 'minimal' | 'card'
+export type PaginationBreakpoint = 'auto' | 'desktop' | 'mobile'
 
 const props = withDefaults(
   defineProps<{
@@ -9,25 +16,34 @@ const props = withDefaults(
     modelValue?: number
     /** Total number of pages */
     total: number
+    /** Figma "Type": page (link nav), minimal (outlined nav), card (outlined nav, card padding) */
+    type?: PaginationType
+    /** Figma "Breakpoint" — `auto` switches to the mobile layout in containers ≤ 520px */
+    breakpoint?: PaginationBreakpoint
     /** Pages shown either side of the current page */
     siblingCount?: number
-    /** Pill-shaped page cells */
+    /** Full corner radius (pill) — page cells and nav buttons */
     pill?: boolean
-    /** Cell size in px */
+    /** Page cell size in px */
     size?: number
     /** Show the prev/next buttons */
     showNav?: boolean
     prevLabel?: string
     nextLabel?: string
+    /** Mobile summary text, e.g. "Сторінка 1 з 10" */
+    summary?: (page: number, total: number) => string
   }>(),
   {
     modelValue: 1,
+    type: 'page',
+    breakpoint: 'auto',
     siblingCount: 1,
     pill: false,
     size: 40,
     showNav: true,
     prevLabel: 'Назад',
     nextLabel: 'Вперед',
+    summary: (page: number, total: number) => `Сторінка ${page} з ${total}`,
   },
 )
 
@@ -64,9 +80,19 @@ const items = computed<Item[]>(() => {
 const canPrev = computed(() => props.modelValue > 1)
 const canNext = computed(() => props.modelValue < props.total)
 
+// Desktop nav: "Page default" uses Link gray, the other types Secondary gray (outlined).
+// Mobile nav is always an outlined icon-only button.
+const desktopNavVariant = computed(() => (props.type === 'page' ? 'link' : 'secondary'))
+
+const wrapClasses = computed(() => [
+  'pagination-wrap',
+  `pagination-wrap--${props.breakpoint}`,
+])
+const navClasses = computed(() => ['pagination', `pagination--${props.type}`])
+
 const cssVars = computed(() => ({
   '--pg-size': `${props.size}px`,
-  '--pg-radius': props.pill ? 'var(--radius-full)' : 'var(--radius-8)',
+  '--pg-radius': props.pill ? 'var(--radius-full)' : 'var(--radius-10)',
 }))
 
 function go(page: number) {
@@ -76,21 +102,26 @@ function go(page: number) {
 </script>
 
 <template>
-  <div class="pagination-wrap">
-  <nav class="pagination" :style="cssVars" role="navigation" aria-label="Pagination">
-    <div v-if="showNav" class="pagination__nav pagination__nav--prev">
-      <button
-        type="button"
-        class="pagination__btn"
+  <div :class="wrapClasses">
+  <nav :class="navClasses" :style="cssVars" role="navigation" aria-label="Pagination">
+    <!-- ===== Desktop layout ===== -->
+    <div v-if="showNav" class="pagination__nav pagination__nav--prev pagination__desktop">
+      <Button
+        :variant="desktopNavVariant"
+        intent="gray"
+        :size="32"
+        :pill="pill"
         :disabled="!canPrev"
+        :icon-left="prevLabel ? 'arrow-left' : undefined"
+        :icon="prevLabel ? undefined : 'arrow-left'"
+        :aria-label="prevLabel ? undefined : 'Попередня сторінка'"
         @click="go(modelValue - 1)"
       >
-        <Icon name="arrow-left" :size="16" class="pagination__btn-icon" />
-        <span v-if="prevLabel">{{ prevLabel }}</span>
-      </button>
+        <template v-if="prevLabel">{{ prevLabel }}</template>
+      </Button>
     </div>
 
-    <div class="pagination__numbers">
+    <div class="pagination__numbers pagination__desktop">
       <template v-for="(it, idx) in items" :key="idx">
         <span v-if="it === 'left-dots' || it === 'right-dots'" class="pagination__ellipsis">…</span>
         <button
@@ -106,17 +137,46 @@ function go(page: number) {
       </template>
     </div>
 
-    <div v-if="showNav" class="pagination__nav pagination__nav--next">
-      <button
-        type="button"
-        class="pagination__btn"
+    <div v-if="showNav" class="pagination__nav pagination__nav--next pagination__desktop">
+      <Button
+        :variant="desktopNavVariant"
+        intent="gray"
+        :size="32"
+        :pill="pill"
         :disabled="!canNext"
+        :icon-right="nextLabel ? 'arrow-right' : undefined"
+        :icon="nextLabel ? undefined : 'arrow-right'"
+        :aria-label="nextLabel ? undefined : 'Наступна сторінка'"
         @click="go(modelValue + 1)"
       >
-        <span v-if="nextLabel">{{ nextLabel }}</span>
-        <Icon name="arrow-right" :size="16" class="pagination__btn-icon" />
-      </button>
+        <template v-if="nextLabel">{{ nextLabel }}</template>
+      </Button>
     </div>
+
+    <!-- ===== Mobile layout (Figma Breakpoint=Mobile) ===== -->
+    <Button
+      class="pagination__mobile"
+      variant="secondary"
+      intent="gray"
+      :size="32"
+      :pill="pill"
+      icon="arrow-left"
+      aria-label="Попередня сторінка"
+      :disabled="!canPrev"
+      @click="go(modelValue - 1)"
+    />
+    <span class="pagination__summary pagination__mobile" aria-live="polite">{{ summary(modelValue, total) }}</span>
+    <Button
+      class="pagination__mobile"
+      variant="secondary"
+      intent="gray"
+      :size="32"
+      :pill="pill"
+      icon="arrow-right"
+      aria-label="Наступна сторінка"
+      :disabled="!canNext"
+      @click="go(modelValue + 1)"
+    />
   </nav>
   </div>
 </template>

@@ -1,4 +1,6 @@
-/* Pagination — Comfy UI design system. Tokens only. */
+/* Pagination — Comfy UI design system. Tokens only.
+   Figma: Patterns / Pagination (node 13447:5347). Prev/next are <Button>s, exactly as in Figma
+   (Link gray / Secondary gray, 32px). */
 
 .pagination-wrap {
   container-type: inline-size;
@@ -6,6 +8,7 @@
 }
 
 .pagination {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,6 +17,10 @@
   padding-top: var(--padding-16);
   border-top: 1px solid var(--border-secondary);
   font-family: var(--font-family);
+}
+/* Figma "Card default": sits at the bottom of a card */
+.pagination--card {
+  padding: var(--padding-12) var(--padding-14);
 }
 
 /* prev / next */
@@ -25,30 +32,6 @@
 }
 .pagination__nav--next {
   justify-content: flex-end;
-}
-.pagination__btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--padding-4);
-  padding: 0 var(--padding-2);
-  border: none;
-  background: none;
-  color: var(--text-secondary);
-  font-size: var(--font-body-2-size, 14px);
-  line-height: var(--font-body-2-line-height, 20px);
-  font-weight: var(--font-weight-medium, 500);
-  cursor: pointer;
-}
-.pagination__btn:hover:not(:disabled) {
-  color: var(--text-primary);
-}
-.pagination__btn:disabled {
-  color: var(--text-disabled);
-  cursor: not-allowed;
-}
-.pagination__btn-icon {
-  flex-shrink: 0;
-  color: inherit;
 }
 
 /* numbers */
@@ -66,18 +49,17 @@
   padding: var(--padding-8);
   border: none;
   background: none;
-  border-radius: var(--pg-radius, 8px);
+  border-radius: var(--pg-radius, 10px);
   color: var(--text-secondary);
+  font-family: inherit;
   font-size: var(--font-body-2-size, 14px);
   line-height: var(--font-body-2-line-height, 20px);
   font-weight: var(--font-weight-medium, 500);
   cursor: pointer;
   transition: background-color 0.12s ease, color 0.12s ease;
 }
-.pagination__num:hover:not(.pagination__num--active) {
-  background: var(--bg-active);
-  color: var(--text-primary);
-}
+/* Figma ".Pagination number" — State "Hover/active" */
+.pagination__num:hover,
 .pagination__num--active {
   background: var(--bg-active);
   color: var(--text-primary);
@@ -99,10 +81,49 @@
   user-select: none;
 }
 
-/* ---- Mobile breakpoint (Figma: Breakpoint=Mobile) ----
-   In narrow containers the prev/next labels are hidden — arrows only. */
+/* mobile summary ("Сторінка 1 з 10") */
+.pagination__summary {
+  color: var(--text-secondary);
+  font-size: var(--font-body-2-size, 14px);
+  line-height: var(--font-body-2-line-height, 20px);
+  font-weight: var(--font-weight-medium, 500);
+  white-space: nowrap;
+}
+
+/* ===================================================================
+   Breakpoints (Figma "Breakpoint")
+   Desktop: nav + numbers.  Mobile: icon-only nav at the edges + summary text.
+   =================================================================== */
+.pagination .pagination__mobile {
+  display: none;
+}
+
+.pagination-wrap--mobile .pagination {
+  justify-content: space-between;
+  gap: var(--padding-8);
+}
+.pagination-wrap--mobile .pagination--card {
+  padding: var(--padding-12) var(--padding-16);
+}
+.pagination-wrap--mobile .pagination__desktop {
+  display: none;
+}
+.pagination-wrap--mobile .pagination__mobile {
+  display: inline-flex;
+}
+
 @container (max-width: 520px) {
-  .pagination__btn span {
+  .pagination-wrap--auto .pagination {
+    justify-content: space-between;
+    gap: var(--padding-8);
+  }
+  .pagination-wrap--auto .pagination--card {
+    padding: var(--padding-12) var(--padding-16);
+  }
+  .pagination-wrap--auto .pagination__desktop {
     display: none;
+  }
+  .pagination-wrap--auto .pagination__mobile {
+    display: inline-flex;
   }
 }

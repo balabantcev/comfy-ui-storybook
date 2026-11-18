@@ -54,7 +54,7 @@ export const WithContent: Story = {
     components: { Divider, Badge, Button, Icon },
     template: `
       <div style="display:flex;flex-direction:column;gap:32px;width:100%;max-width:480px">
-        <Divider><Icon name="star" :size="20" /></Divider>
+        <Divider><Icon name="plus-circle" :size="16" /></Divider>
         <Divider><Button variant="secondary" intent="gray" :size="32">Показати ще</Button></Divider>
         <Divider><Badge color="success" dot>Новинка</Badge></Divider>
       </div>

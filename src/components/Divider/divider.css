@@ -28,17 +28,24 @@
   line-height: var(--font-label-3-line-height, 24px);
   font-weight: var(--font-weight-bold, 700);
 }
+/* Figma Body / Caption: Regular weight, text-tertiary */
 .divider--body .divider__content {
-  color: var(--text-secondary);
+  color: var(--text-tertiary);
   font-size: var(--font-body-2-size, 14px);
   line-height: var(--font-body-2-line-height, 20px);
-  font-weight: var(--font-weight-medium, 500);
+  font-weight: var(--font-weight-regular, 400);
 }
 .divider--caption .divider__content {
-  color: var(--text-secondary);
+  color: var(--text-tertiary);
   font-size: var(--font-caption-1-size, 12px);
   line-height: var(--font-caption-1-line-height, 16px);
-  font-weight: var(--font-weight-medium, 500);
+  font-weight: var(--font-weight-regular, 400);
+}
+
+/* Figma "Icon" variant: a standalone icon in the gap is icon-tertiary */
+.divider__content > .comfy-icon {
+  display: block;
+  color: var(--icon-tertiary);
 }
 
 /* ---- Vertical ---- */
