@@ -25,12 +25,26 @@ Interactive components get a `play()` in their story using `storybook/test`
 (`fn`, `expect`, `userEvent`, `within`) — see Button, Chip, ButtonGroup. They run
 in the browser via `@storybook/addon-vitest` (config in `vite.config.ts`, project
 annotations in `.storybook/vitest.setup.ts`). Run locally with `pnpm test`
-(needs `pnpm exec playwright install chromium` once).
+(needs `pnpm exec playwright install chromium` once — installed on this machine 2026-11-18).
 
 ## a11y
 
-`@storybook/addon-a11y` runs on every story. `preview.ts` sets `a11y.test` to
-`'error'` under CI (fails the run) and `'todo'` locally (reports only).
+`@storybook/addon-a11y` runs on every story. Story tests run **inside Chromium**, where
+`process.env` doesn't exist, so `vite.config.ts` injects the mode at build time
+(`define` → `import.meta.env.STORYBOOK_A11Y_TEST`): `'error'` under `CI` (fails the run),
+`'todo'` locally (reports only). The `color-contrast` rule is off in the CI gate — the
+failing pairs come from the Figma palette, see [[a11y-contrast]].
+
+Component patterns that keep axe green:
+- a visible `<label>` is tied to its control with `useId()` (`for` / `aria-labelledby`);
+  the required `*` is `aria-hidden`, the control gets `aria-required`;
+- `DropdownMenu` puts only items inside its ARIA container (`role` = `menu` | `listbox` |
+  `group`); search header, footer buttons and the empty state go in the `#header`,
+  `#footer` and `#empty` slots;
+- dialogs are named by their title (`aria-labelledby`) and described by their text;
+- several landmarks of one kind on a page get distinct names (`Pagination` `label`).
+
+Check locally exactly like CI: `CI=1 pnpm test`.
 
 ## CI
 

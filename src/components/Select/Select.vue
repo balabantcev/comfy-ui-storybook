@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, ref, watch, onBeforeUnmount } from 'vue'
+import { computed, nextTick, ref, watch, onBeforeUnmount, useId } from 'vue'
 import Icon from '../Icon/Icon.vue'
 import Counter from '../Counter/Counter.vue'
 import Badge from '../Badge/Badge.vue'
@@ -117,6 +117,7 @@ const visibleOptions = computed(() => {
   return q ? props.options.filter((o) => o.label.toLowerCase().includes(q)) : props.options
 })
 
+const labelId = useId()
 const float = computed(() => !!props.label && (open.value || hasValue.value || !!query.value))
 
 const classes = computed(() => [
@@ -210,7 +211,10 @@ onBeforeUnmount(() => {
     <div
       class="input__box"
       role="combobox"
+      :aria-labelledby="label ? labelId : undefined"
+      :aria-label="label ? undefined : 'Вибір'"
       :aria-expanded="open"
+      :aria-required="required || undefined"
       :aria-disabled="disabled || undefined"
       :tabindex="isTags ? -1 : 0"
       @click="toggle"
@@ -245,8 +249,8 @@ onBeforeUnmount(() => {
           />
         </div>
         <span v-else-if="displayText" class="select__value">{{ displayText }}</span>
-        <label v-if="label" class="input__label">
-          {{ label }}<span v-if="required" class="input__req">&nbsp;*</span>
+        <label v-if="label" :id="labelId" class="input__label">
+          {{ label }}<span v-if="required" class="input__req" aria-hidden="true">&nbsp;*</span>
         </label>
       </div>
 
@@ -259,17 +263,18 @@ onBeforeUnmount(() => {
     <p v-if="error || helper" class="input__helper">{{ error || helper }}</p>
 
     <div v-if="open" class="select__panel">
-      <DropdownMenu>
-        <DropdownEmptyState
-          v-if="!visibleOptions.length"
-          :title="emptyTitle"
-          :description="emptyDescription"
-          :action-label="query ? 'Очистити пошук' : ''"
-          @action="query = ''"
-        />
+      <DropdownMenu :role="isMulti ? 'group' : 'listbox'" :label="label">
+        <template v-if="!visibleOptions.length" #empty>
+          <DropdownEmptyState
+            :title="emptyTitle"
+            :description="emptyDescription"
+            :action-label="query ? 'Очистити пошук' : ''"
+            @action="query = ''"
+          />
+        </template>
 
         <!-- Single -->
-        <template v-else-if="!isMulti">
+        <template v-if="!isMulti">
           <button
             v-for="opt in visibleOptions"
             :key="opt.value"
@@ -315,12 +320,9 @@ onBeforeUnmount(() => {
           </div>
         </template>
 
-        <DropdownFooter
-          v-if="multiple && !isTags && visibleOptions.length"
-          layout="horizontal"
-          @clear="clearAll"
-          @apply="applyMulti"
-        />
+        <template v-if="multiple && !isTags && visibleOptions.length" #footer>
+          <DropdownFooter layout="horizontal" @clear="clearAll" @apply="applyMulti" />
+        </template>
       </DropdownMenu>
     </div>
   </div>

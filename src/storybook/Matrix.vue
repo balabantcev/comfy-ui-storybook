@@ -11,7 +11,7 @@ defineProps<{
   <table class="sb-matrix">
     <thead>
       <tr>
-        <th></th>
+        <td></td>
         <th v-for="c in cols" :key="c">{{ c }}</th>
       </tr>
     </thead>

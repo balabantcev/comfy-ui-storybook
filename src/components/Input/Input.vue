@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, useId } from 'vue'
 import Icon from '../Icon/Icon.vue'
 import Flag from '../Flag/Flag.vue'
 import type { FlagCode } from '../Flag/flag.tokens'
@@ -121,6 +121,8 @@ const displayValue = computed(() => {
   return raw
 })
 
+const fieldId = useId()
+
 const placeholderText = computed(() => {
   if (props.placeholder !== undefined) return props.placeholder
   if (props.kind === 'phone') return props.mask.replace(/#/g, '-')
@@ -229,7 +231,9 @@ function clear() {
 
       <div class="input__control">
         <input
+          :id="fieldId"
           class="input__field"
+          :aria-required="required || undefined"
           :type="nativeType"
           :inputmode="inputMode"
           :value="displayValue"
@@ -239,8 +243,8 @@ function clear() {
           @focus="focused = true"
           @blur="focused = false"
         />
-        <label v-if="label" class="input__label">
-          {{ label }}<span v-if="required" class="input__req">&nbsp;*</span>
+        <label v-if="label" class="input__label" :for="fieldId">
+          {{ label }}<span v-if="required" class="input__req" aria-hidden="true">&nbsp;*</span>
         </label>
       </div>
 

@@ -64,6 +64,23 @@ supported variant and log a warning in development (`isSupportedButton()` in `bu
   `modern`, `color` `gray` | `success` | `warning` | `error` | `purple` | `blue`, `size` 32 / 40 / 48 / 56,
   any registry `icon`. New token `--shadow-skeuomorphic` (the Modern inner disc's layer shadows).
 
+### Accessibility
+- The CI a11y gate never ran: `preview.ts` read `process.env.CI`, which doesn't exist in the
+  browser where story tests run. It is now injected at build time (`vite.config.ts`), and the
+  first real run found 51 failing stories. Fixed in code:
+  - **Input / Select / Textarea**: the label is tied to its control (`useId`); the required `*`
+    is hidden from screen readers and the control is `aria-required`.
+  - **AlertDialog**: named by its title, described by its text.
+  - **DropdownMenu**: new `#header`, `#footer` and `#empty` slots render *outside* the ARIA list
+    (`role` prop: `menu` | `listbox` | `group`, plus `label`). Put `DropdownHeader`,
+    `DropdownFooter` and `DropdownEmptyState` in those slots — inside the default slot they make
+    an invalid menu. Select and FilterSelect already do.
+  - **Pagination** `label` (default "Пагінація") to tell several navigations apart.
+  - **Divider** with content is a plain container (a `separator` can't hold text or buttons).
+- `color-contrast` is reported but doesn't gate CI: the failing pairs are Figma palette colors
+  (white on brand-500 2.5:1, `text-tertiary` 2.49:1, error-500 3.75:1) — listed for the designers
+  in `context/a11y-contrast.md`.
+
 ### Changed (visual — now matches Figma)
 - Hover / active surfaces, tertiary alpha borders and elevations use the 4 % layer they were
   designed with (they rendered at 2 %).

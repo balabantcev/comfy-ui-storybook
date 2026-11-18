@@ -15,6 +15,10 @@
   box-shadow: var(--elevation-300);
   font-family: var(--font-family);
 }
+/* the ARIA item container must not change the panel's flex layout */
+.dropdown-menu__list {
+  display: contents;
+}
 
 /* ---- Item ---- */
 .dropdown-item {

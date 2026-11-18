@@ -31,14 +31,20 @@ const showRightLine = computed(() => props.align !== 'right')
 </script>
 
 <template>
-  <div :class="classes" role="separator" :aria-orientation="vertical ? 'vertical' : 'horizontal'">
+  <!-- A separator's children are presentational, so a divider that carries content (text,
+       a button) is a plain container with decorative lines instead. -->
+  <div
+    :class="classes"
+    :role="hasContent ? undefined : 'separator'"
+    :aria-orientation="hasContent ? undefined : vertical ? 'vertical' : 'horizontal'"
+  >
     <template v-if="vertical">
       <span class="divider__line" />
     </template>
     <template v-else-if="hasContent">
-      <span v-if="showLeftLine" class="divider__line" />
+      <span v-if="showLeftLine" class="divider__line" aria-hidden="true" />
       <span class="divider__content"><slot>{{ label }}</slot></span>
-      <span v-if="showRightLine" class="divider__line" />
+      <span v-if="showRightLine" class="divider__line" aria-hidden="true" />
     </template>
     <template v-else>
       <span class="divider__line" />

@@ -18,6 +18,7 @@ graph of connections. Notes link to each other with wiki-links (double square br
 - [[token-driven-components]] — **standing rule:** everything references the token system, never hardcode hex/px/rgba.
 - [[no-screenshots-in-chat]] — verify with text tools (`preview_eval`/`preview_logs`), don't post screenshot images.
 - [[storybook-conventions]] — story chrome is token-driven too; shared `src/storybook/` helpers, `play()` interaction tests, a11y, and CI.
+- [[a11y-contrast]] — Figma palette pairs below WCAG AA (white on brand-500, text-tertiary, error-500); why `color-contrast` isn't a CI gate.
 - [[storybook-mcp]] — Storybook's MCP server at `:6006/mcp` (stories by component, run story tests); how Claude Code / Cursor / Codex connect.
 
 ## How the connections flow

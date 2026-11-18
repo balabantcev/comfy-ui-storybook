@@ -28,6 +28,8 @@ const props = withDefaults(
     size?: number
     /** Show the prev/next buttons */
     showNav?: boolean
+    /** Accessible name of the navigation landmark — make it unique when a page has several */
+    label?: string
     prevLabel?: string
     nextLabel?: string
     /** Mobile summary text, e.g. "Сторінка 1 з 10" */
@@ -41,6 +43,7 @@ const props = withDefaults(
     pill: false,
     size: 40,
     showNav: true,
+    label: 'Пагінація',
     prevLabel: 'Назад',
     nextLabel: 'Вперед',
     summary: (page: number, total: number) => `Сторінка ${page} з ${total}`,
@@ -103,7 +106,7 @@ function go(page: number) {
 
 <template>
   <div :class="wrapClasses">
-  <nav :class="navClasses" :style="cssVars" role="navigation" aria-label="Pagination">
+  <nav :class="navClasses" :style="cssVars" :aria-label="label">
     <!-- ===== Desktop layout ===== -->
     <div v-if="showNav" class="pagination__nav pagination__nav--prev pagination__desktop">
       <Button

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, useId } from 'vue'
 import './textarea.css'
 
 // Figma: Base components / Input / Textarea input (node 11485:675).
@@ -47,16 +47,19 @@ const classes = computed(() => [
 function onInput(e: Event) {
   emit('update:modelValue', (e.target as HTMLTextAreaElement).value)
 }
+const fieldId = useId()
 </script>
 
 <template>
   <div :class="classes">
     <div class="textarea__box">
-      <label v-if="label" class="textarea__label">
-        {{ label }}<span v-if="required" class="textarea__req">&nbsp;*</span>
+      <label v-if="label" class="textarea__label" :for="fieldId">
+        {{ label }}<span v-if="required" class="textarea__req" aria-hidden="true">&nbsp;*</span>
       </label>
       <textarea
+        :id="fieldId"
         class="textarea__field"
+        :aria-required="required || undefined"
         :value="modelValue"
         :rows="rows"
         :maxlength="maxlength"

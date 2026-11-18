@@ -124,12 +124,12 @@ export const Headers: Story = {
     template: `
       <div class="sb-row" style="align-items:flex-start">
         <DropdownMenu>
-          <DropdownHeader v-model="q" />
+          <template #header><DropdownHeader v-model="q" /></template>
           <DropdownItem>Ноутбуки</DropdownItem>
           <DropdownItem>Смартфони</DropdownItem>
         </DropdownMenu>
         <DropdownMenu>
-          <DropdownHeader variant="title" title="Заголовок" />
+          <template #header><DropdownHeader variant="title" title="Заголовок" /></template>
           <DropdownItem>Ноутбуки</DropdownItem>
           <DropdownItem>Смартфони</DropdownItem>
         </DropdownMenu>
@@ -149,12 +149,12 @@ export const Footers: Story = {
         <DropdownMenu>
           <DropdownItem control="checkbox" selected>Техніка для дому</DropdownItem>
           <DropdownItem control="checkbox">Смартфони</DropdownItem>
-          <DropdownFooter layout="vertical" @clear="onClear" @apply="onApply" />
+          <template #footer><DropdownFooter layout="vertical" @clear="onClear" @apply="onApply" /></template>
         </DropdownMenu>
         <DropdownMenu>
           <DropdownItem control="checkbox" selected>Техніка для дому</DropdownItem>
           <DropdownItem control="checkbox">Смартфони</DropdownItem>
-          <DropdownFooter layout="horizontal" @clear="onClear" @apply="onApply" />
+          <template #footer><DropdownFooter layout="horizontal" @clear="onClear" @apply="onApply" /></template>
         </DropdownMenu>
       </div>
     `,
@@ -176,12 +176,12 @@ export const FilterWithSearch: Story = {
     },
     template: `
       <DropdownMenu :width="280">
-        <DropdownHeader v-model="q" />
-        <template v-if="shown.length">
-          <DropdownItem v-for="x in shown" :key="x" control="checkbox" :selected="picked.includes(x)" @click="toggle(x)">{{ x }}</DropdownItem>
+        <template #header><DropdownHeader v-model="q" /></template>
+        <DropdownItem v-for="x in shown" :key="x" control="checkbox" :selected="picked.includes(x)" @click="toggle(x)">{{ x }}</DropdownItem>
+        <template v-if="!shown.length" #empty><DropdownEmptyState @action="q = ''" /></template>
+        <template #footer>
+          <DropdownFooter layout="horizontal" :apply-disabled="!picked.length" @clear="picked = []" @apply="onApply(picked)" />
         </template>
-        <DropdownEmptyState v-else @action="q = ''" />
-        <DropdownFooter layout="horizontal" :apply-disabled="!picked.length" @clear="picked = []" @apply="onApply(picked)" />
       </DropdownMenu>
     `,
   }),

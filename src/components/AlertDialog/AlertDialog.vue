@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, watch, onBeforeUnmount } from 'vue'
+import { computed, watch, onBeforeUnmount, useId, useSlots } from 'vue'
 import Icon from '../Icon/Icon.vue'
 import Button from '../Button/Button.vue'
 import Checkbox from '../Checkbox/Checkbox.vue'
@@ -75,6 +75,12 @@ const emit = defineEmits<{
   (e: 'close'): void
 }>()
 
+const titleId = useId()
+const descId = useId()
+const slots = useSlots()
+const hasTitle = computed(() => !!props.title || !!slots.title)
+const hasDesc = computed(() => !!props.description || !!slots.default)
+
 const iconName = computed(() => props.icon ?? (props.destructive ? 'alert' : 'check-circle'))
 
 const dialogClasses = computed(() => [
@@ -138,6 +144,8 @@ onBeforeUnmount(() => {
           :class="dialogClasses"
           :role="overlay ? 'alertdialog' : 'dialog'"
           :aria-modal="overlay || undefined"
+          :aria-labelledby="hasTitle ? titleId : undefined"
+          :aria-describedby="hasDesc ? descId : undefined"
         >
           <div class="alert-dialog__header">
             <FeaturedIcon
@@ -150,10 +158,10 @@ onBeforeUnmount(() => {
             />
 
             <div class="alert-dialog__text">
-              <p v-if="title || $slots.title" class="alert-dialog__title">
+              <p v-if="hasTitle" :id="titleId" class="alert-dialog__title">
                 <slot name="title">{{ title }}</slot>
               </p>
-              <p v-if="description || $slots.default" class="alert-dialog__desc">
+              <p v-if="hasDesc" :id="descId" class="alert-dialog__desc">
                 <slot>{{ description }}</slot>
               </p>
             </div>

@@ -146,7 +146,7 @@ const cssVars = computed(() => {
     </div>
 
     <div v-if="open" class="filter-select__panel">
-      <DropdownMenu :width="width">
+      <DropdownMenu :width="width" :role="multiple ? 'group' : 'menu'" :label="label">
         <!-- Single select -->
         <template v-if="!multiple">
           <DropdownItem
@@ -168,6 +168,9 @@ const cssVars = computed(() => {
               @change="togglePending(opt.value)"
             />
           </div>
+        </template>
+
+        <template v-if="multiple" #footer>
           <div class="filter-select__footer">
             <Button variant="link" intent="gray" :size="32" @click="clearAll">Очистити все</Button>
             <Button variant="primary" :size="32" @click="applyMulti">Застосувати</Button>

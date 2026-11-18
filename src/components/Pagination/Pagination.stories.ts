@@ -54,11 +54,11 @@ export const Types: Story = {
     setup: () => ({ p1: ref(1), p2: ref(1), p3: ref(1) }),
     template: `
       <div style="display:flex;flex-direction:column;gap:32px">
-        <Pagination type="page" :total="10" v-model="p1" />
-        <Pagination type="minimal" :total="10" v-model="p2" />
+        <Pagination type="page" label="Пагінація — page" :total="10" v-model="p1" />
+        <Pagination type="minimal" label="Пагінація — minimal" :total="10" v-model="p2" />
         <div style="border:1px solid var(--border-secondary);border-radius:var(--radius-12)">
           <div style="height:80px"></div>
-          <Pagination type="card" :total="10" v-model="p3" />
+          <Pagination type="card" label="Пагінація — card" :total="10" v-model="p3" />
         </div>
       </div>
     `,
@@ -73,9 +73,9 @@ export const Mobile: Story = {
     setup: () => ({ p1: ref(1), p2: ref(4), p3: ref(10) }),
     template: `
       <div style="display:flex;flex-direction:column;gap:32px;width:375px">
-        <Pagination type="page" breakpoint="mobile" :total="10" v-model="p1" />
-        <Pagination type="minimal" breakpoint="mobile" pill :total="10" v-model="p2" />
-        <Pagination type="card" breakpoint="mobile" :total="10" v-model="p3" />
+        <Pagination type="page" label="Пагінація — page" breakpoint="mobile" :total="10" v-model="p1" />
+        <Pagination type="minimal" label="Пагінація — minimal" breakpoint="mobile" pill :total="10" v-model="p2" />
+        <Pagination type="card" label="Пагінація — card" breakpoint="mobile" :total="10" v-model="p3" />
       </div>
     `,
   }),
