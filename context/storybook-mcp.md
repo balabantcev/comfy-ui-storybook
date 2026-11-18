@@ -12,11 +12,14 @@ agent query this Storybook instead of grepping for stories.
 
 | Tool | Use it for |
 |---|---|
-| `get-stories-by-component` | which stories a component has |
+| `stories-find-by-component` | which stories a component has |
 | `get-storybook-story-instructions` | how stories are written here (complements [[storybook-conventions]]) |
-| `get-changed-stories` | stories touched by the current change |
-| `preview-stories` | preview links to hand to the user |
-| `run-story-tests` | run story render / `play()` / a11y tests (needs the Playwright Chromium, see [[storybook-conventions]]) |
+| `stories-changed` | stories touched by the current change |
+| `stories-preview` | preview links to hand to the user |
+| `test-run` | run story render / `play()` / a11y tests (needs the Playwright Chromium, see [[storybook-conventions]]) |
+
+Tool names as of `@storybook/addon-mcp` 10.6 (it is versioned with Storybook since 10.6; 0.7 used
+`get-stories-by-component`, `get-changed-stories`, `preview-stories`, `run-story-tests`).
 
 ## Connecting
 
@@ -27,7 +30,6 @@ agent query this Storybook instead of grepping for stories.
 | Codex | `~/.codex/config.toml` → `[mcp_servers.storybook]` `url = "http://localhost:6006/mcp"` | no — user-level |
 
 If a tool reports the server as failed, Storybook is simply not running — start it first
-(`pnpm storybook`), then reconnect. The addon is 0.x (experimental); re-check it after
-Storybook upgrades.
+(`pnpm storybook`), then reconnect. Re-check the tool names after Storybook upgrades.
 
 Verification still follows [[no-screenshots-in-chat]].

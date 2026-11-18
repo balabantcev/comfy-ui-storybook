@@ -122,6 +122,8 @@ supported variant and log a warning in development (`isSupportedButton()` in `bu
   in `context/a11y-contrast.md`.
 
 ### Tooling
+- **Storybook 10.5.2 → 10.6.7** (all `@storybook/*`); `@storybook/addon-mcp` 0.7 → 10.6.7 — its MCP tools
+  were renamed (`stories-find-by-component`, `stories-changed`, `stories-preview`, `test-run`).
 - `pnpm check:tokens` — compares `colors.ts` / `semantic.ts` / `scale.ts` / `typography.ts` with a
   committed snapshot of every Figma variable (`scripts/figma/variables.snapshot.json`, resolved per
   mode, Light/Dark and Desktop/Mobile): reports values that differ, Figma variables missing in the

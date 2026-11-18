@@ -111,5 +111,5 @@ context/         спільна база знань для AI-інструмен
 
 ## Стек
 
-Vue 3.5 · Vite 8 · Storybook 10.5 (`@storybook/vue3-vite`) · Vitest 4 + Playwright · TypeScript ·
+Vue 3.5 · Vite 8 · Storybook 10.6 (`@storybook/vue3-vite`) · Vitest 4 + Playwright · TypeScript ·
 Inter Variable (локальний шрифт)
