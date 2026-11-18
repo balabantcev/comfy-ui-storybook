@@ -22,7 +22,8 @@
   justify-content: center;
   height: var(--badge-height, 22px);
   gap: var(--badge-gap, 4px);
-  padding: 0 var(--badge-px, 6px);
+  /* Figma's 1px stroke sits inside the padding */
+  padding: 0 calc(var(--badge-pr, 4px) - 1px) 0 calc(var(--badge-pl, 4px) - 1px);
   border-radius: var(--radius-full);
   border: 1px solid var(--badge-border);
   background: var(--badge-bg);
@@ -37,6 +38,13 @@
 
 .badge__text {
   display: inline-block;
+}
+/* Type=Default wraps the text in a frame with 2px side padding ("Frame 1") */
+.badge--type-default .badge__text {
+  padding: 0 var(--padding-2);
+}
+.badge__flag {
+  flex-shrink: 0;
 }
 .badge__icon {
   flex-shrink: 0;

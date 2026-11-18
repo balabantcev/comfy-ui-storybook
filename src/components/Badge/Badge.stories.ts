@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import Badge from './Badge.vue'
 import { BADGE_SIZE_VALUES, BADGE_VARIANTS, BADGE_COLORS } from './badge.tokens'
 import { iconNames } from '../../icons'
+import { FLAG_CODES } from '../Flag/flag.tokens'
 import { Matrix, Specimen } from '../../storybook'
 
 const meta = {
@@ -14,6 +15,7 @@ const meta = {
     color: { control: 'select', options: BADGE_COLORS },
     size: { control: 'inline-radio', options: BADGE_SIZE_VALUES },
     dot: { control: 'boolean' },
+    country: { control: 'select', options: ['', ...FLAG_CODES] },
     iconLeft: { control: 'select', options: ['', ...iconNames] },
     iconRight: { control: 'select', options: ['', ...iconNames] },
   },
@@ -64,7 +66,7 @@ export const Sizes: Story = {
   }),
 }
 
-// Types: dot / icon / dismissible
+// Figma Type: Default (text / icons) / Dot / Country
 export const Types: Story = {
   parameters: { controls: { disable: true } },
   render: () => ({
@@ -75,7 +77,26 @@ export const Types: Story = {
         <Badge color="success" dot>З крапкою</Badge>
         <Badge color="success" iconLeft="check">З іконкою</Badge>
         <Badge color="success" iconRight="x">Закрити</Badge>
+        <Badge color="success" country="UA">Україна</Badge>
       </div>
+    `,
+  }),
+}
+
+/** Figma Type × Size — spacing differs per type (Default 4/2 + 2px text frame, Dot, Country). */
+export const TypesBySize: Story = {
+  parameters: { controls: { disable: true } },
+  render: () => ({
+    components: { Badge, Matrix },
+    setup: () => ({ types: ['text', 'icons', 'dot', 'country'], sizes: BADGE_SIZE_VALUES.map((s) => s + 'px') }),
+    template: `
+      <Matrix :rows="types" :cols="sizes" v-slot="{ row, col }">
+        <Badge
+          :size="parseInt(col)" color="gray"
+          :dot="row === 'dot'" :country="row === 'country' ? 'UA' : undefined"
+          :icon-left="row === 'icons' ? 'info-circle' : undefined" :icon-right="row === 'icons' ? 'x' : undefined"
+        >Назва</Badge>
+      </Matrix>
     `,
   }),
 }

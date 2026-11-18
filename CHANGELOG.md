@@ -65,6 +65,9 @@ supported variant and log a warning in development (`isSupportedButton()` in `bu
   any registry `icon`. New token `--shadow-skeuomorphic` (the Modern inner disc's layer shadows).
 - **Alert** `iconStyle`: `default` (20px glyph) | `featured` (32px Outline `FeaturedIcon` in the
   alert's color) — Figma "Variant icon"; `role` `alert` | `status`.
+- **Badge** `country` (Figma Type=Country): a 16px `Flag` before the text, e.g. `country="UA"`.
+- **BadgePrice** (new, Figma Badge price): discount label `value` + `unit` `%` | `₴`, sizes 16 / 20 / 24,
+  Ukrainian digit grouping (`-4 444₴`), `text-price` on `utility-error-50`.
 - **Toast** (new, Figma Alert & Toast / Toast): the Alert with elevation E300 — one row on Desktop,
   stacked on Mobile (`breakpoint` `auto` | `desktop` | `mobile`); `role="status"`, `alert` for errors.
   Placement, stacking and auto-dismiss stay with the app.
@@ -99,6 +102,10 @@ supported variant and log a warning in development (`isSupportedButton()` in `bu
 - Button: primary destructive at rest uses `bg-error-solid`; Primary subtle has a brand outline;
   Secondary gray darkens its border on hover; disabled uses `bg-disabled` / `border-disabled`
   with a lighter icon; the focus ring is brand-colored for every non-destructive type.
+- **Badge** sizes follow Figma 1.1.0: 24px uses Body-2 text (was Caption-1); icons are 16px and the
+  dot 8px at every size; spacing per type — Default 4/4/6px sides + gap 2 with a 2px text frame,
+  Dot 6/8/10 + gap 4/6/6, Country 3/4/6 left · 6/6/8 right; the 1px border sits inside the padding.
+  Text-only 22px badges keep their width; badges with icons get 2px tighter per side.
 - **Alert** (Figma Alert & Toast): title is Body-2 **Bold** `text-primary` and the description
   `text-secondary` in every color (they used to be tinted per color); radius 16 (was 10); the actions
   are real `<Button variant="link">` — Link gray + Link brand / destructive (Warning: Link gray in
