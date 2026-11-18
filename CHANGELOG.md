@@ -36,6 +36,22 @@ supported variant and log a warning in development (`isSupportedButton()` in `bu
   (`vertical` | `horizontal`); `DropdownItem` `control="checkbox" | "dot"`.
 - **Select** `type`: `default` | `icon` | `dot` | `tags` (removable chips + inline search, instant
   apply); options accept `icon`, `dot` (color) and `hint`; empty state (`emptyTitle`, `emptyDescription`).
+- **Input** `kind`: `default` | `phone` | `price`.
+  - `phone`: country picker (flag + dial code; `countries`, `v-model:country`) and a digit mask
+    (`mask`, default `(##) ### ## ##`, placeholder `(--) --- -- --`); the model holds digits only.
+  - `price`: grouped amount with up to 2 decimals (`44 444 444,44`, model `44444444.44`) and a
+    currency picker (`currencies`, `v-model:currency`).
+  - The caret keeps its place while the value is reformatted.
+- **VerificationCode** (new): N one-digit cells, auto-advance, Backspace/arrow navigation,
+  paste and SMS one-time-code autofill, `complete` event; sizes 56 / 48 / 44; error / disabled.
+- **Textarea** (new): in-box label (placeholder-size while empty, caption once filled),
+  "n / max" counter (`maxlength`), vertical resize, error / disabled.
+- **Flag** (new): round UA / EN country flags from Figma Misc icons.
+- **AlertDialog** (Figma "Modal view"): `align` adds `horizontal` (icon beside the text, actions
+  right-aligned, 520px wide); `overlay` (Figma Background — `false` renders the panel inline);
+  `breakpoint` `auto` | `desktop` | `mobile` (mobile: bottom-docked, full width, stacked actions
+  with the primary on top); footer checkbox `checkboxLabel` + `v-model:checked`; `body` slot for
+  custom content between the header and the actions.
 
 ### Changed (visual — now matches Figma)
 - Hover / active surfaces, tertiary alpha borders and elevations use the 4 % layer they were
@@ -53,3 +69,7 @@ supported variant and log a warning in development (`isSupportedButton()` in `bu
 - Select: the selected single-select row is highlighted with `bg-active` only (no check mark);
   multi-select uses the shared `DropdownFooter` and a Grey counter.
 - Divider: Body / Caption labels are Regular weight, `text-tertiary`; a slotted icon is `icon-tertiary`.
+- Input / Select focus: a solid 2px ring (Figma focus-ring-success / -danger) instead of the soft
+  24 % glow.
+- AlertDialog: the featured icon is Gray (alpha-dark-100 / utility-gray-600) unless destructive;
+  the description is text-primary; the × button gets the standard focus ring.

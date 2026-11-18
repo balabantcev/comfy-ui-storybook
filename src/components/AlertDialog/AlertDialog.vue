@@ -2,7 +2,18 @@
 import { computed, watch, onBeforeUnmount } from 'vue'
 import Icon from '../Icon/Icon.vue'
 import Button from '../Button/Button.vue'
+import Checkbox from '../Checkbox/Checkbox.vue'
 import './alert-dialog.css'
+
+// Figma: Patterns / Modal window → "Modal view" (node 12488:888)
+//   Background  → `overlay`    (true: full-screen backdrop; false: the panel inline, no backdrop)
+//   Aligned     → `align`      (left | center | horizontal = "Horizontal right (checkbox)")
+//   Breakpoint  → `breakpoint` (auto by viewport < 768px, or forced desktop / mobile)
+//   Destructive → `destructive`
+//   ↳ Slot      → the `body` slot (custom content between the header and the actions)
+
+export type AlertDialogAlign = 'left' | 'center' | 'horizontal'
+export type AlertDialogBreakpoint = 'auto' | 'desktop' | 'mobile'
 
 const props = withDefaults(
   defineProps<{
@@ -10,8 +21,12 @@ const props = withDefaults(
     modelValue?: boolean
     /** Red/destructive treatment for the confirm action and featured icon */
     destructive?: boolean
-    /** Header alignment */
-    align?: 'left' | 'center'
+    /** Figma "Aligned": left, center, or horizontal (icon beside the text, actions right + checkbox) */
+    align?: AlertDialogAlign
+    /** Figma "Background": render over a full-screen backdrop (true) or inline (false) */
+    overlay?: boolean
+    /** Figma "Breakpoint" */
+    breakpoint?: AlertDialogBreakpoint
     /** Featured icon name; defaults per destructive flag */
     icon?: string
     showIcon?: boolean
@@ -21,19 +36,25 @@ const props = withDefaults(
     cancelLabel?: string
     /** Show the × close button */
     closable?: boolean
-    /** Footer button layout */
+    /** Footer button layout for left / center (horizontal = side by side, vertical = stacked) */
     actionsLayout?: 'horizontal' | 'vertical'
     /** Divider above the footer */
     divider?: boolean
     /** Confirm button loading state */
     loading?: boolean
-    /** Close when clicking the overlay */
+    /** Close when clicking the backdrop */
     closeOnOverlay?: boolean
+    /** Footer checkbox label, e.g. "Не показувати знову" (Figma Action control "Checkbox") */
+    checkboxLabel?: string
+    /** Footer checkbox state (v-model:checked) */
+    checked?: boolean
   }>(),
   {
     modelValue: false,
     destructive: false,
     align: 'left',
+    overlay: true,
+    breakpoint: 'auto',
     showIcon: true,
     confirmLabel: 'Підтвердити',
     cancelLabel: 'Скасувати',
@@ -41,19 +62,33 @@ const props = withDefaults(
     actionsLayout: 'horizontal',
     divider: true,
     closeOnOverlay: true,
+    checked: false,
   },
 )
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: boolean): void
+  (e: 'update:checked', value: boolean): void
   (e: 'confirm'): void
   (e: 'cancel'): void
   (e: 'close'): void
 }>()
 
-const iconName = computed(
-  () => props.icon ?? (props.destructive ? 'alert' : 'check-circle'),
-)
+const iconName = computed(() => props.icon ?? (props.destructive ? 'alert' : 'check-circle'))
+
+const dialogClasses = computed(() => [
+  'alert-dialog',
+  `alert-dialog--${props.align}`,
+  `alert-dialog--bp-${props.breakpoint}`,
+  {
+    'alert-dialog--destructive': props.destructive,
+    'alert-dialog--inline': !props.overlay,
+  },
+])
+const footerClasses = computed(() => [
+  'alert-dialog__footer',
+  `alert-dialog__footer--${props.align === 'horizontal' ? 'right' : props.actionsLayout}`,
+])
 
 function close() {
   emit('update:modelValue', false)
@@ -73,14 +108,16 @@ function onKey(e: KeyboardEvent) {
   if (e.key === 'Escape' && props.modelValue) cancel()
 }
 
+// Scroll lock + Escape only apply to the modal (backdrop) form.
 watch(
-  () => props.modelValue,
-  (open) => {
+  () => props.modelValue && props.overlay,
+  (active) => {
     if (typeof document === 'undefined') return
-    document.body.style.overflow = open ? 'hidden' : ''
-    if (open) window.addEventListener('keydown', onKey)
+    document.body.style.overflow = active ? 'hidden' : ''
+    if (active) window.addEventListener('keydown', onKey)
     else window.removeEventListener('keydown', onKey)
   },
+  { immediate: true },
 )
 onBeforeUnmount(() => {
   if (typeof document !== 'undefined') document.body.style.overflow = ''
@@ -89,17 +126,17 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <Teleport to="body">
+  <Teleport to="body" :disabled="!overlay">
     <Transition name="ad-fade">
       <div
         v-if="modelValue"
-        class="alert-dialog__overlay"
-        @click.self="onOverlay"
+        :class="['alert-dialog__overlay', `alert-dialog__overlay--bp-${breakpoint}`, { 'alert-dialog__overlay--inline': !overlay }]"
+        @click.self="overlay && onOverlay()"
       >
         <div
-          :class="['alert-dialog', `alert-dialog--${align}`, { 'alert-dialog--destructive': destructive }]"
-          role="alertdialog"
-          aria-modal="true"
+          :class="dialogClasses"
+          :role="overlay ? 'alertdialog' : 'dialog'"
+          :aria-modal="overlay || undefined"
         >
           <div class="alert-dialog__header">
             <span v-if="showIcon" class="alert-dialog__featured-icon">
@@ -119,29 +156,41 @@ onBeforeUnmount(() => {
               v-if="closable"
               type="button"
               class="alert-dialog__close"
-              aria-label="Close"
+              aria-label="Закрити"
               @click="cancel"
             >
               <Icon name="x-close" :size="24" />
             </button>
           </div>
 
+          <div v-if="$slots.body" class="alert-dialog__body"><slot name="body" /></div>
+
           <div v-if="divider" class="alert-dialog__divider" />
 
-          <div :class="['alert-dialog__footer', `alert-dialog__footer--${actionsLayout}`]">
-            <Button variant="secondary" intent="gray" :size="40" pill @click="cancel">
-              {{ cancelLabel }}
-            </Button>
-            <Button
-              variant="primary"
-              :intent="destructive ? 'destructive' : 'brand'"
-              :size="40"
-              pill
-              :loading="loading"
-              @click="confirm"
-            >
-              {{ confirmLabel }}
-            </Button>
+          <div :class="footerClasses">
+            <Checkbox
+              v-if="checkboxLabel"
+              class="alert-dialog__checkbox"
+              :size="16"
+              :label="checkboxLabel"
+              :model-value="checked"
+              @update:model-value="(v: boolean) => emit('update:checked', v)"
+            />
+            <div class="alert-dialog__actions">
+              <Button variant="secondary" intent="gray" :size="40" pill @click="cancel">
+                {{ cancelLabel }}
+              </Button>
+              <Button
+                variant="primary"
+                :intent="destructive ? 'destructive' : 'brand'"
+                :size="40"
+                pill
+                :loading="loading"
+                @click="confirm"
+              >
+                {{ confirmLabel }}
+              </Button>
+            </div>
           </div>
         </div>
       </div>

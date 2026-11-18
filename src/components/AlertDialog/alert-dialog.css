@@ -1,6 +1,9 @@
-/* Alert Dialog (modal) — Comfy UI design system.
-   All values reference design tokens (src/foundations/tokens.css). */
+/* Alert Dialog / Modal view — Comfy UI design system. Tokens only.
+   Figma: Patterns / Modal window → Modal view (node 12488:888). */
 
+/* ===================================================================
+   Backdrop (Figma Background=True): centred on desktop, docked to the bottom on mobile
+   =================================================================== */
 .alert-dialog__overlay {
   position: fixed;
   inset: 0;
@@ -11,11 +14,25 @@
   padding: var(--padding-32);
   background: var(--bg-overlay);
 }
+/* Figma Background=False: the panel sits inline in the page */
+.alert-dialog__overlay--inline {
+  position: static;
+  z-index: auto;
+  display: block;
+  padding: 0;
+  background: none;
+}
 
+/* ===================================================================
+   Panel
+   =================================================================== */
 .alert-dialog {
-  --ad-accent: var(--utility-brand-600);
-  --ad-accent-bg: var(--utility-brand-100);
+  /* Figma featured icon: Type=Light, Color=Gray (Error when destructive) */
+  --ad-accent: var(--utility-gray-600);
+  --ad-accent-bg: var(--alpha-dark-100);
+  --ad-pad: var(--padding-24);
 
+  position: relative;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -27,14 +44,16 @@
   box-shadow: var(--elevation-400);
   font-family: var(--font-family);
 }
+.alert-dialog--horizontal {
+  width: 520px;
+}
 .alert-dialog--destructive {
   --ad-accent: var(--utility-error-600);
   --ad-accent-bg: var(--utility-error-100);
 }
 
-/* ---- Header ---- */
+/* ---- Header (Figma "Modal view – Header control") ---- */
 .alert-dialog__header {
-  position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--padding-16);
@@ -44,9 +63,14 @@
   align-items: center;
   text-align: center;
 }
+.alert-dialog--horizontal .alert-dialog__header {
+  flex-direction: row;
+  align-items: flex-start;
+}
 
 .alert-dialog__featured-icon {
   display: inline-flex;
+  flex-shrink: 0;
   align-self: flex-start;
   align-items: center;
   justify-content: center;
@@ -63,6 +87,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--padding-2);
+  flex: 1 1 auto;
+  min-width: 0;
   width: 100%;
 }
 .alert-dialog__title {
@@ -74,12 +100,20 @@
 }
 .alert-dialog__desc {
   margin: 0;
-  color: var(--text-secondary);
+  color: var(--text-primary);
   font-size: var(--font-body-2-size, 14px);
   line-height: var(--font-body-2-line-height, 20px);
   font-weight: var(--font-weight-regular, 400);
 }
+/* keep the title clear of the absolute × button */
+.alert-dialog:has(.alert-dialog__close) .alert-dialog__text {
+  padding-right: var(--padding-24);
+}
+.alert-dialog--center:has(.alert-dialog__close) .alert-dialog__text {
+  padding-left: var(--padding-24);
+}
 
+/* Figma "Button-X": 48px hit area, icon-tertiary, bg-hover on hover */
 .alert-dialog__close {
   position: absolute;
   top: var(--padding-8);
@@ -99,31 +133,117 @@
 }
 .alert-dialog__close:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px var(--alpha-dark-200);
+  box-shadow: 0 0 0 2px var(--border-gap), 0 0 0 4px var(--focus-ring-color);
 }
 
-/* ---- Footer / actions ---- */
+/* ---- Figma "↳ Slot": custom content between header and actions ---- */
+.alert-dialog__body {
+  padding: 0 var(--ad-pad) var(--ad-pad);
+}
+
+/* ---- Footer (Figma "Modal view – Action control") ---- */
 .alert-dialog__divider {
   height: 1px;
   background: var(--border-alpha-secondary);
 }
 .alert-dialog__footer {
   display: flex;
+  flex-direction: column;
   gap: var(--padding-12);
-  padding: var(--padding-24);
-  padding-top: var(--padding-24);
+  padding: var(--ad-pad);
 }
-.alert-dialog__footer--horizontal {
-  flex-direction: row;
+.alert-dialog__actions {
+  display: flex;
+  gap: var(--padding-12);
 }
-.alert-dialog__footer--horizontal > .btn {
+/* Horizontal fill */
+.alert-dialog__footer--horizontal .alert-dialog__actions > .btn {
   flex: 1 1 0;
 }
-.alert-dialog__footer--vertical {
+/* Vertical fill — primary on top */
+.alert-dialog__footer--vertical .alert-dialog__actions {
   flex-direction: column-reverse;
 }
-.alert-dialog__footer--vertical > .btn {
+.alert-dialog__footer--vertical .alert-dialog__actions > .btn {
   width: 100%;
+}
+/* Horizontal right (checkbox) — checkbox left, hugging buttons right */
+.alert-dialog__footer--right {
+  flex-direction: row;
+  align-items: center;
+}
+.alert-dialog__footer--right .alert-dialog__actions {
+  flex: 1 1 auto;
+  justify-content: flex-end;
+}
+.alert-dialog__checkbox {
+  flex-shrink: 0;
+}
+
+/* ===================================================================
+   Mobile (Figma Breakpoint=Mobile): bottom-docked, full width, stacked actions
+   =================================================================== */
+.alert-dialog__overlay--bp-mobile:not(.alert-dialog__overlay--inline) {
+  align-items: flex-end;
+  padding: var(--padding-16) var(--padding-16) var(--padding-64);
+}
+.alert-dialog--bp-mobile {
+  --ad-pad: var(--padding-16);
+  width: 100%;
+}
+.alert-dialog--bp-mobile .alert-dialog__header {
+  flex-direction: column;
+  align-items: flex-start;
+}
+.alert-dialog--bp-mobile.alert-dialog--center .alert-dialog__header {
+  align-items: center;
+}
+.alert-dialog--bp-mobile .alert-dialog__footer {
+  flex-direction: column;
+  align-items: stretch;
+}
+.alert-dialog--bp-mobile .alert-dialog__actions {
+  flex-direction: column-reverse;
+}
+.alert-dialog--bp-mobile .alert-dialog__actions > .btn {
+  /* reset the horizontal-fill flex-basis: 0, which would collapse stacked buttons */
+  flex: none;
+  width: 100%;
+}
+.alert-dialog--bp-mobile .alert-dialog__checkbox {
+  order: 2;
+}
+
+@media (max-width: 767.98px) {
+  .alert-dialog__overlay--bp-auto:not(.alert-dialog__overlay--inline) {
+    align-items: flex-end;
+    padding: var(--padding-16) var(--padding-16) var(--padding-64);
+  }
+  .alert-dialog--bp-auto {
+    --ad-pad: var(--padding-16);
+    width: 100%;
+  }
+  .alert-dialog--bp-auto .alert-dialog__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .alert-dialog--bp-auto.alert-dialog--center .alert-dialog__header {
+    align-items: center;
+  }
+  .alert-dialog--bp-auto .alert-dialog__footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .alert-dialog--bp-auto .alert-dialog__actions {
+    flex-direction: column-reverse;
+  }
+  .alert-dialog--bp-auto .alert-dialog__actions > .btn {
+    flex: none;
+    width: 100%;
+  }
+  .alert-dialog--bp-auto .alert-dialog__checkbox {
+    order: 2;
+  }
 }
 
 /* ---- Transition ---- */
