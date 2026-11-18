@@ -68,6 +68,11 @@ supported variant and log a warning in development (`isSupportedButton()` in `bu
 - **Badge** `country` (Figma Type=Country): a 16px `Flag` before the text, e.g. `country="UA"`.
 - **BadgePrice** (new, Figma Badge price): discount label `value` + `unit` `%` | `₴`, sizes 16 / 20 / 24,
   Ukrainian digit grouping (`-4 444₴`), `text-price` on `utility-error-50`.
+- **Tabs** (new, Figma Tabs): `variant="segmented"` — the "Horizontal tabs" container (`color`
+  `brand` | `white`, `border`, `pill`) with "-Tab button base" tabs (`size` 36 | 40, per-item `icon`,
+  `count`, `disabled`); `variant="underline"` — "-Tab button underline" with an optional
+  `trailingIcon`. WAI-ARIA tabs: `role="tablist"`/`tab`, roving focus, ←/→ (wrapping, skipping
+  disabled), Home/End; `panelId` per item → `aria-controls`. Panels are rendered by the app.
 - **Toast** (new, Figma Alert & Toast / Toast): the Alert with elevation E300 — one row on Desktop,
   stacked on Mobile (`breakpoint` `auto` | `desktop` | `mobile`); `role="status"`, `alert` for errors.
   Placement, stacking and auto-dismiss stay with the app.
