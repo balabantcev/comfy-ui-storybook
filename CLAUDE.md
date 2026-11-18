@@ -38,6 +38,10 @@ semantic.ts    (aliases, Light + Dark: --text-secondary: var(--dark-600) …)  �
 Regenerate with `pnpm gen:tokens`. It also runs automatically via `prestorybook`
 and `prebuild-storybook`, so tokens are always fresh.
 
+`pnpm check:tokens` compares the token sources with a committed snapshot of the Figma
+variables (`scripts/figma/variables.snapshot.json`) — CI fails on any difference. To refresh the
+snapshot after a Figma change, see `context/figma-token-mapping.md`.
+
 ### When adding or changing a foundation / component
 
 1. Pull real values from **Figma variables** (the source of truth) — don't eyeball them.

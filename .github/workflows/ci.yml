@@ -31,8 +31,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Tokens match the Figma snapshot
+        run: pnpm check:tokens
+
       - name: Generate design tokens
         run: pnpm gen:tokens
+
+      - name: Generated tokens.css is committed
+        run: git diff --exit-code -- src/foundations/tokens.css
 
       - name: Typecheck
         run: pnpm typecheck

@@ -121,6 +121,14 @@ supported variant and log a warning in development (`isSupportedButton()` in `bu
   (white on brand-500 2.5:1, `text-tertiary` 2.49:1, error-500 3.75:1) — listed for the designers
   in `context/a11y-contrast.md`.
 
+### Tooling
+- `pnpm check:tokens` — compares `colors.ts` / `semantic.ts` / `scale.ts` / `typography.ts` with a
+  committed snapshot of every Figma variable (`scripts/figma/variables.snapshot.json`, resolved per
+  mode, Light/Dark and Desktop/Mobile): reports values that differ, Figma variables missing in the
+  repo and repo tokens Figma doesn't have. Current state: ✓ all 502 values match.
+- CI: `check:tokens` runs first; after `gen:tokens` it fails if the committed `tokens.css` is stale.
+- `scripts/figma/export-variables.figma.js` refreshes the snapshot (Figma MCP or plugin console).
+
 ### Changed (visual — now matches Figma)
 - Hover / active surfaces, tertiary alpha borders and elevations use the 4 % layer they were
   designed with (they rendered at 2 %).
